@@ -3,7 +3,7 @@ load("display.js")
 load("../screens/session_screen.js")
 load("../screens/note_screen.js")
 load("../screens/device_screen.js")
-load("../screens/tempo_screen.js")
+load("../screens/action_screen.js")
 
 
 //--------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ function Launchpad(input, output) {
     this.screens[2] = new Device_Screen(this)
     this.screens[3] = new Note_Screen(this, true)
 
-    this.tempo_screen = new Tempo_Screen(this)
+    this.action_screen = new Action_Screen(this)
 
     this.current_screen = this.screens[0]
     this.momentary_screen = null
@@ -69,8 +69,23 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
         if(data2 > 0) {
             if(this.momentary_page == null) {
                 this.current_screen.leave()
-                this.momentary_screen = this.tempo_screen
-                this.tempo_screen.enter()
+                this.action_screen.select_tempo_page()
+                this.momentary_screen = this.action_screen
+                this.momentary_screen.enter()
+            }
+        } else {
+            this.momentary_screen.leave()
+            this.momentary_screen = null
+            this.current_screen.enter()
+        }
+        is_handled = true
+    } else if(!is_handled && status == 0xb0 && data1 == 0x28) {
+        if(data2 > 0) {
+            if(this.momentary_page == null) {
+                this.current_screen.leave()
+                this.action_screen.select_quantization_page()
+                this.momentary_screen = this.action_screen
+                this.momentary_screen.enter()
             }
         } else {
             this.momentary_screen.leave()
