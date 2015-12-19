@@ -36,9 +36,13 @@ function Display() {
 
     this.current_layout = 0 | 0x100
 
-    this.grid = new Array(128)
+    this.current_grid = new Array(128)
     for(var i = 0; i < 128; ++i) {
-        this.grid[i] = 0
+        this.current_grid[i] = null
+    }
+    this.next_grid = new Array(128)
+    for(var i = 0; i < 128; ++i) {
+        this.next_grid[i] = 0
     }
 
 }
@@ -73,7 +77,10 @@ Display.prototype.set_note_layout = function() {
 
 Display.prototype.mark_all_buttons_modified = function() {
     for(var i = 0; i < 32; ++i) {
-        this.grid[ALL_BUTTONS[i]] |= 0x100
+        if(this.next_grid[ALL_BUTTONS[i]] === null) {
+            this.next_grid[ALL_BUTTONS[i]] = this.current_grid[ALL_BUTTONS[i]]
+        }
+        this.current_grid[ALL_BUTTONS[i]] = null
     }
 }
 
@@ -82,6 +89,9 @@ Display.prototype.mark_all_buttons_modified = function() {
 
 Display.prototype.clear_all = function() {
     sendSysex("f000202902100e00f7")
+    for(var i = 0; i < 128; ++i) {
+        this.current_grid[i] = 0
+    }
 };
 
 
@@ -96,7 +106,7 @@ Display.prototype.clear_action_buttons = function(color) {
 
 
 Display.prototype.set_action_button = function(index, color) {
-    this.grid[ACTION_BUTTONS[index]] = color | 0x100
+    this.next_grid[ACTION_BUTTONS[index]] = color
 }
 
 
@@ -111,8 +121,8 @@ Display.prototype.clear_screen_buttons = function(color) {
 
 
 Display.prototype.set_screen_button = function(index, color) {
-    this.grid[SCREEN_BUTTONS[index]] = color | 0x100
-    this.grid[0x63] = color | 0x100
+    this.next_grid[SCREEN_BUTTONS[index]] = color
+    this.next_grid[0x63] = color
 }
 
 
@@ -127,7 +137,7 @@ Display.prototype.clear_page_buttons = function(color) {
 
 
 Display.prototype.set_page_button = function(index, color) {
-    this.grid[PAGE_BUTTONS[index]] = color | 0x100
+    this.next_grid[PAGE_BUTTONS[index]] = color
 }
 
 
@@ -142,7 +152,7 @@ Display.prototype.clear_scene_buttons = function(color) {
 
 
 Display.prototype.set_scene_button = function(index, color) {
-    this.grid[SCENE_BUTTONS[index]] = color | 0x100
+    this.next_grid[SCENE_BUTTONS[index]] = color
 }
 
 
@@ -159,7 +169,7 @@ Display.prototype.clear_pads = function(color) {
 
 
 Display.prototype.set_pad = function(x, y, color) {
-    this.grid[0x0b + x + y * 0x0a] = color | 0x100
+    this.next_grid[0x0b + x + y * 0x0a] = color
 }
 
 
@@ -167,7 +177,7 @@ Display.prototype.set_pad = function(x, y, color) {
 
 
 Display.prototype.flush = function() {
-    var index, value
+    var index, current_value, next_value
 
     if(this.current_layout & 0x100) {
         switch(this.current_layout & 0xff) {
@@ -189,14 +199,15 @@ Display.prototype.flush = function() {
     for(var x = 0; x < 8; ++x) {
         for(var y = 0; y < 8; ++y) {
             index = 0x0b + x + y * 0x0a
-            value = this.grid[index]
-            if(value & 0x100) {
-                if(value & BLINKING_COLOR) {
+            current_value = this.current_grid[index]
+            next_value = this.next_grid[index]
+            if(next_value != null && current_value != next_value) {
+                if(next_value & BLINKING_COLOR) {
                     sendMidi(0x90, index, 0)
                 } else {
-                    //println("PAD " + x + ", " + y + " = " + COLORS[value & 0xff])
-                    sendMidi(0x90, index, COLORS[value & 0xff])
-                    this.grid[index] = value & 0xff
+                    println("PAD " + x + ", " + y + " = " + byte_to_hex_string(COLORS[next_value & 0xff]))
+                    sendMidi(0x90, index, COLORS[next_value & 0xff])
+                    this.current_grid[index] = next_value
                 }
             }
         }
@@ -205,29 +216,32 @@ Display.prototype.flush = function() {
     for(var x = 0; x < 8; ++x) {
         for(var y = 0; y < 8; ++y) {
             index = 0x0b + x + y * 0x0a
-            value = this.grid[index]
-            if(value & 0x100) {
-                if(value & BLINKING_COLOR) {
-                    sendSysex("f0002029021023" + byte_to_hex_string(index) + byte_to_hex_string(COLORS[value & 0x0f]) + "f7")
+            current_value = this.current_grid[index]
+            next_value = this.next_grid[index]
+            if(next_value != null && current_value != next_value) {
+                if(next_value & BLINKING_COLOR) {
+                    sendSysex("f0002029021023" + byte_to_hex_string(index) + byte_to_hex_string(COLORS[next_value & 0x0f]) + "f7")
                 }
-                this.grid[index] = value & 0xff
+                this.current_grid[index] = next_value
             }
         }
     }
 
     for(var i = 0; i < 32; ++i) {
         index = ALL_BUTTONS[i]
-        value = this.grid[index]
-        if(value & 0x100) {
-            sendMidi(0xB0, index, COLORS[value & 0xff])
-            this.grid[index] = value & 0xff
+        current_value = this.current_grid[index]
+        next_value = this.next_grid[index]
+        if(next_value != null && current_value != next_value) {
+            sendMidi(0xB0, index, COLORS[next_value & 0xff])
+            this.current_grid[index] = next_value
         }
     }
 
-    value = this.grid[0x63]
-    if(value & 0x100) {
-        sendSysex("f000202902100a63" + byte_to_hex_string(COLORS[value & 0xff]) + "f7")
-        this.grid[0x63] = value & 0xff
+    current_value = this.current_grid[0x63]
+    next_value = this.next_grid[0x63]
+    if(next_value != null && current_value != next_value) {
+        sendSysex("f000202902100a63" + byte_to_hex_string(COLORS[next_value & 0xff]) + "f7")
+        this.current_grid[0x63] = next_value
     }
 }
 
