@@ -73,7 +73,7 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
                 this.momentary_screen = this.action_screen
                 this.momentary_screen.enter()
             }
-        } else {
+        } else if(this.momentary_screen === this.action_screen) {
             this.momentary_screen.leave()
             this.momentary_screen = null
             this.current_screen.enter()
@@ -87,7 +87,7 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
                 this.momentary_screen = this.action_screen
                 this.momentary_screen.enter()
             }
-        } else {
+        } else if(this.momentary_screen === this.action_screen)  {
             this.momentary_screen.leave()
             this.momentary_screen = null
             this.current_screen.enter()
