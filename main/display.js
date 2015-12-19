@@ -34,7 +34,8 @@ function Display() {
     // Switch to Standalone Mode
     sendSysex("f000202902102101f7")
 
-    this.current_layout = 0 | 0x100
+    this.current_layout = null
+    this.next_layout = 3
 
     this.current_grid = new Array(128)
     for(var i = 0; i < 128; ++i) {
@@ -52,27 +53,21 @@ function Display() {
 
 
 Display.prototype.set_program_layout = function() {
-    if((this.current_layout & 0xff) != 3) {
-        this.current_layout = 3 | 0x100
-        this.mark_all_buttons_modified()
-    }
+    this.next_layout = 3
 }
 
 
 Display.prototype.set_fader_layout = function() {
-    if((this.current_layout & 0xff) != 2) {
-        this.current_layout = 2 | 0x100
-        this.mark_all_buttons_modified()
-    }
+    this.next_layout = 2
 }
 
 
 Display.prototype.set_note_layout = function() {
-    if((this.current_layout & 0xff) != 0) {
-        this.current_layout = 0 | 0x100
-        this.mark_all_buttons_modified()
-    }
+    this.next_layout = 0
 }
+
+
+//--------------------------------------------------------------------------------------------------
 
 
 Display.prototype.mark_all_buttons_modified = function() {
@@ -83,6 +78,7 @@ Display.prototype.mark_all_buttons_modified = function() {
         this.current_grid[ALL_BUTTONS[i]] = null
     }
 }
+
 
 //--------------------------------------------------------------------------------------------------
 
@@ -179,8 +175,8 @@ Display.prototype.set_pad = function(x, y, color) {
 Display.prototype.flush = function() {
     var index, current_value, next_value
 
-    if(this.current_layout & 0x100) {
-        switch(this.current_layout & 0xff) {
+    if(this.next_layout != null && this.current_layout != this.next_layout) {
+        switch(this.next_layout) {
             case 3:
                 sendSysex("f000202902102c03f7")
                 break;
@@ -193,7 +189,8 @@ Display.prototype.flush = function() {
             default:
                 println("Warning: Unkonwn layout required.")
         }
-        this.current_layout &= 0xff
+        this.mark_all_buttons_modified()
+        this.current_layout = this.next_layout
     }
 
     for(var x = 0; x < 8; ++x) {
@@ -205,7 +202,7 @@ Display.prototype.flush = function() {
                 if(next_value & BLINKING_COLOR) {
                     sendMidi(0x90, index, 0)
                 } else {
-                    println("PAD " + x + ", " + y + " = " + byte_to_hex_string(COLORS[next_value & 0xff]))
+                    //println("PAD " + x + ", " + y + " = " + byte_to_hex_string(COLORS[next_value & 0xff]))
                     sendMidi(0x90, index, COLORS[next_value & 0xff])
                     this.current_grid[index] = next_value
                 }
