@@ -14,6 +14,8 @@ load("../pages/voicing_page.js")
 
 function Note_Screen(launchpad, is_secondary) {
     Screen.call(this, launchpad)
+	
+    this.is_secondary = is_secondary
 
     this.pages[0] = new Drums_Page(this)
     this.pages[1] = new Chromatic_Page(this)
@@ -26,7 +28,23 @@ function Note_Screen(launchpad, is_secondary) {
 
     this.current_page = this.pages[0]
 
-    this.is_secondary = is_secondary
+    this.modes = new Array(4)
+    this.modes[0] = new Drums_Page(this)
+    this.modes[1] = new Chromatic_Page(this)
+    this.modes[2] = new In_Key_Page(this)
+    this.modes[3] = new Chords_Page(this)
+    this.mode = this.modes[0]
+	
+    this.menus = new Array(8)
+    this.menus[0] = new Drums_Page(this)
+    this.menus[1] = new Chromatic_Page(this)
+    this.menus[2] = new In_Key_Page(this)
+    this.menus[3] = new Chords_Page(this)
+    this.menus[4] = new Velocity_Page(this)
+    this.menus[5] = new Key_Page(this)
+    this.menus[6] = new Scale_Page(this)
+    this.menus[7] = new Voicing_Page(this)
+	this.menu = null
 }
 
 

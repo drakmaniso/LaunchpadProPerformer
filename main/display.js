@@ -1,14 +1,11 @@
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 const DARK_COLOR = 0x10
 const LIGHT_COLOR = 0x20
 const PULSING_COLOR = 0x40
 const BLINKING_COLOR = 0x80
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 const SYSEX_EMPTY_GRID ="f000202902100a0b000c000e000f00100011001200150016001700180019001a001b001c001f00200021002200230024002500260029002a002b002c002d002e002f00300033003400350036003700380039003a003d003e003f00400041004200430044004700480049004a004b004c004d004e0051005200530054005500560057005800"
 
@@ -25,9 +22,7 @@ const ARROW_BUTTONS = [0x5b, 0x5c, 0x5d, 0x5e]
 const PAGE_BUTTONS = [0x59, 0x4f, 0x45, 0x3b, 0x31, 0x27, 0x1d, 0x13]
 const SCENE_BUTTONS = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 function Display() {
 
@@ -48,9 +43,7 @@ function Display() {
 
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.mark_all_buttons_modified = function() {
     for(var i = 0; i < 32; ++i) {
@@ -61,9 +54,7 @@ Display.prototype.mark_all_buttons_modified = function() {
     }
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.clear_all = function() {
     sendSysex("f000202902100e00f7")
@@ -72,9 +63,7 @@ Display.prototype.clear_all = function() {
     }
 };
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.clear_action_buttons = function(color) {
     for(var i = 0; i < 8; ++i) {
@@ -82,14 +71,11 @@ Display.prototype.clear_action_buttons = function(color) {
     }
 }
 
-
 Display.prototype.set_action_button = function(index, color) {
     this.next_grid[ACTION_BUTTONS[index]] = color
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.clear_screen_buttons = function(color) {
     for(var i = 0; i < 4; ++i) {
@@ -97,15 +83,12 @@ Display.prototype.clear_screen_buttons = function(color) {
     }
 }
 
-
 Display.prototype.set_screen_button = function(index, color) {
     this.next_grid[SCREEN_BUTTONS[index]] = color
     this.next_grid[0x63] = color
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.clear_page_buttons = function(color) {
     for(var i = 0; i < 8; ++i) {
@@ -113,14 +96,11 @@ Display.prototype.clear_page_buttons = function(color) {
     }
 }
 
-
 Display.prototype.set_page_button = function(index, color) {
     this.next_grid[PAGE_BUTTONS[index]] = color
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.clear_scene_buttons = function(color) {
     for(var i = 0; i < 8; ++i) {
@@ -128,14 +108,11 @@ Display.prototype.clear_scene_buttons = function(color) {
     }
 }
 
-
 Display.prototype.set_scene_button = function(index, color) {
     this.next_grid[SCENE_BUTTONS[index]] = color
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.clear_pads = function(color) {
     for(var y = 0; y < 8; ++y) {
@@ -145,14 +122,11 @@ Display.prototype.clear_pads = function(color) {
     }
 }
 
-
 Display.prototype.set_pad = function(x, y, color) {
     this.next_grid[0x0b + x + y * 0x0a] = color
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Display.prototype.flush = function() {
     var index, current_value, next_value
@@ -206,6 +180,5 @@ Display.prototype.flush = function() {
     }
 }
 
-
-//--------------------------------------------------------------------------------------------------
-// Copyright (c) 2015 - Laurent Moussault <moussault.laurent@gmail.com>
+//------------------------------------------------------------------------------
+// Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>
