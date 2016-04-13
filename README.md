@@ -1,4 +1,4 @@
-# Launchpad Pro Performer
+# Playpad
 
 A Bitwig Script for Novation's Launchpad Pro.
 

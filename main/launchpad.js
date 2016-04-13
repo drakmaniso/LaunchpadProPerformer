@@ -2,7 +2,7 @@ load("tools.js")
 load("display.js")
 load("../screens/session_screen.js")
 load("../screens/note_screen.js")
-load("../screens/device_screen.js")
+load("../screens/sequencer_screen.js")
 load("../screens/action_screen.js")
 
 
@@ -14,15 +14,14 @@ function Launchpad(input, output) {
     this.output = output
 
     this.display = new Display()
-    this.display.set_program_layout()
     this.display.clear_all()
     this.setup_buttons()
 
     this.screens = new Array()
     this.screens[0] = new Session_Screen(this)
     this.screens[1] = new Note_Screen(this, false)
-    this.screens[2] = new Device_Screen(this)
-    this.screens[3] = new Note_Screen(this, true)
+    this.screens[2] = new Note_Screen(this, true)
+    this.screens[3] = new Sequencer_Screen(this)
 
     this.action_screen = new Action_Screen(this)
 

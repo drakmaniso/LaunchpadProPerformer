@@ -15,7 +15,7 @@ var launchpad = null
 //--------------------------------------------------------------------------------------------------
 
 
-host.defineController("Novation", "Launchpad Pro Performer", "0.1", "36CE6090-9754-11E5-A837-0800200C9A66")
+host.defineController("Novation", "Playpad", "0.1", "dbc14455-2d68-43da-b842-503b9e4292c1")
 
 host.defineMidiPorts(1, 1)
 if (host.platformIsWindows()) {

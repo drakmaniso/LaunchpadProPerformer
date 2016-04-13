@@ -34,8 +34,8 @@ function Display() {
     // Switch to Standalone Mode
     sendSysex("f000202902102101f7")
 
-    this.current_layout = null
-    this.next_layout = 3
+	// Switch to Program Layout	
+	sendSysex("f000202902102c03f7")
 
     this.current_grid = new Array(128)
     for(var i = 0; i < 128; ++i) {
@@ -46,24 +46,6 @@ function Display() {
         this.next_grid[i] = 0
     }
 
-}
-
-
-//--------------------------------------------------------------------------------------------------
-
-
-Display.prototype.set_program_layout = function() {
-    this.next_layout = 3
-}
-
-
-Display.prototype.set_fader_layout = function() {
-    this.next_layout = 2
-}
-
-
-Display.prototype.set_note_layout = function() {
-    this.next_layout = 0
 }
 
 
@@ -174,24 +156,6 @@ Display.prototype.set_pad = function(x, y, color) {
 
 Display.prototype.flush = function() {
     var index, current_value, next_value
-
-    if(this.next_layout != null && this.current_layout != this.next_layout) {
-        switch(this.next_layout) {
-            case 3:
-                sendSysex("f000202902102c03f7")
-                break;
-            case 2:
-                sendSysex("f000202902102c02f7")
-                break;
-            case 0:
-                sendSysex("f000202902102c00f7")
-                break;
-            default:
-                println("Warning: Unkonwn layout required.")
-        }
-        this.mark_all_buttons_modified()
-        this.current_layout = this.next_layout
-    }
 
     for(var x = 0; x < 8; ++x) {
         for(var y = 0; y < 8; ++y) {

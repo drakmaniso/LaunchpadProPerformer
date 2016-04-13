@@ -29,8 +29,6 @@ Fader_Page.prototype.enter = function() {
 
     var display = this.screen.launchpad.display
 
-    display.set_fader_layout()
-
     display.clear_pads(0x0)
 }
 
@@ -39,7 +37,6 @@ Fader_Page.prototype.enter = function() {
 
 
 Fader_Page.prototype.leave = function() {
-    this.screen.launchpad.display.set_program_layout()
     Page.prototype.leave.call(this)
 }
 
