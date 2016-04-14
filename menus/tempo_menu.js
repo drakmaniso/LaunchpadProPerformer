@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 
-function Tempo_Menu(launchpad) {
-	this.launchpad = launchpad
+function Tempo_Menu(screen) {
+	this.screen = screen
 }
 
 //------------------------------------------------------------------------------
@@ -18,9 +18,7 @@ Tempo_Menu.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 Tempo_Menu.prototype.enter = function() {
-    Page.prototype.enter.call(this)
-
-    var display = this.launchpad.display
+    var display = this.screen.launchpad.display
 
     display.clear_pads(0x00)
 

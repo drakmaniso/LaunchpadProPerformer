@@ -76,7 +76,7 @@ Mode_Menu.prototype.draw_grid = function() {
 	if (this.screen.mode === this.screen.modes[0]) {
 		c = SELECTED_OPTION_COLOR 
 	} else {
-		c = 0x08
+		c = 0x07
 	}
 	d.set_pad(1, 7, c)
 	d.set_pad(2, 7, c)
@@ -89,7 +89,7 @@ Mode_Menu.prototype.draw_grid = function() {
 	if (this.screen.mode === this.screen.modes[1]) {
 		c = SELECTED_OPTION_COLOR 
 	} else {
-		c = 0x03
+		c = 0x07
 	}
 	d.set_pad(4, 7, c)
 	d.set_pad(5, 7, c)
@@ -117,7 +117,7 @@ Mode_Menu.prototype.draw_grid = function() {
 	if (this.screen.mode === this.screen.modes[3]) {
 		c = SELECTED_OPTION_COLOR 
 	} else {
-		c = 0x05
+		c = 0x07
 	}
 	d.set_pad(4, 2, c)
 	d.set_pad(6, 2, c)

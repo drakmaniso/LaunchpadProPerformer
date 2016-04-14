@@ -1,46 +1,96 @@
-load("screen.js")
+load("../menus/tempo_menu.js")
+load("../menus/quantization_menu.js")
 
 //------------------------------------------------------------------------------
 
 function Session_Screen(launchpad) {
 	this.launchpad = launchpad
+	
+    this.menus = new Array(8)
+    this.menus[0] = null // new Shift_Menu(this)
+    this.menus[1] = new Tempo_Menu(this)
+    this.menus[2] = null // Undo
+    this.menus[3] = null // Delete
+    this.menus[4] = new Quantization_Menu(this)
+    this.menus[5] = null // Duplicate
+    this.menus[6] = null // Double
+    this.menus[7] = null // Record
+	this.menu = null
 }
 
 //------------------------------------------------------------------------------
 
 Session_Screen.prototype.on_midi = function(status, data1, data2) {
-	var is_handled
+	var h
 
-	var display = this.launchpad.display	
+	var d = this.launchpad.display	
 
-    if(status == 0xb0 && data1 == 0x50) {
-        if(data2 > 0) {
-            display.set_action_button(6, 0x11)
-        } else {
-            display.set_action_button(6, 0x13)
+	var m = null
+    if (status == 0xb0) {
+        switch(data1) {
+            case 0x50:
+                m = 0
+                if (data2 > 0) {
+                    d.clear_action_buttons(0x11)
+                } else {
+                    d.set_action_button(1, 0x12)
+                    d.set_action_button(4, 0x12)
+                    d.set_action_button(6, 0x13)
+                }
+                h = true
+                break
+            case 0x46:
+                m = 1
+                break
+            case 0x3c:
+                m = 2
+                break
+            case 0x32:
+                m = 3
+                break
+            case 0x28:
+                m = 4
+                break
+            case 0x1e:
+                m = 5
+                break
+            case 0x14:
+                m = 6
+                if (data2 > 0) {
+                    for (x = 0; x < 8; ++x) {
+                        d.set_pad(x, 1, 0x13)
+                        d.set_pad(x, 0, 0x12)
+                    }
+                    d.clear_page_buttons(0x18)
+                    d.clear_scene_buttons(0x18)
+                } else {
+                    for (x = 0; x < 8; ++x) {
+                        d.set_pad(x, 1, 0x00)
+                        d.set_pad(x, 0, 0x00)
+                    }
+                    d.clear_page_buttons(0x11)
+                    d.clear_scene_buttons(0x00)
+                }
+                h = true
+                break
+            case 0x0a:
+                m = 7;
+                break
         }
-        is_handled = true
-    } else if(status == 0xb0 && data1 == 0x14) {
-        is_handled = true
-        if(data2 > 0) {
-            for(y = 0; y < 8; ++y) {
-                display.set_pad(6, y, 0x12)
-                display.set_pad(7, y, 0x13)
-            }
-            display.clear_page_buttons(0x18)
-            display.clear_scene_buttons(0x18)
-        } else {
-            for(y = 0; y < 8; ++y) {
-                display.set_pad(6, y, 0x00)
-                display.set_pad(7, y, 0x00)
-            }
-            display.clear_page_buttons(0x11)
-            display.set_page_button(0, 0x12)
-            display.clear_scene_buttons(0x00)
+        if (m != null) {
+			if (data2 > 0 && this.menu === null && this.menus[m] != null) {
+                this.menu = this.menus[m]
+                this.menu.enter()
+			} else if (data2 <= 0 && this.menu != null) {
+				this.menu.leave()
+				this.menu = null
+				this.enter()
+			}
+            h = true
         }
-    }
+    }    
 
-    return is_handled
+    return h
 }
 
 //------------------------------------------------------------------------------
@@ -48,48 +98,57 @@ Session_Screen.prototype.on_midi = function(status, data1, data2) {
 Session_Screen.prototype.enter = function() {
     //Screen.prototype.enter.call(this)
 
-    var display = this.launchpad.display
+    var d = this.launchpad.display
 
-    display.set_screen_button(0, 0x12)
+    d.set_screen_button(0, 0x12)
+    
+	d.set_action_button(0, 0x11)
+	d.set_action_button(1, 0x12)
+	d.set_action_button(2, 0x11)
+	d.set_action_button(3, 0x11)
+	d.set_action_button(4, 0x12)
+	d.set_action_button(5, 0x11)
+	d.set_action_button(6, 0x13)
+	d.set_action_button(7, 0x11)
 
-    display.clear_pads(0x00)
+    d.clear_pads(0x00)
 
-    display.set_pad(0, 7, 0x02)
-    display.set_pad(1, 7, 0x02 | BLINKING_COLOR)
-    display.set_pad(2, 7, 0x02)
-    display.set_pad(3, 7, 0x02)
+    d.set_pad(0, 7, 0x02)
+    d.set_pad(0, 6, 0x02 | BLINKING_COLOR)
+    d.set_pad(0, 5, 0x02)
+    d.set_pad(0, 4, 0x02)
 
-    display.set_pad(0, 6, 0x03)
-    display.set_pad(1, 6, 0x03 | BLINKING_COLOR)
-    display.set_pad(2, 6, 0x03)
-    display.set_pad(3, 6, 0x03)
-    display.set_pad(4, 6, 0x03)
+    d.set_pad(1, 7, 0x03)
+    d.set_pad(1, 6, 0x03 | BLINKING_COLOR)
+    d.set_pad(1, 5, 0x03)
+    d.set_pad(1, 4, 0x03)
+    d.set_pad(1, 3, 0x03)
 
-    display.set_pad(0, 5, 0x04 | BLINKING_COLOR)
-    display.set_pad(1, 5, 0x04)
-    display.set_pad(2, 5, 0x04)
+    d.set_pad(2, 7, 0x04 | BLINKING_COLOR)
+    d.set_pad(2, 6, 0x04)
+    d.set_pad(2, 5, 0x04)
 
-    display.set_pad(1, 4, 0x05)
-    display.set_pad(2, 4, 0x05)
-    display.set_pad(3, 4, 0x05)
-    display.set_pad(5, 4, 0x05)
+    d.set_pad(3, 6, 0x05)
+    d.set_pad(3, 5, 0x05)
+    d.set_pad(3, 4, 0x05)
+    d.set_pad(3, 2, 0x05)
 
-    display.set_pad(1, 3, 0x06)
-    display.set_pad(2, 3, 0x06)
-    display.set_pad(3, 3, 0x06 | BLINKING_COLOR)
-    display.set_pad(4, 3, 0x06)
+    d.set_pad(4, 6, 0x06)
+    d.set_pad(4, 5, 0x06)
+    d.set_pad(4, 4, 0x06 | BLINKING_COLOR)
+    d.set_pad(4, 3, 0x06)
 
-    display.set_pad(0, 2, 0x07)
-    display.set_pad(1, 2, 0x07)
-    display.set_pad(2, 2, 0x07)
+    d.set_pad(5, 7, 0x07)
+    d.set_pad(5, 6, 0x07)
+    d.set_pad(5, 5, 0x07)
 
-    display.set_pad(1, 1, 0x08)
-    display.set_pad(2, 1, 0x08)
-    display.set_pad(3, 1, 0x08)
+    d.set_pad(6, 6, 0x08)
+    d.set_pad(6, 5, 0x08)
+    d.set_pad(6, 4, 0x08)
 
-    display.set_pad(2, 0, 0x09)
-    display.set_pad(3, 0, 0x09)
-    display.set_pad(4, 0, 0x09)
+    d.set_pad(7, 5, 0x09)
+    d.set_pad(7, 4, 0x09)
+    d.set_pad(7, 3, 0x09)
 }
 
 //------------------------------------------------------------------------------

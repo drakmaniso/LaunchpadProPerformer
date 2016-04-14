@@ -81,6 +81,18 @@ Display.prototype.set_action_button = function(index, color) {
 
 //------------------------------------------------------------------------------
 
+Display.prototype.clear_arrow_buttons = function(color) {
+    for(var i = 0; i < 4; ++i) {
+        this.set_arrow_button(i, color)
+    }
+}
+
+Display.prototype.set_arrow_button = function(index, color) {
+    this.next_grid[ARROW_BUTTONS[index]] = color
+}
+
+//------------------------------------------------------------------------------
+
 Display.prototype.clear_screen_buttons = function(color) {
     for(var i = 0; i < 4; ++i) {
         this.set_screen_button(i, color)

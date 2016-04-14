@@ -3,8 +3,6 @@ load("display.js")
 load("../screens/session_screen.js")
 load("../screens/note_screen.js")
 load("../screens/sequencer_screen.js")
-load("../menus/tempo_menu.js")
-load("../menus/quantization_menu.js")
 
 //------------------------------------------------------------------------------
 
@@ -23,11 +21,6 @@ function Launchpad(input, output) {
     this.screens[3] = new Sequencer_Screen(this)
 
     this.screen = this.screens[1]
-
-	this.action_menus = new Array(2)
-	this.action_menus[0] = new Tempo_Menu(this)
-	this.action_menus[1] = new Quantization_Menu(this)
-	this.menu = null
 	
     var lp = this
     input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})
@@ -48,7 +41,7 @@ function Launchpad(input, output) {
 
 Launchpad.prototype.setup_buttons = function() {
     this.display.clear_action_buttons(0x11)
-    this.display.set_action_button(6, 0x13)
+    this.display.clear_arrow_buttons(0x11)
     this.display.clear_screen_buttons(0x11)
     this.display.clear_page_buttons(0x11)
 }
@@ -58,32 +51,6 @@ Launchpad.prototype.setup_buttons = function() {
 Launchpad.prototype.on_midi = function(status, data1, data2) {
     var screen = null
     var is_handled = this.dispatch_midi_to_screen(status, data1, data2)
-
-    if(!is_handled && status == 0xb0 && data1 == 0x46) {
-        if(data2 > 0) {
-            if(this.menu == null) {
-                this.menu = this.action_menus[0]
-                this.menu.enter()
-            }
-        } else if(this.menu === this.action_menus[0]) {
-            this.menu.leave()
-            this.menu = null
-            this.screen.enter()
-        }
-        is_handled = true
-    } else if(!is_handled && status == 0xb0 && data1 == 0x28) {
-        if(data2 > 0) {
-            if(this.menu == null) {
-                this.menu = this.action_menus[1]
-                this.menu.enter()
-            }
-        } else if(this.menu === this.action_menus[1])  {
-            this.menu.leave()
-            this.menu = null
-            this.screen.enter()
-        }
-        is_handled = true
-    }
 
     if(!is_handled && status == 0xb0) {
         switch (data1) {
@@ -129,11 +96,7 @@ Launchpad.prototype.flush = function() {
 //------------------------------------------------------------------------------
 
 Launchpad.prototype.dispatch_midi_to_screen = function(status, data1, data2) {
-    if (this.menu != null) {
-        return this.menu.on_midi(status, data1, data2)
-    } else {
-        return this.screen.on_midi(status, data1, data2)
-    }
+    return this.screen.on_midi(status, data1, data2)
 }
 
 //------------------------------------------------------------------------------
@@ -141,22 +104,13 @@ Launchpad.prototype.dispatch_midi_to_screen = function(status, data1, data2) {
 Launchpad.prototype.on_screen_button = function (screen_index, data2) {
     var screen = this.screens[screen_index]
     if(data2 != 0) {
-        if(this.menu == null
-                && this.momentary_page == null
-                && this.screen != screen) {
-            // this.screen.current_page.leave()
+        if(this.screen != screen) {
             this.screen.leave()
-            this.menu = screen
-            this.menu.enter()
-        }
-    } else {
-        if(this.menu == screen) {
-            this.screen = this.menu
-            this.menu = null
-            this.momentary_page = null
+            this.screen = screen
+            this.screen.enter()
         }
     }
-};
+}
 
 //------------------------------------------------------------------------------
 // Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>

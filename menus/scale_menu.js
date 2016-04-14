@@ -20,27 +20,27 @@ Scale_Menu.prototype.enter = function() {
     display.clear_pads(0x0)
 
     for(var x = 0; x < 7; ++x) {
-        display.set_pad(x, 7, 0x7)
-        display.set_pad(x, 5, 0x7)
+        display.set_pad(x, 7, 0x8)
+        display.set_pad(x, 5, 0x8)
     }
     display.set_pad(4, 7, 0x0)
     for(var y = 4; y < 5; ++y) {
         for(var x = 0; x < 8; ++x) {
-            display.set_pad(x, y, 0x7)
+            display.set_pad(x, y, 0x8)
         }
     }
 
     display.set_pad(0, 0, 0x3)
-    display.set_pad(1, 0, 0x7)
+    display.set_pad(1, 0, 0x8)
     display.set_pad(2, 0, 0x1)
-    display.set_pad(3, 0, 0x7)
+    display.set_pad(3, 0, 0x8)
     display.set_pad(4, 0, 0x1)
     display.set_pad(0, 1, 0x1)
-    display.set_pad(1, 1, 0x7)
+    display.set_pad(1, 1, 0x8)
     display.set_pad(2, 1, 0x1)
-    display.set_pad(3, 1, 0x7)
+    display.set_pad(3, 1, 0x8)
     display.set_pad(4, 1, 0x1)
-    display.set_pad(0, 2, 0x7)
+    display.set_pad(0, 2, 0x8)
     display.set_pad(1, 2, 0x1)
     display.set_pad(2, 2, 0x3)
 

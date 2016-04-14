@@ -51,14 +51,6 @@ Drums_Mode.prototype.enter = function() {
 
 Drums_Mode.prototype.draw_menus = function() {
 	var d = this.screen.launchpad.display
-	d.set_page_button(0, 0x12)
-	d.set_page_button(1, 0x13)
-	d.set_page_button(2, 0x13)
-	d.set_page_button(3, 0x00)
-	d.set_page_button(4, 0x00)
-	d.set_page_button(5, 0x00)
-	d.set_page_button(6, 0x00)
-	d.set_page_button(7, 0x00)
 }
 
 //------------------------------------------------------------------------------

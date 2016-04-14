@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
 
-function Velocity_Range_Menu(screen) {
+function Velocity_Menu(screen) {
     this.screen = screen
 }
 
 //------------------------------------------------------------------------------
 
-Velocity_Range_Menu.prototype.on_midi = function(status, data1, data2) {
+Velocity_Menu.prototype.on_midi = function(status, data1, data2) {
     if(status == 0x90) {
     }
 }
@@ -14,27 +14,22 @@ Velocity_Range_Menu.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 
-Velocity_Range_Menu.prototype.enter = function() {
-    var display = this.screen.launchpad.display
+Velocity_Menu.prototype.enter = function() {
+    var d = this.screen.launchpad.display
     // display.set_page_button(4, 0x13)
 
-    display.clear_pads(0x0)
+    d.clear_pads(0x0)
 
     for(var y = 0; y < 8; ++y) {
-        display.set_pad(3, y, 0x3)
-        display.set_pad(4, y, 0x3)
+        d.set_pad(y, y, 0x03)
     }
-    for (var x = 0; x < 5; ++x) {
-		display.set_pad(x, 0, SELECTED_OPTION_COLOR)
-	}
-    for (var x = 3; x < 8; ++x) {
-		display.set_pad(x, 7, SELECTED_OPTION_COLOR)
-	}
+    d.set_pad(0, 0, 0x02)
+    d.set_pad(7, 7, 0x02)
 }
 
 //------------------------------------------------------------------------------
 
-Velocity_Range_Menu.prototype.leave = function() {
+Velocity_Menu.prototype.leave = function() {
     var display = this.screen.launchpad.display
     // display.set_page_button(4, 0x11)
 }
