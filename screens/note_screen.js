@@ -1,126 +1,122 @@
 load("screen.js")
-load("../pages/drums_page.js")
-load("../pages/chromatic_page.js")
-load("../pages/in_key_page.js")
-load("../pages/chords_page.js")
-load("../pages/velocity_page.js")
-load("../pages/key_page.js")
-load("../pages/scale_page.js")
-load("../pages/voicing_page.js")
+load("../modes/drums_mode.js")
+load("../modes/chromatic_mode.js")
+load("../modes/in_key_mode.js")
+load("../modes/chords_mode.js")
+load("../menus/mode_menu.js")
+load("../menus/velocity_range_menu.js")
+load("../menus/velocity_curve_menu.js")
+load("../menus/key_menu.js")
+load("../menus/scale_menu.js")
+load("../menus/voicing_menu.js")
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 function Note_Screen(launchpad, is_secondary) {
-    Screen.call(this, launchpad)
-	
+	this.launchpad = launchpad
     this.is_secondary = is_secondary
 
-    this.pages[0] = new Drums_Page(this)
-    this.pages[1] = new Chromatic_Page(this)
-    this.pages[2] = new In_Key_Page(this)
-    this.pages[3] = new Chords_Page(this)
-    this.pages[4] = new Velocity_Page(this)
-    this.pages[5] = new Key_Page(this)
-    this.pages[6] = new Scale_Page(this)
-    this.pages[7] = new Voicing_Page(this)
-
-    this.current_page = this.pages[0]
-
     this.modes = new Array(4)
-    this.modes[0] = new Drums_Page(this)
-    this.modes[1] = new Chromatic_Page(this)
-    this.modes[2] = new In_Key_Page(this)
-    this.modes[3] = new Chords_Page(this)
+    this.modes[0] = new Chromatic_Mode(this)
+    this.modes[1] = new Drums_Mode(this)
+    this.modes[2] = new In_Key_Mode(this)
+    this.modes[3] = new Chords_Mode(this)
     this.mode = this.modes[0]
 	
     this.menus = new Array(8)
-    this.menus[0] = new Drums_Page(this)
-    this.menus[1] = new Chromatic_Page(this)
-    this.menus[2] = new In_Key_Page(this)
-    this.menus[3] = new Chords_Page(this)
-    this.menus[4] = new Velocity_Page(this)
-    this.menus[5] = new Key_Page(this)
-    this.menus[6] = new Scale_Page(this)
-    this.menus[7] = new Voicing_Page(this)
+    this.menus[0] = new Mode_Menu(this)
+    this.menus[1] = new Velocity_Range_Menu(this)
+    this.menus[2] = new Velocity_Curve_Menu(this)
+    this.menus[3] = new Key_Menu(this)
+    this.menus[4] = new Scale_Menu(this)
+    this.menus[5] = new Voicing_Menu(this)
+    this.menus[6] = null
+    this.menus[7] = null
 	this.menu = null
 }
 
-
-Note_Screen.prototype = create_object(Screen.prototype)
-
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Note_Screen.prototype.on_midi = function(status, data1, data2) {
-    var page_index
-    var is_handled = this.dispatch_midi_to_page(status, data1, data2)
+	var m
+    var h
 
-    if(! is_handled && status == 0xb0) {
+	if (this.menu != null) {
+		h = this.menu.on_midi(status, data1, data2)
+	}
+
+	if (!h && status == 0xb0) {
         switch (data1) {
             case 0x59:
-                page_index = 0
+                m = 0
                 break
             case 0x4F:
-                page_index = 1
+                m = 1
                 break
             case 0x45:
-                page_index = 2
+                m = 2
                 break
             case 0x3B:
-                page_index = 3
+                m = 3
                 break
             case 0x31:
-                page_index = 4
+                m = 4
                 break;
             case 0x27:
-                page_index = 5
+                m = 5
                 break
             case 0x1D:
-                page_index = 6
+                //m = 6
                 break
             case 0x13:
-                page_index = 7
+                //m = 7
                 break
             default:
         }
-        if(page_index != null) {
-            this.on_page_button(this.pages[page_index], data2)
-            is_handled = true
+        if (m != null) {
+			if (data2 > 0 && this.menu === null) {
+				if (
+					m <= 2
+					|| (m <= 4 && this.mode != this.modes[1])
+					|| (m == 5 && this.mode === this.modes[3])
+				) {
+					this.menu = this.menus[m]
+					this.menu.enter()
+				}
+			} else if (data2 <= 0) {
+				this.menu.leave()
+				this.menu = null
+				this.mode.enter()
+			}
+            h = true
         }
     }
 
-    return is_handled
+    return h
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Note_Screen.prototype.enter = function() {
+var d = this.launchpad.display
     if(this.is_secondary) {
-        this.launchpad.display.set_screen_button(2, 0x15)
+        d.set_screen_button(2, 0x15)
     } else {
-        this.launchpad.display.set_screen_button(1, 0x17)
+        d.set_screen_button(1, 0x17)
     }
-    Screen.prototype.enter.call(this)
+	this.mode.enter()
 }
 
-
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 Note_Screen.prototype.leave = function() {
-    Screen.prototype.leave.call(this)
     if(this.is_secondary) {
         this.launchpad.display.set_screen_button(2, 0x11)
     } else {
         this.launchpad.display.set_screen_button(1, 0x11)
     }
+	this.mode.leave()
 }
 
-
-//--------------------------------------------------------------------------------------------------
-// Copyright (c) 2015 - Laurent Moussault <moussault.laurent@gmail.com>
+//------------------------------------------------------------------------------
+// Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>

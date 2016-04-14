@@ -3,15 +3,15 @@ load("screen.js")
 //------------------------------------------------------------------------------
 
 function Session_Screen(launchpad) {
-    Screen.call(this, launchpad)
+	this.launchpad = launchpad
 }
-
-Session_Screen.prototype = create_object(Screen.prototype)
 
 //------------------------------------------------------------------------------
 
 Session_Screen.prototype.on_midi = function(status, data1, data2) {
 	var is_handled
+
+	var display = this.launchpad.display	
 
     if(status == 0xb0 && data1 == 0x50) {
         if(data2 > 0) {

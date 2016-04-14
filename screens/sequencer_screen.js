@@ -3,11 +3,8 @@ load("screen.js")
 //------------------------------------------------------------------------------
 
 function Sequencer_Screen(launchpad) {
-    Screen.call(this, launchpad)
+	this.launchpad = launchpad
 }
-
-
-Sequencer_Screen.prototype = create_object(Screen.prototype)
 
 //------------------------------------------------------------------------------
 

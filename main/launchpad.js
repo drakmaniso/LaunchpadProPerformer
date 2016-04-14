@@ -22,7 +22,7 @@ function Launchpad(input, output) {
     this.screens[2] = new Note_Screen(this, true)
     this.screens[3] = new Sequencer_Screen(this)
 
-    this.current_screen = this.screens[0]
+    this.screen = this.screens[1]
 
 	this.action_menus = new Array(2)
 	this.action_menus[0] = new Tempo_Menu(this)
@@ -39,7 +39,7 @@ function Launchpad(input, output) {
     // this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
     // this.user_input.setShouldConsumeEvents(false)
 
-    this.current_screen.enter()
+    this.screen.enter()
 
     this.display.flush()
 }
@@ -68,7 +68,7 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
         } else if(this.menu === this.action_menus[0]) {
             this.menu.leave()
             this.menu = null
-            this.current_screen.enter()
+            this.screen.enter()
         }
         is_handled = true
     } else if(!is_handled && status == 0xb0 && data1 == 0x28) {
@@ -80,7 +80,7 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
         } else if(this.menu === this.action_menus[1])  {
             this.menu.leave()
             this.menu = null
-            this.current_screen.enter()
+            this.screen.enter()
         }
         is_handled = true
     }
@@ -132,7 +132,7 @@ Launchpad.prototype.dispatch_midi_to_screen = function(status, data1, data2) {
     if (this.menu != null) {
         return this.menu.on_midi(status, data1, data2)
     } else {
-        return this.current_screen.on_midi(status, data1, data2)
+        return this.screen.on_midi(status, data1, data2)
     }
 }
 
@@ -143,15 +143,15 @@ Launchpad.prototype.on_screen_button = function (screen_index, data2) {
     if(data2 != 0) {
         if(this.menu == null
                 && this.momentary_page == null
-                && this.current_screen != screen) {
-            // this.current_screen.current_page.leave()
-            this.current_screen.leave()
+                && this.screen != screen) {
+            // this.screen.current_page.leave()
+            this.screen.leave()
             this.menu = screen
             this.menu.enter()
         }
     } else {
         if(this.menu == screen) {
-            this.current_screen = this.menu
+            this.screen = this.menu
             this.menu = null
             this.momentary_page = null
         }

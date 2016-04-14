@@ -1,34 +1,22 @@
-load("page.js")
+//------------------------------------------------------------------------------
 
-
-//--------------------------------------------------------------------------------------------------
-
-
-function Chords_Page(screen) {
-    Page.call(this, screen)
+function Chords_Mode(screen) {
+	this.screen = screen
 }
 
+//------------------------------------------------------------------------------
 
-Chords_Page.prototype = create_object(Page.prototype)
-
-
-//--------------------------------------------------------------------------------------------------
-
-
-Chords_Page.prototype.on_midi = function(status, data1, data2) {
+Chords_Mode.prototype.on_midi = function(status, data1, data2) {
     if(status == 0x90) {
     }
 }
 
+//------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------
-
-
-Chords_Page.prototype.enter = function() {
-    Page.prototype.enter.call(this)
-
+Chords_Mode.prototype.enter = function() {
     var display = this.screen.launchpad.display
-    display.set_page_button(3, 0x15)
+
+	this.draw_menus()	
 
     display.clear_pads(0x0)
 
@@ -79,17 +67,25 @@ Chords_Page.prototype.enter = function() {
     display.set_pad(7, 7, 0x7)
 }
 
+//------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------
-
-
-Chords_Page.prototype.leave = function() {
-    Page.prototype.leave.call(this)
-
-    var display = this.screen.launchpad.display
-    display.set_page_button(3, 0x11)
+Chords_Mode.prototype.draw_menus = function() {
+	var d = this.screen.launchpad.display
+	d.set_page_button(0, 0x12)
+	d.set_page_button(1, 0x13)
+	d.set_page_button(2, 0x13)
+	d.set_page_button(3, 0x18)
+	d.set_page_button(4, 0x17)
+	d.set_page_button(5, 0x15)
+	d.set_page_button(6, 0x00)
+	d.set_page_button(7, 0x00)
 }
 
+//------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------
-// Copyright (c) 2015 - Laurent Moussault <moussault.laurent@gmail.com>
+Chords_Mode.prototype.leave = function() {
+    var display = this.screen.launchpad.display
+}
+
+//------------------------------------------------------------------------------
+// Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>
