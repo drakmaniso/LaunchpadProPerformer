@@ -17,10 +17,13 @@ function Launchpad(input, output) {
     this.screens = new Array(4)
     this.screens[0] = new Session_Screen(this)
     this.screens[1] = new Note_Screen(this, false)
-    this.screens[2] = new Note_Screen(this, true)
-    this.screens[3] = new Sequencer_Screen(this)
+    this.screens[2] = new Sequencer_Screen(this)
+    this.screens[3] = new Note_Screen(this, true)
 
     this.screen = this.screens[1]
+
+    this.root_key = 0
+    this.scale = [true, false, true, false, true, true, false, true, false, true, false, true]
 	
     var lp = this
     input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})

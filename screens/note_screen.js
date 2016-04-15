@@ -43,7 +43,9 @@ Note_Screen.prototype.on_midi = function(status, data1, data2) {
 
 	if (this.menu != null) {
 		h = this.menu.on_midi(status, data1, data2)
-	}
+    }
+
+    h = this.mode.on_midi(status, data1, data2)
 
 	var m = null
 	if (!h && status == 0xb0) {
@@ -94,7 +96,7 @@ Note_Screen.prototype.on_midi = function(status, data1, data2) {
 Note_Screen.prototype.enter = function() {
     var d = this.launchpad.display
     if(this.is_secondary) {
-        d.set_screen_button(2, 0x15)
+        d.set_screen_button(3, 0x15)
     } else {
         d.set_screen_button(1, 0x17)
     }
@@ -113,7 +115,7 @@ Note_Screen.prototype.enter = function() {
 
 Note_Screen.prototype.leave = function() {
     if(this.is_secondary) {
-        this.launchpad.display.set_screen_button(2, 0x11)
+        this.launchpad.display.set_screen_button(3, 0x11)
     } else {
         this.launchpad.display.set_screen_button(1, 0x11)
     }

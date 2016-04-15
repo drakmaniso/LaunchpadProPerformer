@@ -28,6 +28,11 @@ const SELECTED_OPTION_COLOR = 0x02
 
 //------------------------------------------------------------------------------
 
+const WHITE_KEY_COLOR = 0x01
+const ROOT_KEYS_COLORS = [0x18, 0x19, 0x1a, 0x02, 0x03, 0x05, 0x07, 0x08, 0x09, 0x0b, 0x1a]
+
+//------------------------------------------------------------------------------
+
 function Display() {
 
     // Switch to Standalone Mode

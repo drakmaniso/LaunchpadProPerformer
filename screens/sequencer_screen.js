@@ -27,7 +27,7 @@ Sequencer_Screen.prototype.enter = function() {
 
     var display = this.launchpad.display
 
-    display.set_screen_button(3, 0x19)
+    display.set_screen_button(2, 0x19)
 
     for(y = 0; y < 4; ++y) {
         for(var x = 0; x < 8; ++x) {
@@ -47,7 +47,7 @@ Sequencer_Screen.prototype.enter = function() {
 
 Sequencer_Screen.prototype.leave = function() {
     //Screen.prototype.leave.call(this)
-    this.launchpad.display.set_screen_button(3, 0x11)
+    this.launchpad.display.set_screen_button(2, 0x11)
 }
 
 //------------------------------------------------------------------------------

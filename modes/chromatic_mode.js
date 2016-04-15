@@ -1,50 +1,98 @@
 //------------------------------------------------------------------------------
 
 function Chromatic_Mode(screen) {
-	this.screen = screen
+    this.screen = screen
+
+    this.translation = new_translation_table()
+    this.origin = 48
+    this.deltax = 1
+    this.deltay = 5
+    this.fill_translation()
 }
 
 //------------------------------------------------------------------------------
 
-Chromatic_Mode.prototype.on_midi = function(status, data1, data2) {
-    if(status == 0x90) {
-        if (data2 > 0) {
-            sendMidi(status, data1, 0x05)
-        } else {
-            sendMidi(status, data1, 0x00)
+Chromatic_Mode.prototype.fill_translation = function () {
+    for (x = 0; x < 8; x++) {
+        for (y = 0; y < 8; y++) {
+            var n = this.pad_note(x, y)
+            set_pad_translation(this.translation, x, y, n)
         }
     }
 }
 
+Chromatic_Mode.prototype.draw_grid = function () {
+    var l = this.screen.launchpad
+    var d = l.display
+    for (x = 0; x < 8; x++) {
+        for (y = 0; y < 8; y++) {
+            var n = this.pad_note(x, y)
+            var nn = n % 12
+            var no = Math.floor(n / 12)
+            if (n != -1 && nn == l.root_key) {
+                d.set_pad(x, y, ROOT_KEYS_COLORS[no])
+            } else if (n != -1 && l.scale[nn]) {
+                d.set_pad(x, y, WHITE_KEY_COLOR)
+            } else {
+                d.set_pad(x, y, 0x00)
+            }
+        }
+    }
+}
+
+Chromatic_Mode.prototype.pad_note = function(x, y) {
+    var n = this.origin + x * this.deltax + y * this.deltay
+    if (n > 127 || n < 0) {
+        n = -1
+    }
+    return n
+}
+
 //------------------------------------------------------------------------------
 
-Chromatic_Mode.prototype.enter = function() {
-    var display = this.screen.launchpad.display
+Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
+    var h = false
+    if (status = 0xb0 && data2 > 0) {
+        switch (data1) {
+            case 0x5b:
+                this.origin = this.origin + this.deltay
+                h = true
+                break                
+            case 0x5c:
+                this.origin = this.origin - this.deltay
+                h = true
+                break                
+            case 0x5d:
+                this.origin = this.origin - this.deltax
+                h = true
+                break                
+            case 0x5e:
+                this.origin = this.origin + this.deltax
+                h = true
+                break                
+        }
+        if (h) {
+            this.update_and_draw()
+        }
+    }
 
+    return h
+}
+
+//------------------------------------------------------------------------------
+
+Chromatic_Mode.prototype.update_and_draw = function () {
+    this.fill_translation()
+    this.screen.launchpad.note_input.setKeyTranslationTable(this.translation)
+    this.draw_grid()
+}
+
+//------------------------------------------------------------------------------
+
+Chromatic_Mode.prototype.enter = function () {
+    this.update_and_draw()
 	this.draw_menus()	
-
-    display.clear_pads(0x0)
-
-    display.set_pad(0, 0, 0x3)
-    display.set_pad(2, 0, 0x1)
-    display.set_pad(4, 0, 0x1)
-    display.set_pad(5, 0, 0x1)
-    display.set_pad(7, 0, 0x1)
-    display.set_pad(0, 1, 0x1)
-    display.set_pad(2, 1, 0x1)
-    display.set_pad(4, 1, 0x1)
-    display.set_pad(6, 1, 0x1)
-    display.set_pad(7, 1, 0x5)
-    display.set_pad(1, 2, 0x1)
-    display.set_pad(2, 2, 0x5)
-    display.set_pad(4, 2, 0x1)
-    display.set_pad(6, 2, 0x1)
-    display.set_pad(7, 2, 0x1)
-    display.set_pad(1, 3, 0x1)
-
-    display.set_pad(4, 4, 0x7)
-    display.set_pad(6, 6, 0x8)
-    display.set_pad(1, 7, 0x8)
+    this.draw_grid()
 }
 
 //------------------------------------------------------------------------------
