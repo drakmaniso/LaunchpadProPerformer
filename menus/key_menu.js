@@ -9,7 +9,6 @@ function Key_Menu(screen) {
 Key_Menu.prototype.on_midi = function(status, data1, data2) {
     var l = this.screen.launchpad
     if (status == 0x90 && data2 > 0) {
-        println("Pad: 0x" + byte_to_hex_string(data1))
         switch (data1) {
             case 0x47: // C
             case 0x36:
