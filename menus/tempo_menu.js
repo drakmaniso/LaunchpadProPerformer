@@ -18,6 +18,7 @@ Tempo_Menu.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 Tempo_Menu.prototype.enter = function() {
+    this.screen.launchpad.mute()
     var display = this.screen.launchpad.display
 
     display.clear_pads(0x00)

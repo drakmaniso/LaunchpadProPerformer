@@ -41,10 +41,8 @@ function new_translation_table() {
 
 //------------------------------------------------------------------------------
 
-const ROWS_ORIGINS = [0x0b, 0x15, 0x1f, 0x29, 0x33, 0x3d, 0x47, 0x51]
-
 function set_pad_translation(table, x, y, note) {
-   table[ROWS_ORIGINS[y] + x] = note
+   table[0x0b + x + y * 0x0a] = note
 }
 
 //------------------------------------------------------------------------------

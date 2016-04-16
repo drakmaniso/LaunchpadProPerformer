@@ -6,58 +6,40 @@ function Mode_Menu(screen) {
 
 //------------------------------------------------------------------------------
 
-Mode_Menu.prototype.on_midi = function(status, data1, data2) {
+Mode_Menu.prototype.on_midi = function (status, data1, data2) {
     if (status == 0x90 && data2 > 0) {
-		if (
-			(data1 >= 0x0b && data1 <= 0x0e)
-			|| (data1 >= 0x15 && data1 <= 0x18)
-			|| (data1 >= 0x1f && data1 <= 0x22)
-			|| (data1 >= 0x29 && data1 <= 0x2c)
-		) {
-			this.screen.mode = this.screen.modes[2]
-			this.screen.mode.draw_menus()
-			this.draw_grid()
-			return true
-		}
-		else if (
-			(data1 >= 0x0f && data1 <= 0x12)
-			|| (data1 >= 0x19 && data1 <= 0x1c)
-			|| (data1 >= 0x23 && data1 <= 0x26)
-			|| (data1 >= 0x2d && data1 <= 0x30)
-		) {
-			this.screen.mode = this.screen.modes[3]
-			this.screen.mode.draw_menus()
-			this.draw_grid()
-			return true
-		}
-		else if (
-			(data1 >= 0x33 && data1 <= 0x36)
-			|| (data1 >= 0x3d && data1 <= 0x40)
-			|| (data1 >= 0x47 && data1 <= 0x4a)
-			|| (data1 >= 0x51 && data1 <= 0x54)
-		) {
+		var x = this.screen.launchpad.display.pad_x(data1)
+		var y = this.screen.launchpad.display.pad_y(data1)
+		if (y >= 4) {
+			if (x < 4) {
 			this.screen.mode = this.screen.modes[0]
 			this.screen.mode.draw_menus()
 			this.draw_grid()
-			return true
-		}
-		else if (
-			(data1 >= 0x37 && data1 <= 0x3a)
-			|| (data1 >= 0x41 && data1 <= 0x44)
-			|| (data1 >= 0x4b && data1 <= 0x4e)
-			|| (data1 >= 0x55 && data1 <= 0x58)
-		) {
+			} else {
 			this.screen.mode = this.screen.modes[1]
 			this.screen.mode.draw_menus()
 			this.draw_grid()
-			return true
+			}
+		} else {
+			if (x < 4) {
+			this.screen.mode = this.screen.modes[2]
+			this.screen.mode.draw_menus()
+			this.draw_grid()
+			} else {
+			this.screen.mode = this.screen.modes[3]
+			this.screen.mode.draw_menus()
+			this.draw_grid()
+			}
 		}
     }
+
+	return ! (status == 0xb0 && data1 == 0x46 && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------
 
 Mode_Menu.prototype.enter = function() {
+    this.screen.launchpad.mute()
     var display = this.screen.launchpad.display
     // display.set_page_button(0, 0x12)
 

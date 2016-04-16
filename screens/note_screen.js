@@ -45,10 +45,12 @@ Note_Screen.prototype.on_midi = function(status, data1, data2) {
 		h = this.menu.on_midi(status, data1, data2)
     }
 
-    h = this.mode.on_midi(status, data1, data2)
+    if (!h) {
+        h = this.mode.on_midi(status, data1, data2)
+    }    
 
-	var m = null
 	if (!h && status == 0xb0) {
+    	var m = null
         switch (data1) {
             case 0x50:
                 m = 0

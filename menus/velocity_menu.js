@@ -15,6 +15,7 @@ Velocity_Menu.prototype.on_midi = function(status, data1, data2) {
 
 
 Velocity_Menu.prototype.enter = function() {
+    this.screen.launchpad.mute()
     var d = this.screen.launchpad.display
     // display.set_page_button(4, 0x13)
 

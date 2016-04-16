@@ -7,13 +7,13 @@ function In_Key_Mode(screen) {
 //------------------------------------------------------------------------------
 
 In_Key_Mode.prototype.on_midi = function(status, data1, data2) {
-    if(status == 0x90) { // Note On
-        if (data2 > 0) {
-            sendMidi(status, data1, 0x05)
-        } else {
-            sendMidi(status, data1, 0x03)
-        }
-    }
+    // if(status == 0x90) { // Note On
+    //     if (data2 > 0) {
+    //         sendMidi(status, data1, 0x05)
+    //     } else {
+    //         sendMidi(status, data1, 0x03)
+    //     }
+    // }
 }
 
 //------------------------------------------------------------------------------

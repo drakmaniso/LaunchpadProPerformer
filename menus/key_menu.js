@@ -13,7 +13,8 @@ Key_Menu.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Key_Menu.prototype.enter = function() {
+Key_Menu.prototype.enter = function () {
+    this.screen.launchpad.mute()
     var display = this.screen.launchpad.display
     // display.set_page_button(5, 0x17)
 

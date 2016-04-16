@@ -4,7 +4,7 @@ function Chromatic_Mode(screen) {
     this.screen = screen
 
     this.translation = new_translation_table()
-    this.origin = 48
+    this.origin = 47
     this.deltax = 1
     this.deltay = 5
     this.fill_translation()
@@ -29,12 +29,14 @@ Chromatic_Mode.prototype.draw_grid = function () {
             var n = this.pad_note(x, y)
             var nn = n % 12
             var no = Math.floor(n / 12)
-            if (n != -1 && nn == l.root_key) {
-                d.set_pad(x, y, ROOT_KEYS_COLORS[no])
-            } else if (n != -1 && l.scale[nn]) {
-                d.set_pad(x, y, WHITE_KEY_COLOR)
-            } else {
+            if (n == -1) {
                 d.set_pad(x, y, 0x00)
+            } else if (nn == l.root_key) {
+                d.set_pad(x, y, ROOT_KEYS_COLORS[no])
+            } else if (l.scale[nn]) {
+                d.set_pad(x, y, WHITE_KEYS_COLORS[no])
+            } else {
+                d.set_pad(x, y, BLACK_KEYS_COLORS[no])
             }
         }
     }
@@ -52,7 +54,7 @@ Chromatic_Mode.prototype.pad_note = function(x, y) {
 
 Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
     var h = false
-    if (status = 0xb0 && data2 > 0) {
+    if (status == 0xb0 && data2 > 0) {
         switch (data1) {
             case 0x5b:
                 this.origin = this.origin + this.deltay
@@ -74,6 +76,45 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
         if (h) {
             this.update_and_draw()
         }
+    } else if (status == 0x90) {
+        var l = this.screen.launchpad
+        var d = this.screen.launchpad.display
+        var x = d.pad_x(data1)
+        var y = d.pad_y(data1)
+        var n = this.pad_note(x, y)
+        var nn = n % 12
+        var no = Math.floor(n / 12)
+        var c = 0x0a
+        if (data2 > 0) {
+            if (n == -1) {
+                c = 0x00
+            } else if (nn == l.root_key) {
+                c = ROOT_KEYS_PRESSED_COLORS[no]
+            } else if (l.scale[nn]) {
+                c = WHITE_KEYS_PRESSED_COLORS[no]
+            } else {
+                c = BLACK_KEYS_PRESSED_COLORS[no]
+            }
+        } else {
+            if (n == -1) {
+                c = 0x00
+            } else if (nn == l.root_key) {
+                c = ROOT_KEYS_COLORS[no]
+            } else if (l.scale[nn]) {
+                c = WHITE_KEYS_COLORS[no]
+            } else {
+                c = BLACK_KEYS_COLORS[no]
+            }
+        }
+        for (x = 0; x < 8; x++) {
+            for (y = 0; y < 8; y++) {
+                var xyn = this.pad_note(x, y)
+                if (xyn == n) {
+                    d.set_pad(x, y, c)
+                }
+            }
+        }
+        h = true
     }
 
     return h

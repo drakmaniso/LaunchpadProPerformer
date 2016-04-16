@@ -14,6 +14,7 @@ Scale_Menu.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 Scale_Menu.prototype.enter = function() {
+    this.screen.launchpad.mute()
     var display = this.screen.launchpad.display
     // display.set_page_button(6, 0x17)
 

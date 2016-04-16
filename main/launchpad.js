@@ -24,6 +24,8 @@ function Launchpad(input, output) {
 
     this.root_key = 0
     this.scale = [true, false, true, false, true, true, false, true, false, true, false, true]
+
+    this.mute_translation = new_translation_table()
 	
     var lp = this
     input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})
@@ -42,6 +44,12 @@ function Launchpad(input, output) {
 
 //------------------------------------------------------------------------------
 
+Launchpad.prototype.mute = function () {
+    this.note_input.setKeyTranslationTable(this.mute_translation)
+}
+
+//------------------------------------------------------------------------------
+
 Launchpad.prototype.setup_buttons = function() {
     this.display.clear_action_buttons(0x11)
     this.display.clear_arrow_buttons(0x11)
@@ -52,36 +60,36 @@ Launchpad.prototype.setup_buttons = function() {
 //------------------------------------------------------------------------------
 
 Launchpad.prototype.on_midi = function(status, data1, data2) {
-    var screen = null
-    var is_handled = this.dispatch_midi_to_screen(status, data1, data2)
+    var h = this.screen.on_midi(status, data1, data2)
 
-    if(!is_handled && status == 0xb0) {
+    var s = null
+    if(!h && status == 0xb0) {
         switch (data1) {
             case 0x5F:
-                screen = 0
+                s = 0
                 break
             case 0x60:
-                screen = 1
+                s = 1
                 break
             case 0x61:
-                screen = 2
+                s = 2
                 break
             case 0x62:
-                screen = 3
+                s = 3
                 break
             default:
         }
-        if(screen != null) {
-            this.on_screen_button(screen, data2)
-            is_handled = true
+        if(s != null) {
+            this.on_screen_button(s, data2)
+            h = true
         }
     }
 
-    if(! is_handled){
+    if(! h){
         println("Unhandled Midi Event: " + byte_to_hex_string(status) + " " + byte_to_hex_string(data1) + " " + byte_to_hex_string(data2))
     }
 
-    return is_handled
+    return h
 }
 
 //------------------------------------------------------------------------------
@@ -94,12 +102,6 @@ Launchpad.prototype.on_sysex = function(data) {
 
 Launchpad.prototype.flush = function() {
     this.display.flush()
-}
-
-//------------------------------------------------------------------------------
-
-Launchpad.prototype.dispatch_midi_to_screen = function(status, data1, data2) {
-    return this.screen.on_midi(status, data1, data2)
 }
 
 //------------------------------------------------------------------------------

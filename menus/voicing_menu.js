@@ -9,11 +9,13 @@ function Voicing_Menu(screen) {
 Voicing_Menu.prototype.on_midi = function(status, data1, data2) {
     if(status == 0x90) { // Note On
     }
+    return  ! (status == 0xb0 && data1 == 0x32 && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------
 
 Voicing_Menu.prototype.enter = function () {
+    this.screen.launchpad.mute()
     var display = this.screen.launchpad.display
     // display.set_page_button(7, 0x15)
 

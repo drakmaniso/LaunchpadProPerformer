@@ -96,8 +96,7 @@ Session_Screen.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 Session_Screen.prototype.enter = function() {
-    //Screen.prototype.enter.call(this)
-
+    this.launchpad.mute()
     var d = this.launchpad.display
 
     d.set_screen_button(0, 0x12)

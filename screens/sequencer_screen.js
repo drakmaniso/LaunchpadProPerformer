@@ -23,8 +23,7 @@ Sequencer_Screen.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 Sequencer_Screen.prototype.enter = function() {
-    //Screen.prototype.enter.call(this)
-
+    this.launchpad.mute()
     var display = this.launchpad.display
 
     display.set_screen_button(2, 0x19)
