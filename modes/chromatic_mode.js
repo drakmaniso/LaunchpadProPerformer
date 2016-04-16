@@ -27,11 +27,11 @@ Chromatic_Mode.prototype.draw_grid = function () {
     for (x = 0; x < 8; x++) {
         for (y = 0; y < 8; y++) {
             var n = this.pad_note(x, y)
-            var nn = n % 12
+            var nn = (n - l.root_key) % 12
             var no = Math.floor(n / 12)
             if (n == -1) {
                 d.set_pad(x, y, 0x00)
-            } else if (nn == l.root_key) {
+            } else if (nn == 0) {
                 d.set_pad(x, y, ROOT_KEYS_COLORS[no])
             } else if (l.scale[nn]) {
                 d.set_pad(x, y, WHITE_KEYS_COLORS[no])
@@ -82,13 +82,13 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
         var x = d.pad_x(data1)
         var y = d.pad_y(data1)
         var n = this.pad_note(x, y)
-        var nn = n % 12
+        var nn = (n - l.root_key) % 12
         var no = Math.floor(n / 12)
         var c = 0x0a
         if (data2 > 0) {
             if (n == -1) {
                 c = 0x00
-            } else if (nn == l.root_key) {
+            } else if (nn == 0) {
                 c = ROOT_KEYS_PRESSED_COLORS[no]
             } else if (l.scale[nn]) {
                 c = WHITE_KEYS_PRESSED_COLORS[no]
@@ -98,7 +98,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
         } else {
             if (n == -1) {
                 c = 0x00
-            } else if (nn == l.root_key) {
+            } else if (nn == 0) {
                 c = ROOT_KEYS_COLORS[no]
             } else if (l.scale[nn]) {
                 c = WHITE_KEYS_COLORS[no]

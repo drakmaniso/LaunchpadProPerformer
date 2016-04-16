@@ -24,6 +24,7 @@ function Launchpad(input, output) {
 
     this.root_key = 0
     this.scale = [true, false, true, false, true, true, false, true, false, true, false, true]
+    // this.scale = [true, false, true, true, false, true, false, true, true, false, true, false]
 
     this.mute_translation = new_translation_table()
 	
@@ -34,8 +35,8 @@ function Launchpad(input, output) {
 
     this.note_input = this.input.createNoteInput("Note", "80????", "90????", "A0????", "D0????")
     this.note_input.setShouldConsumeEvents(false)
-    // this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
-    // this.user_input.setShouldConsumeEvents(false)
+    this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
+    this.user_input.setShouldConsumeEvents(false)
 
     this.screen.enter()
 
