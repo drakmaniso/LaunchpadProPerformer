@@ -225,4 +225,206 @@ Display.prototype.flush = function() {
 }
 
 //------------------------------------------------------------------------------
+
+Display.prototype.big_number = function (x, y, number, color) {
+    switch (number) {
+        case 0:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break;
+        case 1:
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+1, y+3, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+1, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break;
+        case 2:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 3:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 4:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+1, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 5:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 6: 
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 7:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 8:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 9:
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            break
+        case 10:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 11:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            break
+        case 12:
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 13:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+2, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+2, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+2, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            break
+        case 14:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            this.set_pad(x+1, y+0, color)
+            this.set_pad(x+2, y+0, color)
+            break
+        case 15:
+            this.set_pad(x+0, y+4, color)
+            this.set_pad(x+1, y+4, color)
+            this.set_pad(x+2, y+4, color)
+            this.set_pad(x+0, y+3, color)
+            this.set_pad(x+0, y+2, color)
+            this.set_pad(x+1, y+2, color)
+            this.set_pad(x+0, y+1, color)
+            this.set_pad(x+0, y+0, color)
+            break
+    }
+}
+
+//------------------------------------------------------------------------------
 // Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>

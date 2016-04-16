@@ -7,6 +7,7 @@ load("../menus/velocity_menu.js")
 load("../menus/key_menu.js")
 load("../menus/scale_menu.js")
 load("../menus/voicing_menu.js")
+load("../menus/layout_menu.js")
 
 //------------------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ function Note_Screen(launchpad, is_secondary) {
     this.menus[0] = null // new Shift_Menu(this)
     this.menus[1] = new Mode_Menu(this)
     this.menus[2] = null // Undo
-    this.menus[3] = new Voicing_Menu(this)
+    this.menus[3] = new Layout_Menu(this) //new Voicing_Menu(this)
     this.menus[4] = new Velocity_Menu(this)
     this.menus[5] = new Key_Menu(this)
     this.menus[6] = new Scale_Menu(this)
