@@ -6,8 +6,26 @@ function Scale_Menu(screen) {
     this.scales = new Array(4)
     this.scales[0] = [IONIAN_MAJOR_SCALE, AEOLIAN_MINOR_SCALE, HARMONIC_MINOR_SCALE, MELODIC_MINOR_SCALE, null, MINOR_PENTATONIC_SCALE, BLUES_SCALE, null]
     this.scales[1] = [IONIAN_MAJOR_SCALE, DORIAN_MODE_SCALE, PHRYGIAN_MODE_SCALE, LYDIAN_MODE_SCALE, MIXOLYDIAN_MODE_SCALE, AEOLIAN_MINOR_SCALE, LOCRIAN_MODE_SCALE, null]
-    this.scales[2] = [PHRYGIAN_DOMINANT_SCALE, GYPSY_SCALE, HUNGARIAN_MINOR_SCALE, PERSIAN_SCALE, null, null, SYMETRIC_DIMINISHED_SCALE, WHOLE_TONE_SCALE]
-    this.scales[3] = [JAPANESE_HIRAJOSHI_SCALE, JAPANESE_IN_SCALE, JAPANESE_IN_SEN_SCALE, null, PENTATONIC_MAJOR_SCALE, null, null, null]
+    this.scales[2] = [
+        PHRYGIAN_DOMINANT_SCALE,
+        GYPSY_SCALE,
+        HUNGARIAN_MINOR_SCALE,
+        PERSIAN_SCALE,
+        null,
+        null,
+        SYMETRIC_DIMINISHED_SCALE,
+        WHOLE_TONE_SCALE
+    ]
+    this.scales[3] = [
+        JAPANESE_HIRAJOSHI_SCALE,
+        JAPANESE_IN_SCALE,
+        JAPANESE_IN_SEN_SCALE,
+        null,
+        PENTATONIC_MAJOR_SCALE,
+        null,
+        null,
+        null
+    ]
 }
 
 //------------------------------------------------------------------------------
@@ -58,19 +76,37 @@ Scale_Menu.prototype.draw_grid = function () {
         }
     }
 
-    d.set_pad(1+0, 0, 0x3)
-    d.set_pad(1+1, 0, l.scale[1] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+2, 0, l.scale[2] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+3, 0, l.scale[3] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+4, 0, l.scale[4] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+0, 1, l.scale[5] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+1, 1, l.scale[6] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+2, 1, l.scale[7] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+3, 1, l.scale[8] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+4, 1, l.scale[9] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+0, 2, l.scale[10] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+1, 2, l.scale[11] ? WHITE_KEYS_COLORS[4] : 0x8)
-    d.set_pad(1+2, 2, 0x5)
+    if (true) {
+        // Display the scale as bass guitar    
+        d.set_pad(1 + 0, 0, 0x3)
+        d.set_pad(1 + 1, 0, l.scale[1] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 2, 0, l.scale[2] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 3, 0, l.scale[3] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 4, 0, l.scale[4] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 0, 1, l.scale[5] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 1, 1, l.scale[6] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 2, 1, l.scale[7] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 3, 1, l.scale[8] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 4, 1, l.scale[9] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 0, 2, l.scale[10] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 1, 2, l.scale[11] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1 + 2, 2, 0x5)
+    } else {
+        // Display the scale on piano    
+        d.set_pad(0, 0, 0x3)
+        d.set_pad(0, 1, l.scale[1] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1, 0, l.scale[2] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(1, 1, l.scale[3] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(2, 0, l.scale[4] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(3, 0, l.scale[5] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(3, 1, l.scale[6] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(4, 0, l.scale[7] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(4, 1, l.scale[8] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(5, 0, l.scale[9] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(5, 1, l.scale[10] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(6, 0, l.scale[11] ? WHITE_KEYS_COLORS[4] : 0x8)
+        d.set_pad(7, 0, 0x5)
+    }
 }
 
 //------------------------------------------------------------------------------
