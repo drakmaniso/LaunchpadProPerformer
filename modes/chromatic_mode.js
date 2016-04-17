@@ -7,6 +7,11 @@ function Chromatic_Mode(screen) {
     this.origin = 47
     this.deltax = 1
     this.deltay = 5
+    this.screen_pressed = false
+    this.up_pressed = false
+    this.down_pressed = false
+    this.left_pressed = false
+    this.right_pressed = false
     this.fill_translation()
 }
 
@@ -54,22 +59,74 @@ Chromatic_Mode.prototype.pad_note = function(x, y) {
 
 Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
     var h = false
-    if (status == 0xb0 && data2 > 0) {
+    if (status == 0xb0) {
         switch (data1) {
+            case 0x60:
+                if (data2 > 0) {
+                    this.screen_pressed = true
+                } else {
+                    this.screen_pressed = false
+                }
+                h = true
+                break
             case 0x5b:
-                this.origin = this.origin + this.deltay
+                if (data2 > 0) {
+                    this.up_pressed = true
+                    if (this.screen_pressed) {
+                        this.origin = this.origin - 12
+                    } else if (this.down_pressed) {
+                        this.origin = 48
+                    } else {
+                        this.origin = this.origin + this.deltay
+                    }    
+                } else {
+                    this.up_pressed = false
+                }
                 h = true
                 break                
             case 0x5c:
-                this.origin = this.origin - this.deltay
+                if (data2 > 0) {
+                    this.down_pressed = true
+                    if (this.screen_pressed) {
+                        this.origin =  this.origin + 12
+                    } else if (this.up_pressed) {
+                        this.origin = 48
+                    } else {
+                        this.origin = this.origin - this.deltay
+                    }    
+                } else {
+                    this.down_pressed = false
+                }   
                 h = true
                 break                
             case 0x5d:
-                this.origin = this.origin - this.deltax
+                if (data2 > 0) {
+                    this.left_pressed = true
+                    if (this.screen_pressed) {
+                        this.origin =  this.origin - 1
+                    } else if (this.right_pressed) {
+                        this.origin = 48
+                    } else {
+                        this.origin = this.origin - this.deltax
+                    }    
+                } else {
+                    this.left_pressed = false
+                }  
                 h = true
                 break                
             case 0x5e:
-                this.origin = this.origin + this.deltax
+                if (data2 > 0) {
+                    this.right_pressed = true
+                    if (this.screen_pressed) {
+                        this.origin =  this.origin + 1
+                    } else if (this.left_pressed) {
+                        this.origin = 48
+                    } else {
+                        this.origin = this.origin + this.deltax
+                    }    
+                } else {
+                    this.right_pressed = false
+                }  
                 h = true
                 break                
         }
