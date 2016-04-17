@@ -13,21 +13,17 @@ Mode_Menu.prototype.on_midi = function (status, data1, data2) {
 		if (y >= 4) {
 			if (x < 4) {
 			this.screen.mode = this.screen.modes[0]
-			this.screen.mode.draw_menus()
 			this.draw_grid()
 			} else {
 			this.screen.mode = this.screen.modes[1]
-			this.screen.mode.draw_menus()
 			this.draw_grid()
 			}
 		} else {
 			if (x < 4) {
 			this.screen.mode = this.screen.modes[2]
-			this.screen.mode.draw_menus()
 			this.draw_grid()
 			} else {
 			this.screen.mode = this.screen.modes[3]
-			this.screen.mode.draw_menus()
 			this.draw_grid()
 			}
 		}

@@ -3,36 +3,7 @@ load("display.js")
 load("../screens/session_screen.js")
 load("../screens/note_screen.js")
 load("../screens/sequencer_screen.js")
-
-//------------------------------------------------------------------------------
-
-const IONIAN_MAJOR_SCALE = [true, false, true, false, true, true, false, true, false, true, false, true]
-const AEOLIAN_MINOR_SCALE = [true, false, true, true, false, true, false, true, true, false, true, false]
-const HARMONIC_MINOR_SCALE = [true, false, true, true, false, true, false, true, true, false, false, true]
-const MELODIC_MINOR_SCALE = [true, false, true, true, false, true, false, true, false, true, false, true]
-
-const MINOR_PENTATONIC_SCALE = [true, false, false, true, false, true, false, true, false, false, true, false]
-const BLUES_SCALE = [true, false, false, true, false, true, true, true, false, false, true, false]
-
-const DORIAN_MODE_SCALE = [true, false, true, true, false, true, false, true, false, true, true, false]
-const PHRYGIAN_MODE_SCALE = [true, true, false, true, false, true, false, true, true, false, true, false]
-const LYDIAN_MODE_SCALE = [true, false, true, false, true, false, true, true, false, true, false, true]
-const MIXOLYDIAN_MODE_SCALE = [true, false, true, false, true, true, false, true, false, true, true, false]
-const LOCRIAN_MODE_SCALE = [true, true, false, true, false, true, true, false, true, false, true, false]
-
-const PHRYGIAN_DOMINANT_SCALE = [true, true, false, false, true, true, false, true, true, false, true, false]
-const GYPSY_SCALE = [true, true, false, false, true, true, false, true, true, false, false, true]
-const HUNGARIAN_MINOR_SCALE = [true, false, true, true, false, false, true, true, true, false, false, true]
-const PERSIAN_SCALE = [true, true, false, false, true, true, true, false, true, false, false, true]
-
-const SYMETRIC_DIMINISHED_SCALE = [true, false, true, true, false, true, true, false, true, true, false, true]
-const WHOLE_TONE_SCALE = [true, false, true, false, true, false, true, false, true, false, true, false]
-
-const JAPANESE_HIRAJOSHI_SCALE = [true, false, true, true, false, false, false, true, true, false, false, false]
-const JAPANESE_IN_SEN_SCALE = [true, true, false, false, false, true, false, true, false, false, true, false]
-const JAPANESE_YO_SCALE = [true, false, true, false, false, true, false, true, false, true, false, false]
-const JAPANESE_IN_SCALE = [true, true, false, false, false, true, false, true, true, false, false, false]
-const PENTATONIC_MAJOR_SCALE = [true, false, true, false, true, false, false, true, false, true, false, false]
+load("../scales.js")
 
 //------------------------------------------------------------------------------
 
@@ -53,7 +24,7 @@ function Launchpad(input, output) {
     this.screen = this.screens[1]
 
     this.root_key = 0
-    this.scale = IONIAN_MAJOR_SCALE
+    this.scale = scales[0][0]
 
     this.mute_translation = new_translation_table()
 	

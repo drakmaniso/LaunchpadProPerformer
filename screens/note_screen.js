@@ -111,6 +111,7 @@ Note_Screen.prototype.enter = function() {
 	d.set_action_button(5, 0x18)
 	d.set_action_button(6, 0x18)
 	d.set_action_button(7, 0x11)
+    d.clear_page_buttons(0x11)
 	this.mode.enter()
 }
 

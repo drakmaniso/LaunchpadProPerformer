@@ -7,6 +7,7 @@ function Chromatic_Mode(screen) {
     this.origin = 47
     this.deltax = 1
     this.deltay = 5
+    this.key_colors = key_color_schemes[0]
     this.screen_pressed = false
     this.up_pressed = false
     this.down_pressed = false
@@ -34,14 +35,15 @@ Chromatic_Mode.prototype.draw_grid = function () {
             var n = this.pad_note(x, y)
             var nn = (n - l.root_key) % 12
             var no = Math.floor(n / 12)
+            var ns = l.scale[nn]
             if (n == -1) {
                 d.set_pad(x, y, 0x00)
-            } else if (nn == 0) {
-                d.set_pad(x, y, ROOT_KEYS_COLORS[no])
-            } else if (l.scale[nn]) {
-                d.set_pad(x, y, WHITE_KEYS_COLORS[no])
+            } else if (ns === 0) {
+                d.set_pad(x, y, this.key_colors[no][ns])
+            } else if (ns) {
+                d.set_pad(x, y, this.key_colors[no][ns])
             } else {
-                d.set_pad(x, y, BLACK_KEYS_COLORS[no])
+                d.set_pad(x, y, 0x00)
             }
         }
     }
@@ -141,26 +143,23 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
         var n = this.pad_note(x, y)
         var nn = (n - l.root_key) % 12
         var no = Math.floor(n / 12)
+        var ns = l.scale[nn]
         var c = 0x0a
         if (data2 > 0) {
             if (n == -1) {
                 c = 0x00
-            } else if (nn == 0) {
-                c = ROOT_KEYS_PRESSED_COLORS[no]
-            } else if (l.scale[nn]) {
-                c = WHITE_KEYS_PRESSED_COLORS[no]
             } else {
-                c = BLACK_KEYS_PRESSED_COLORS[no]
+                c = pressed_key_color
             }
         } else {
             if (n == -1) {
                 c = 0x00
-            } else if (nn == 0) {
-                c = ROOT_KEYS_COLORS[no]
-            } else if (l.scale[nn]) {
-                c = WHITE_KEYS_COLORS[no]
+            } else if (ns === 0) {
+                c = this.key_colors[no][ns]
+            } else if (ns) {
+                c = this.key_colors[no][ns]
             } else {
-                c = BLACK_KEYS_COLORS[no]
+                c = 0x00
             }
         }
         for (x = 0; x < 8; x++) {
@@ -189,14 +188,8 @@ Chromatic_Mode.prototype.update_and_draw = function () {
 
 Chromatic_Mode.prototype.enter = function () {
     this.update_and_draw()
-	this.draw_menus()	
+    this.screen.launchpad.display.clear_page_buttons(0x11)
     this.draw_grid()
-}
-
-//------------------------------------------------------------------------------
-
-Chromatic_Mode.prototype.draw_menus = function() {
-	var d = this.screen.launchpad.display
 }
 
 //------------------------------------------------------------------------------

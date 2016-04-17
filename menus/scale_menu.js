@@ -1,31 +1,9 @@
+load("../scales.js")
+
 //------------------------------------------------------------------------------
 
 function Scale_Menu(screen) {
     this.screen = screen
-
-    this.scales = new Array(4)
-    this.scales[0] = [IONIAN_MAJOR_SCALE, AEOLIAN_MINOR_SCALE, HARMONIC_MINOR_SCALE, MELODIC_MINOR_SCALE, null, MINOR_PENTATONIC_SCALE, BLUES_SCALE, null]
-    this.scales[1] = [IONIAN_MAJOR_SCALE, DORIAN_MODE_SCALE, PHRYGIAN_MODE_SCALE, LYDIAN_MODE_SCALE, MIXOLYDIAN_MODE_SCALE, AEOLIAN_MINOR_SCALE, LOCRIAN_MODE_SCALE, null]
-    this.scales[2] = [
-        PHRYGIAN_DOMINANT_SCALE,
-        GYPSY_SCALE,
-        HUNGARIAN_MINOR_SCALE,
-        PERSIAN_SCALE,
-        null,
-        null,
-        SYMETRIC_DIMINISHED_SCALE,
-        WHOLE_TONE_SCALE
-    ]
-    this.scales[3] = [
-        JAPANESE_HIRAJOSHI_SCALE,
-        JAPANESE_IN_SCALE,
-        JAPANESE_IN_SEN_SCALE,
-        null,
-        PENTATONIC_MAJOR_SCALE,
-        null,
-        null,
-        null
-    ]
 }
 
 //------------------------------------------------------------------------------
@@ -37,8 +15,8 @@ Scale_Menu.prototype.on_midi = function(status, data1, data2) {
         var y = l.display.pad_y(data1)
         println("Pad: 0x" + byte_to_hex_string(data1) + " x=" + x + " y=" + y)
         if (y >= 4) {
-            if (this.scales[7 - y][x] != null) {
-                l.scale = this.scales[7 - y][x]
+            if (scales[7 - y][x] != null) {
+                l.scale = scales[7 - y][x]
             }
         }
         this.draw_grid()
@@ -64,10 +42,10 @@ Scale_Menu.prototype.draw_grid = function () {
 
     for (x = 0; x < 8; x++) {
         for (y = 0; y < 4; y++) {
-            if (this.scales[y][x] != null) {
+            if (scales[y][x] != null) {
                 var eq = true
                 for (i = 0; i < 12; i++) {
-                    if ((l.scale[i]) != (this.scales[y][x][i])) {
+                    if ((l.scale[i]) != (scales[y][x][i])) {
                         eq = false
                     }
                 }
