@@ -7,8 +7,9 @@ function Velocity_Menu(screen) {
 //------------------------------------------------------------------------------
 
 Velocity_Menu.prototype.on_midi = function(status, data1, data2) {
-    if(status == 0x90) {
+    if(status == 0x90 && data2 > 0) {
     }
+    return ! (status == 0xb0 && data1 == 0x28 && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------

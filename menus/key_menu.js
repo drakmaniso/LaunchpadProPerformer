@@ -61,7 +61,7 @@ Key_Menu.prototype.on_midi = function(status, data1, data2) {
         }
         this.draw_grid()
     }
-    return status == 0x90
+    return ! (status == 0xb0 && data1 == 0x1e && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------

@@ -7,12 +7,10 @@ function Quantization_Menu(screen) {
 //------------------------------------------------------------------------------
 
 Quantization_Menu.prototype.on_midi = function(status, data1, data2) {
-    var is_handled = false
-
-    if(status == 0x90) {
+    if(status == 0x90 && data2 > 0) {
     }
 
-    return is_handled
+    return ! (status == 0xb0 && data1 == 0x28 && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------
