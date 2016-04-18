@@ -11,6 +11,11 @@ function Launchpad(input, output) {
     this.input = input
     this.output = output
 
+    this.root_key = 0
+    this.scale = scales[0][0]
+
+    this.mute_translation = new_translation_table()
+
     this.display = new Display()
     this.display.clear_all()
     this.setup_buttons()
@@ -22,11 +27,6 @@ function Launchpad(input, output) {
     this.screens[3] = new Note_Screen(this, true)
 
     this.screen = this.screens[1]
-
-    this.root_key = 0
-    this.scale = scales[0][0]
-
-    this.mute_translation = new_translation_table()
 	
     var lp = this
     input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})
@@ -86,7 +86,7 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
         }
     }
 
-    if(! h){
+    if(! h && status != 0xa0){
         println("Unhandled Midi Event: " + byte_to_hex_string(status) + " " + byte_to_hex_string(data1) + " " + byte_to_hex_string(data2))
     }
 

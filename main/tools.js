@@ -46,4 +46,10 @@ function set_pad_translation(table, x, y, note) {
 }
 
 //------------------------------------------------------------------------------
+
+function modulo(a, b) {
+    return ((a%b)+b)%b
+}
+
+//------------------------------------------------------------------------------
 // Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>
