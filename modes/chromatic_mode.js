@@ -75,7 +75,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
                 if (data2 > 0) {
                     this.up_pressed = true
                     if (this.screen_pressed) {
-                        this.origin = this.origin - 12
+                        this.origin = this.origin + 12
                     } else if (this.down_pressed) {
                         this.origin = 48
                     } else {
@@ -90,7 +90,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
                 if (data2 > 0) {
                     this.down_pressed = true
                     if (this.screen_pressed) {
-                        this.origin =  this.origin + 12
+                        this.origin =  this.origin - 12
                     } else if (this.up_pressed) {
                         this.origin = 48
                     } else {
