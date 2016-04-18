@@ -36,6 +36,10 @@ Layout_Menu.prototype.on_midi = function(status, data1, data2) {
                     m.deltax = 1
                     m.deltay = 7
                     break;
+                case 2:
+                    m.deltax = 2
+                    m.deltay = 5
+                    break;
                 case 4:
                     m.deltax = 4
                     m.deltay = 3
@@ -89,6 +93,7 @@ Layout_Menu.prototype.draw_grid = function () {
     
     d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? 0x02 : 0x05)
     d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? 0x02 : 0x05)
+    d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? 0x02 : 0x05)
     d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? 0x02 : 0x05)
     d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? 0x02 : 0x05)
 
