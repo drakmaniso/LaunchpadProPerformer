@@ -4,7 +4,7 @@ function Chromatic_Mode(screen) {
     this.screen = screen
 
     this.translation = new_translation_table()
-    this.origin = 47
+    this.origin = 48
     this.deltax = 1
     this.deltay = 5
     this.key_colors = key_color_schemes[0]
@@ -35,7 +35,7 @@ Chromatic_Mode.prototype.draw_grid = function () {
             var n = this.pad_note(x, y)
             var nn = (n - l.root_key) % 12
             var no = Math.floor(n / 12)
-            var ns = l.scale[nn]
+            var ns = l.scale.notes[nn]
             if (n == -1) {
                 d.set_pad(x, y, 0x00)
             } else if (ns === 0) {
@@ -143,7 +143,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
         var n = this.pad_note(x, y)
         var nn = (n - l.root_key) % 12
         var no = Math.floor(n / 12)
-        var ns = l.scale[nn]
+        var ns = l.scale.notes[nn]
         var c = 0x0a
         if (data2 > 0) {
             if (n == -1) {

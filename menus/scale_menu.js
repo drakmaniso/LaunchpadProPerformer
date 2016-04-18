@@ -45,7 +45,7 @@ Scale_Menu.prototype.draw_grid = function () {
             if (scales[y][x] != null) {
                 var eq = true
                 for (i = 0; i < 12; i++) {
-                    if ((l.scale[i]) != (scales[y][x][i])) {
+                    if ((l.scale.notes[i]) != (scales[y][x].notes[i])) {
                         eq = false
                     }
                 }
@@ -57,32 +57,32 @@ Scale_Menu.prototype.draw_grid = function () {
     if (true) {
         // Display the scale as bass guitar    
         d.set_pad(1 + 0, 0, 0x3)
-        d.set_pad(1 + 1, 0, l.scale[1] ? 0x01 : 0x8)
-        d.set_pad(1 + 2, 0, l.scale[2] ? 0x01 : 0x8)
-        d.set_pad(1 + 3, 0, l.scale[3] ? 0x01 : 0x8)
-        d.set_pad(1 + 4, 0, l.scale[4] ? 0x01 : 0x8)
-        d.set_pad(1 + 0, 1, l.scale[5] ? 0x01 : 0x8)
-        d.set_pad(1 + 1, 1, l.scale[6] ? 0x01 : 0x8)
-        d.set_pad(1 + 2, 1, l.scale[7] ? 0x01 : 0x8)
-        d.set_pad(1 + 3, 1, l.scale[8] ? 0x01 : 0x8)
-        d.set_pad(1 + 4, 1, l.scale[9] ? 0x01 : 0x8)
-        d.set_pad(1 + 0, 2, l.scale[10] ? 0x01 : 0x8)
-        d.set_pad(1 + 1, 2, l.scale[11] ? 0x01 : 0x8)
+        d.set_pad(1 + 1, 0, l.scale.notes[1] ? 0x01 : 0x8)
+        d.set_pad(1 + 2, 0, l.scale.notes[2] ? 0x01 : 0x8)
+        d.set_pad(1 + 3, 0, l.scale.notes[3] ? 0x01 : 0x8)
+        d.set_pad(1 + 4, 0, l.scale.notes[4] ? 0x01 : 0x8)
+        d.set_pad(1 + 0, 1, l.scale.notes[5] ? 0x01 : 0x8)
+        d.set_pad(1 + 1, 1, l.scale.notes[6] ? 0x01 : 0x8)
+        d.set_pad(1 + 2, 1, l.scale.notes[7] ? 0x01 : 0x8)
+        d.set_pad(1 + 3, 1, l.scale.notes[8] ? 0x01 : 0x8)
+        d.set_pad(1 + 4, 1, l.scale.notes[9] ? 0x01 : 0x8)
+        d.set_pad(1 + 0, 2, l.scale.notes[10] ? 0x01 : 0x8)
+        d.set_pad(1 + 1, 2, l.scale.notes[11] ? 0x01 : 0x8)
         d.set_pad(1 + 2, 2, 0x5)
     } else {
         // Display the scale on piano    
         d.set_pad(0, 0, 0x3)
-        d.set_pad(0, 1, l.scale[1] ? 0x01 : 0x8)
-        d.set_pad(1, 0, l.scale[2] ? 0x01 : 0x8)
-        d.set_pad(1, 1, l.scale[3] ? 0x01 : 0x8)
-        d.set_pad(2, 0, l.scale[4] ? 0x01 : 0x8)
-        d.set_pad(3, 0, l.scale[5] ? 0x01 : 0x8)
-        d.set_pad(3, 1, l.scale[6] ? 0x01 : 0x8)
-        d.set_pad(4, 0, l.scale[7] ? 0x01 : 0x8)
-        d.set_pad(4, 1, l.scale[8] ? 0x01 : 0x8)
-        d.set_pad(5, 0, l.scale[9] ? 0x01 : 0x8)
-        d.set_pad(5, 1, l.scale[10] ? 0x01 : 0x8)
-        d.set_pad(6, 0, l.scale[11] ? 0x01 : 0x8)
+        d.set_pad(0, 1, l.scale.notes[1] ? 0x01 : 0x8)
+        d.set_pad(1, 0, l.scale.notes[2] ? 0x01 : 0x8)
+        d.set_pad(1, 1, l.scale.notes[3] ? 0x01 : 0x8)
+        d.set_pad(2, 0, l.scale.notes[4] ? 0x01 : 0x8)
+        d.set_pad(3, 0, l.scale.notes[5] ? 0x01 : 0x8)
+        d.set_pad(3, 1, l.scale.notes[6] ? 0x01 : 0x8)
+        d.set_pad(4, 0, l.scale.notes[7] ? 0x01 : 0x8)
+        d.set_pad(4, 1, l.scale.notes[8] ? 0x01 : 0x8)
+        d.set_pad(5, 0, l.scale.notes[9] ? 0x01 : 0x8)
+        d.set_pad(5, 1, l.scale.notes[10] ? 0x01 : 0x8)
+        d.set_pad(6, 0, l.scale.notes[11] ? 0x01 : 0x8)
         d.set_pad(7, 0, 0x5)
     }
 }
