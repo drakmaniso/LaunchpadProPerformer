@@ -77,7 +77,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
                     if (this.screen_pressed) {
                         this.origin = this.origin + 12
                     } else if (this.down_pressed) {
-                        this.origin = 48
+                        this.origin = 48 + this.screen.launchpad.root_key
                     } else {
                         this.origin = this.origin + this.deltay
                     }    
@@ -92,7 +92,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
                     if (this.screen_pressed) {
                         this.origin =  this.origin - 12
                     } else if (this.up_pressed) {
-                        this.origin = 48
+                        this.origin = 48 + this.screen.launchpad.root_key
                     } else {
                         this.origin = this.origin - this.deltay
                     }    
