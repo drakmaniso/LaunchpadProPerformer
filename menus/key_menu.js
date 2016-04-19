@@ -61,7 +61,7 @@ Key_Menu.prototype.on_midi = function(status, data1, data2) {
         }
         this.draw_grid()
     }
-    return ! (status == 0xb0 && data1 == 0x1e && data2 == 0x00)
+    return ! (status == 0xb0 && data1 == 0x14 && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +69,6 @@ Key_Menu.prototype.on_midi = function(status, data1, data2) {
 Key_Menu.prototype.enter = function () {
     this.screen.launchpad.mute()
     var d = this.screen.launchpad.display
-    // display.set_page_button(5, 0x17)
 
     d.clear_pads(0x0)
 
@@ -157,7 +156,6 @@ Key_Menu.prototype.draw_grid = function () {
 
 Key_Menu.prototype.leave = function() {
     var display = this.screen.launchpad.display
-    // display.set_page_button(5, 0x11)
 }
 
 //------------------------------------------------------------------------------

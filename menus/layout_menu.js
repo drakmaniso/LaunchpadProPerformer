@@ -96,32 +96,32 @@ Layout_Menu.prototype.draw_grid = function () {
     var d = this.screen.launchpad.display
 
     var kc = this.screen.mode.key_colors    
-    d.set_page_button(0, kc === key_color_schemes[0] ? 0x12 : 0x15)
-    d.set_page_button(1, kc === key_color_schemes[1] ? 0x12 : 0x15)
-    d.set_page_button(2, kc === key_color_schemes[2] ? 0x12 : 0x15)
+    d.set_page_button(0, kc === key_color_schemes[0] ? 0x12 : 0x13)
+    d.set_page_button(1, kc === key_color_schemes[1] ? 0x12 : 0x13)
+    d.set_page_button(2, kc === key_color_schemes[2] ? 0x12 : 0x13)
     
     d.clear_pads(0x0)
 
     var m = this.screen.mode
     
     if (this.screen.mode === this.screen.modes[0]) {
-        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? 0x02 : 0x05)
-        d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? 0x02 : 0x05)
-        d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? 0x02 : 0x05)
-        d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? 0x02 : 0x05)
-        d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? 0x02 : 0x05)
+        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
+        d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
+        d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
+        d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
+        d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
     } else {
-        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 3 ? 0x02 : 0x05)
-        d.set_pad(4, 7, m.deltax == 2 && m.deltay == 3 ? 0x02 : 0x05)
+        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
+        d.set_pad(4, 7, m.deltax == 2 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
     }
 
     if (m.deltax >= 0) {
-        d.big_number(0, 0, m.deltax, 0x01)
+        d.big_number(0, 0, m.deltax, 0x03)
     } else {
         d.big_number(0, 0, -m.deltax, 0x0b)
     }    
     if (m.deltay >= 0) {
-        d.big_number(5, 0, m.deltay, 0x01)
+        d.big_number(5, 0, m.deltay, 0x03)
     } else {
         d.big_number(5, 0, -m.deltay, 0x0b)
     }    

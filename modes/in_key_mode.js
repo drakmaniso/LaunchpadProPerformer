@@ -193,9 +193,8 @@ In_Key_Mode.prototype.update_and_draw = function () {
 //------------------------------------------------------------------------------
 
 In_Key_Mode.prototype.enter = function() {
-    this.fill_translation()
-    this.screen.launchpad.note_input.setKeyTranslationTable(this.translation)
-    this.draw_grid()
+    this.screen.launchpad.display.clear_page_buttons(0x11)
+    this.update_and_draw()
 }
 
 In_Key_Mode.prototype.draw_grid = function () {

@@ -23,10 +23,10 @@ Velocity_Menu.prototype.enter = function() {
     d.clear_pads(0x0)
 
     for(var y = 0; y < 8; ++y) {
-        d.set_pad(y, y, 0x03)
+        d.set_pad(y, y, 0x05)
     }
-    d.set_pad(0, 0, 0x02)
-    d.set_pad(7, 7, 0x02)
+    d.set_pad(0, 0, SELECTED_OPTION_COLOR)
+    d.set_pad(7, 7, SELECTED_OPTION_COLOR)
 }
 
 //------------------------------------------------------------------------------

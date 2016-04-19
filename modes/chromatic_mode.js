@@ -187,9 +187,8 @@ Chromatic_Mode.prototype.update_and_draw = function () {
 //------------------------------------------------------------------------------
 
 Chromatic_Mode.prototype.enter = function () {
-    this.update_and_draw()
     this.screen.launchpad.display.clear_page_buttons(0x11)
-    this.draw_grid()
+    this.update_and_draw()
 }
 
 //------------------------------------------------------------------------------

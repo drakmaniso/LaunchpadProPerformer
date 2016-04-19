@@ -31,8 +31,8 @@ function Note_Screen(launchpad, is_secondary) {
     this.menus[2] = null // Undo
     this.menus[3] = new Layout_Menu(this) //new Voicing_Menu(this)
     this.menus[4] = new Velocity_Menu(this)
-    this.menus[5] = new Key_Menu(this)
-    this.menus[6] = new Scale_Menu(this)
+    this.menus[5] = new Scale_Menu(this)
+    this.menus[6] = new Key_Menu(this)
     this.menus[7] = null // Record
 	this.menu = null
 }
@@ -104,11 +104,11 @@ Note_Screen.prototype.enter = function() {
         d.set_screen_button(1, 0x17)
     }
 	d.set_action_button(0, 0x11)
-	d.set_action_button(1, 0x17)
+	d.set_action_button(1, 0x13)
 	d.set_action_button(2, 0x11)
-	d.set_action_button(3, 0x15)
-	d.set_action_button(4, 0x13)
-	d.set_action_button(5, 0x18)
+	d.set_action_button(3, 0x13)
+	d.set_action_button(4, 0x15)
+	d.set_action_button(5, 0x17)
 	d.set_action_button(6, 0x18)
 	d.set_action_button(7, 0x11)
     d.clear_page_buttons(0x11)

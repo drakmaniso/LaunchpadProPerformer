@@ -102,7 +102,7 @@ Session_Screen.prototype.enter = function() {
     d.set_screen_button(0, 0x12)
     
 	d.set_action_button(0, 0x11)
-	d.set_action_button(1, 0x12)
+	d.set_action_button(1, 0x11)
 	d.set_action_button(2, 0x11)
 	d.set_action_button(3, 0x11)
 	d.set_action_button(4, 0x12)

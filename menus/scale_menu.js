@@ -21,7 +21,7 @@ Scale_Menu.prototype.on_midi = function(status, data1, data2) {
         }
         this.draw_grid()
     }
-    return ! (status == 0xb0 && data1 == 0x14 && data2 == 0x00)
+    return ! (status == 0xb0 && data1 == 0x1e && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------
@@ -29,7 +29,6 @@ Scale_Menu.prototype.on_midi = function(status, data1, data2) {
 Scale_Menu.prototype.enter = function() {
     this.screen.launchpad.mute()
     var d = this.screen.launchpad.display
-    // display.set_page_button(6, 0x17)
 
     d.clear_pads(0x0)
 
@@ -49,7 +48,7 @@ Scale_Menu.prototype.draw_grid = function () {
                         eq = false
                     }
                 }
-                d.set_pad(x, 7-y, eq ? 0x02 : 0x08)
+                d.set_pad(x, 7-y, eq ? SELECTED_OPTION_COLOR : 0x07)
             }
         }
     }
@@ -57,32 +56,32 @@ Scale_Menu.prototype.draw_grid = function () {
     if (true) {
         // Display the scale as bass guitar    
         d.set_pad(1 + 0, 0, 0x3)
-        d.set_pad(1 + 1, 0, l.scale.notes[1] ? 0x01 : 0x8)
-        d.set_pad(1 + 2, 0, l.scale.notes[2] ? 0x01 : 0x8)
-        d.set_pad(1 + 3, 0, l.scale.notes[3] ? 0x01 : 0x8)
-        d.set_pad(1 + 4, 0, l.scale.notes[4] ? 0x01 : 0x8)
-        d.set_pad(1 + 0, 1, l.scale.notes[5] ? 0x01 : 0x8)
-        d.set_pad(1 + 1, 1, l.scale.notes[6] ? 0x01 : 0x8)
-        d.set_pad(1 + 2, 1, l.scale.notes[7] ? 0x01 : 0x8)
-        d.set_pad(1 + 3, 1, l.scale.notes[8] ? 0x01 : 0x8)
-        d.set_pad(1 + 4, 1, l.scale.notes[9] ? 0x01 : 0x8)
-        d.set_pad(1 + 0, 2, l.scale.notes[10] ? 0x01 : 0x8)
-        d.set_pad(1 + 1, 2, l.scale.notes[11] ? 0x01 : 0x8)
+        d.set_pad(1 + 1, 0, l.scale.notes[1] ? 0x01 : 0x07)
+        d.set_pad(1 + 2, 0, l.scale.notes[2] ? 0x01 : 0x07)
+        d.set_pad(1 + 3, 0, l.scale.notes[3] ? 0x01 : 0x07)
+        d.set_pad(1 + 4, 0, l.scale.notes[4] ? 0x01 : 0x07)
+        d.set_pad(1 + 0, 1, l.scale.notes[5] ? 0x01 : 0x07)
+        d.set_pad(1 + 1, 1, l.scale.notes[6] ? 0x01 : 0x07)
+        d.set_pad(1 + 2, 1, l.scale.notes[7] ? 0x01 : 0x07)
+        d.set_pad(1 + 3, 1, l.scale.notes[8] ? 0x01 : 0x07)
+        d.set_pad(1 + 4, 1, l.scale.notes[9] ? 0x01 : 0x07)
+        d.set_pad(1 + 0, 2, l.scale.notes[10] ? 0x01 : 0x07)
+        d.set_pad(1 + 1, 2, l.scale.notes[11] ? 0x01 : 0x07)
         d.set_pad(1 + 2, 2, 0x5)
     } else {
         // Display the scale on piano    
         d.set_pad(0, 0, 0x3)
-        d.set_pad(0, 1, l.scale.notes[1] ? 0x01 : 0x8)
-        d.set_pad(1, 0, l.scale.notes[2] ? 0x01 : 0x8)
-        d.set_pad(1, 1, l.scale.notes[3] ? 0x01 : 0x8)
-        d.set_pad(2, 0, l.scale.notes[4] ? 0x01 : 0x8)
-        d.set_pad(3, 0, l.scale.notes[5] ? 0x01 : 0x8)
-        d.set_pad(3, 1, l.scale.notes[6] ? 0x01 : 0x8)
-        d.set_pad(4, 0, l.scale.notes[7] ? 0x01 : 0x8)
-        d.set_pad(4, 1, l.scale.notes[8] ? 0x01 : 0x8)
-        d.set_pad(5, 0, l.scale.notes[9] ? 0x01 : 0x8)
-        d.set_pad(5, 1, l.scale.notes[10] ? 0x01 : 0x8)
-        d.set_pad(6, 0, l.scale.notes[11] ? 0x01 : 0x8)
+        d.set_pad(0, 1, l.scale.notes[1] ? 0x01 : 0x07)
+        d.set_pad(1, 0, l.scale.notes[2] ? 0x01 : 0x07)
+        d.set_pad(1, 1, l.scale.notes[3] ? 0x01 : 0x07)
+        d.set_pad(2, 0, l.scale.notes[4] ? 0x01 : 0x07)
+        d.set_pad(3, 0, l.scale.notes[5] ? 0x01 : 0x07)
+        d.set_pad(3, 1, l.scale.notes[6] ? 0x01 : 0x07)
+        d.set_pad(4, 0, l.scale.notes[7] ? 0x01 : 0x07)
+        d.set_pad(4, 1, l.scale.notes[8] ? 0x01 : 0x07)
+        d.set_pad(5, 0, l.scale.notes[9] ? 0x01 : 0x07)
+        d.set_pad(5, 1, l.scale.notes[10] ? 0x01 : 0x07)
+        d.set_pad(6, 0, l.scale.notes[11] ? 0x01 : 0x07)
         d.set_pad(7, 0, 0x5)
     }
 }
@@ -91,7 +90,6 @@ Scale_Menu.prototype.draw_grid = function () {
 
 Scale_Menu.prototype.leave = function() {
     var display = this.screen.launchpad.display
-    // display.set_page_button(6, 0x11)
 }
 
 //------------------------------------------------------------------------------
