@@ -20,6 +20,19 @@ Scale_Menu.prototype.on_midi = function(status, data1, data2) {
             }
         }
         this.draw_grid()
+    } else if (status == 0xb0 && data2 > 0) {
+        if (data1 == 0x14) { 
+            if (l.scale === scales[0][0]) {
+                l.scale = scales[0][1]
+                l.root_key += 9
+                l.root_key %= 12
+            } else if (l.scale === scales[0][1]) {
+                l.scale = scales[0][0]
+                l.root_key -= 9
+                l.root_key %= 12
+            }
+        this.draw_grid()
+        }
     }
     return ! (status == 0xb0 && data1 == 0x1e && data2 == 0x00)
 }
