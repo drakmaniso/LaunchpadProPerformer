@@ -24,28 +24,33 @@ Sequencer_Screen.prototype.on_midi = function(status, data1, data2) {
 
 Sequencer_Screen.prototype.enter = function() {
     this.launchpad.mute()
-    var display = this.launchpad.display
+    var d = this.launchpad.display
 
-    display.set_screen_button(2, 0x19)
+    d.set_screen_button(2, 0x19)
 
-    for(y = 0; y < 4; ++y) {
-        for(var x = 0; x < 8; ++x) {
-            display.set_pad(x, y+4, 0x17)
-            display.set_pad(x, y, 0x18)
-        }
+    d.clear_pads(0x00)
+    
+    for (var y = 0; y < 4; ++y) {
+        for (x = 0; x < 4; x++) {
+            d.set_pad(x, y, 0x17)
+            d.set_pad(4+x, 4+y, 0x17)
+            d.set_pad(x, 4+y, 0x18)
+            d.set_pad(4+x, y, 0x18)
+        }    
+        d.set_pad(0, y, 0x13)
+        d.set_pad(4+0, 4+y, 0x13)
+        d.set_pad(0, 4+y, 0x13)
+        d.set_pad(4+0, y, 0x13)
     }
-    for(var y = 0; y < 4; ++y) {
-        display.set_pad(0, y+4, 0x12)
-        display.set_pad(4, y+4, 0x13)
-        display.set_pad(0, y, 0x13)
-        display.set_pad(4, y, 0x13)
-    }
+    d.set_pad(4+0, 4+3, 0x12)
+    d.set_pad(0, 3, 0x12)
+    d.set_pad(4+0, 3, 0x12)
+    d.set_pad(0, 4+3, 0x12)
 }
 
 //------------------------------------------------------------------------------
 
 Sequencer_Screen.prototype.leave = function() {
-    //Screen.prototype.leave.call(this)
     this.launchpad.display.set_screen_button(2, 0x11)
 }
 
