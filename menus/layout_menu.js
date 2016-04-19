@@ -27,28 +27,41 @@ Layout_Menu.prototype.on_midi = function(status, data1, data2) {
                 }
             }
         } else if (y == 7) {
-            switch (x) {
-                case 0:
-                    m.deltax = 1
-                    m.deltay = 5
-                    break;
-                case 1:
-                    m.deltax = 1
-                    m.deltay = 7
-                    break;
-                case 2:
-                    m.deltax = 2
-                    m.deltay = 5
-                    break;
-                case 4:
-                    m.deltax = 4
-                    m.deltay = 3
-                    break;
-                case 5:
-                    m.deltax = 4
-                    m.deltay = 7
-                    break;
-            }
+            if (this.screen.mode === this.screen.modes[0]) {
+                switch (x) {
+                    case 0:
+                        m.deltax = 1
+                        m.deltay = 5
+                        break;
+                    case 1:
+                        m.deltax = 1
+                        m.deltay = 7
+                        break;
+                    case 2:
+                        m.deltax = 2
+                        m.deltay = 5
+                        break;
+                    case 4:
+                        m.deltax = 4
+                        m.deltay = 3
+                        break;
+                    case 5:
+                        m.deltax = 4
+                        m.deltay = 7
+                        break;
+                }
+            } else {
+                switch (x) {
+                    case 0:
+                        m.deltax = 1
+                        m.deltay = 3
+                        break;
+                    case 4:
+                        m.deltax = 2
+                        m.deltay = 3
+                        break;
+                }
+            }    
         }
         this.draw_grid()
     } else if (status == 0xb0 && data2 > 0) {
@@ -91,11 +104,16 @@ Layout_Menu.prototype.draw_grid = function () {
 
     var m = this.screen.mode
     
-    d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? 0x02 : 0x05)
-    d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? 0x02 : 0x05)
-    d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? 0x02 : 0x05)
-    d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? 0x02 : 0x05)
-    d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? 0x02 : 0x05)
+    if (this.screen.mode === this.screen.modes[0]) {
+        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? 0x02 : 0x05)
+        d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? 0x02 : 0x05)
+        d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? 0x02 : 0x05)
+        d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? 0x02 : 0x05)
+        d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? 0x02 : 0x05)
+    } else {
+        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 3 ? 0x02 : 0x05)
+        d.set_pad(4, 7, m.deltax == 2 && m.deltay == 3 ? 0x02 : 0x05)
+    }
 
     if (m.deltax >= 0) {
         d.big_number(0, 0, m.deltax, 0x01)

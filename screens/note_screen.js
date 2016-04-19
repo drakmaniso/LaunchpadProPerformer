@@ -20,7 +20,7 @@ function Note_Screen(launchpad, is_secondary) {
     this.modes[1] = new Drums_Mode(this)
     this.modes[2] = new In_Key_Mode(this)
     this.modes[3] = new Chords_Mode(this)
-    this.mode = this.modes[2]
+    this.mode = this.modes[0]
     if (is_secondary) {
         this.mode = this.modes[1]
     }
