@@ -31,22 +31,27 @@ Chromatic_Layout_Menu.prototype.on_midi = function(status, data1, data2) {
                 case 0:
                     m.deltax = 1
                     m.deltay = 5
+                    m.key_colors = key_color_schemes[0]
                     break;
                 case 1:
                     m.deltax = 1
                     m.deltay = 7
+                    m.key_colors = key_color_schemes[0]
                     break;
                 case 2:
                     m.deltax = 2
                     m.deltay = 5
+                    m.key_colors = key_color_schemes[0]
                     break;
                 case 4:
                     m.deltax = 4
                     m.deltay = 3
+                    m.key_colors = key_color_schemes[1]
                     break;
                 case 5:
                     m.deltax = 4
                     m.deltay = 7
+                    m.key_colors = key_color_schemes[1]
                     break;
             }
         }
