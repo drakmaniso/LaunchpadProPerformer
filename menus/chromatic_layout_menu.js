@@ -1,15 +1,15 @@
 //------------------------------------------------------------------------------
 
-function Layout_Menu(screen) {
+function Chromatic_Layout_Menu(screen) {
     this.screen = screen
 }
 
 //------------------------------------------------------------------------------
 
-Layout_Menu.prototype.on_midi = function(status, data1, data2) {
+Chromatic_Layout_Menu.prototype.on_midi = function(status, data1, data2) {
     var d = this.screen.launchpad.display
     var m = this.screen.mode
-    if (status == 0x90 && data2 > 0) { // Note On
+    if (status == 0x90 && data2 > 0) {
         var x = d.pad_x(data1)
         var y = d.pad_y(data1)
         if (y < 5) {
@@ -27,41 +27,28 @@ Layout_Menu.prototype.on_midi = function(status, data1, data2) {
                 }
             }
         } else if (y == 7) {
-            if (this.screen.mode === this.screen.modes[0]) {
-                switch (x) {
-                    case 0:
-                        m.deltax = 1
-                        m.deltay = 5
-                        break;
-                    case 1:
-                        m.deltax = 1
-                        m.deltay = 7
-                        break;
-                    case 2:
-                        m.deltax = 2
-                        m.deltay = 5
-                        break;
-                    case 4:
-                        m.deltax = 4
-                        m.deltay = 3
-                        break;
-                    case 5:
-                        m.deltax = 4
-                        m.deltay = 7
-                        break;
-                }
-            } else {
-                switch (x) {
-                    case 0:
-                        m.deltax = 1
-                        m.deltay = 3
-                        break;
-                    case 4:
-                        m.deltax = 2
-                        m.deltay = 3
-                        break;
-                }
-            }    
+            switch (x) {
+                case 0:
+                    m.deltax = 1
+                    m.deltay = 5
+                    break;
+                case 1:
+                    m.deltax = 1
+                    m.deltay = 7
+                    break;
+                case 2:
+                    m.deltax = 2
+                    m.deltay = 5
+                    break;
+                case 4:
+                    m.deltax = 4
+                    m.deltay = 3
+                    break;
+                case 5:
+                    m.deltax = 4
+                    m.deltay = 7
+                    break;
+            }
         }
         this.draw_grid()
     } else if (status == 0xb0 && data2 > 0) {
@@ -84,7 +71,7 @@ Layout_Menu.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Layout_Menu.prototype.enter = function () {
+Chromatic_Layout_Menu.prototype.enter = function () {
     this.screen.launchpad.mute()
     var d = this.screen.launchpad.display
     d.clear_page_buttons(0x00)
@@ -92,7 +79,7 @@ Layout_Menu.prototype.enter = function () {
     this.draw_grid()
 }
 
-Layout_Menu.prototype.draw_grid = function () {
+Chromatic_Layout_Menu.prototype.draw_grid = function () {
     var d = this.screen.launchpad.display
 
     var kc = this.screen.mode.key_colors    
@@ -104,16 +91,11 @@ Layout_Menu.prototype.draw_grid = function () {
 
     var m = this.screen.mode
     
-    if (this.screen.mode === this.screen.modes[0]) {
-        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
-        d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
-        d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
-        d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
-        d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
-    } else {
-        d.set_pad(0, 7, m.deltax == 1 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
-        d.set_pad(4, 7, m.deltax == 2 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
-    }
+    d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
+    d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
+    d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
+    d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
+    d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
 
     if (m.deltax >= 0) {
         d.big_number(0, 0, m.deltax, 0x03)
@@ -129,9 +111,8 @@ Layout_Menu.prototype.draw_grid = function () {
 
 //------------------------------------------------------------------------------
 
-Layout_Menu.prototype.leave = function() {
+Chromatic_Layout_Menu.prototype.leave = function() {
     var display = this.screen.launchpad.display
-    // display.set_page_button(7, 0x11)
 }
 
 //------------------------------------------------------------------------------

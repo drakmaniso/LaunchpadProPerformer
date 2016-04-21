@@ -1,7 +1,11 @@
+load("../menus/chromatic_layout_menu.js")
+
 //------------------------------------------------------------------------------
 
 function Chromatic_Mode(screen) {
     this.screen = screen
+
+    this.layout_menu = new Chromatic_Layout_Menu(screen)
 
     this.translation = new_translation_table()
     this.origin = 48
@@ -187,6 +191,7 @@ Chromatic_Mode.prototype.update_and_draw = function () {
 //------------------------------------------------------------------------------
 
 Chromatic_Mode.prototype.enter = function () {
+    this.screen.menus[3] = this.layout_menu
     this.screen.launchpad.display.clear_page_buttons(0x11)
     this.update_and_draw()
 }

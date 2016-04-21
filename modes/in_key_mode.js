@@ -1,7 +1,11 @@
+load("../menus/in_key_layout_menu.js")
+
 //------------------------------------------------------------------------------
 
 function In_Key_Mode(screen) {
 	this.screen = screen
+
+    this.layout_menu = new In_Key_Layout_Menu(screen)
 
     this.translation = new_translation_table()
     this.origin_degree = 0
@@ -193,6 +197,7 @@ In_Key_Mode.prototype.update_and_draw = function () {
 //------------------------------------------------------------------------------
 
 In_Key_Mode.prototype.enter = function() {
+    this.screen.menus[3] = this.layout_menu
     this.screen.launchpad.display.clear_page_buttons(0x11)
     this.update_and_draw()
 }

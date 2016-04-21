@@ -1,7 +1,12 @@
+load("../menus/drums_layout_menu.js")
+
 //------------------------------------------------------------------------------
 
 function Drums_Mode(screen) {
 	this.screen = screen
+
+    this.layout_menu = new Drums_Layout_Menu(screen)
+
     this.translation = new_translation_table()
     this.origin = 36
 }
@@ -94,6 +99,7 @@ Drums_Mode.prototype.fill_translation = function () {
 //------------------------------------------------------------------------------
 
 Drums_Mode.prototype.enter = function() {
+    this.screen.menus[3] = this.layout_menu
     this.screen.launchpad.display.clear_page_buttons(0x11)
     this.update_and_draw()    
 }
