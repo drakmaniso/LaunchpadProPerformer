@@ -7,7 +7,9 @@ load("../scales.js")
 
 //------------------------------------------------------------------------------
 
-function Launchpad(input, output) {
+function Launchpad(bitwig, input, output) {
+    this.bitwig = bitwig
+    bitwig.setLaunchpad(this)
     this.input = input
     this.output = output
 

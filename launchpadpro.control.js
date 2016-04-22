@@ -3,6 +3,7 @@
 
 loadAPI(1)
 
+load("main/bitwig.js")
 load("main/launchpad.js")
 
 
@@ -26,14 +27,16 @@ if (host.platformIsWindows()) {
 } else if (host.platformIsMac()) {
     host.addDeviceNameBasedDiscoveryPair (["Launchpad Pro Standalone Port"], ["Launchpad Pro Standalone Port"])
 }
-
+ 
 
 //--------------------------------------------------------------------------------------------------
 
-
 function init() {
     println("-- Initialization ---------------------------------------------------------------------")
-    launchpad = new Launchpad(host.getMidiInPort(0), host.getMidiOutPort(0))
+
+    var b = new Bitwig()
+    launchpad = new Launchpad(b, host.getMidiInPort(0), host.getMidiOutPort(0))
+    
     println("-- Initialized ------------------------------------------------------------------------")
 }
 

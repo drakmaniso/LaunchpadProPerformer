@@ -24,10 +24,31 @@ Session_Screen.prototype.on_midi = function(status, data1, data2) {
 	var h
 
 	var d = this.launchpad.display	
+	var b = this.launchpad.bitwig	
 
 	var m = null
     if (status == 0xb0) {
-        switch(data1) {
+        switch (data1) {
+            case 0x5b:
+                if (data2 > 0) {
+                    b.trackBank.scrollScenesUp()
+                }    
+                break
+            case 0x5c:
+                if (data2 > 0) {
+                    b.trackBank.scrollScenesDown()
+                }    
+                break
+            case 0x5d:
+                if (data2 > 0) {
+                    b.trackBank.scrollChannelsUp()
+                }    
+                break
+            case 0x5e:
+                if (data2 > 0) {
+                    b.trackBank.scrollChannelsDown()
+                }    
+                break
             case 0x50:
                 m = 0
                 if (data2 > 0) {
@@ -112,42 +133,46 @@ Session_Screen.prototype.enter = function() {
 
     d.clear_pads(0x00)
 
-    d.set_pad(0, 7, 0x02)
-    d.set_pad(0, 6, 0x02 | BLINKING_COLOR)
-    d.set_pad(0, 5, 0x02)
-    d.set_pad(0, 4, 0x02)
+    // d.set_pad(0, 7, 0x02)
+    // d.set_pad(0, 6, 0x02 | BLINKING_COLOR)
+    // d.set_pad(0, 5, 0x02)
+    // d.set_pad(0, 4, 0x02)
 
-    d.set_pad(1, 7, 0x03)
-    d.set_pad(1, 6, 0x03 | BLINKING_COLOR)
-    d.set_pad(1, 5, 0x03)
-    d.set_pad(1, 4, 0x03)
-    d.set_pad(1, 3, 0x03)
+    // d.set_pad(1, 7, 0x03)
+    // d.set_pad(1, 6, 0x03 | BLINKING_COLOR)
+    // d.set_pad(1, 5, 0x03)
+    // d.set_pad(1, 4, 0x03)
+    // d.set_pad(1, 3, 0x03)
 
-    d.set_pad(2, 7, 0x04 | BLINKING_COLOR)
-    d.set_pad(2, 6, 0x04)
-    d.set_pad(2, 5, 0x04)
+    // d.set_pad(2, 7, 0x04 | BLINKING_COLOR)
+    // d.set_pad(2, 6, 0x04)
+    // d.set_pad(2, 5, 0x04)
 
-    d.set_pad(3, 6, 0x05)
-    d.set_pad(3, 5, 0x05)
-    d.set_pad(3, 4, 0x05)
-    d.set_pad(3, 2, 0x05)
+    // d.set_pad(3, 6, 0x05)
+    // d.set_pad(3, 5, 0x05)
+    // d.set_pad(3, 4, 0x05)
+    // d.set_pad(3, 2, 0x05)
 
-    d.set_pad(4, 6, 0x06)
-    d.set_pad(4, 5, 0x06)
-    d.set_pad(4, 4, 0x06 | BLINKING_COLOR)
-    d.set_pad(4, 3, 0x06)
+    // d.set_pad(4, 6, 0x06)
+    // d.set_pad(4, 5, 0x06)
+    // d.set_pad(4, 4, 0x06 | BLINKING_COLOR)
+    // d.set_pad(4, 3, 0x06)
 
-    d.set_pad(5, 7, 0x07)
-    d.set_pad(5, 6, 0x07)
-    d.set_pad(5, 5, 0x07)
+    // d.set_pad(5, 7, 0x07)
+    // d.set_pad(5, 6, 0x07)
+    // d.set_pad(5, 5, 0x07)
 
-    d.set_pad(6, 6, 0x08)
-    d.set_pad(6, 5, 0x08)
-    d.set_pad(6, 4, 0x08)
+    // d.set_pad(6, 6, 0x08)
+    // d.set_pad(6, 5, 0x08)
+    // d.set_pad(6, 4, 0x08)
 
-    d.set_pad(7, 5, 0x09)
-    d.set_pad(7, 4, 0x09)
-    d.set_pad(7, 3, 0x09)
+    // d.set_pad(7, 5, 0x09)
+    // d.set_pad(7, 4, 0x09)
+    // d.set_pad(7, 3, 0x09)
+
+    // tracks.getClipLauncherScenes().setIndication(true)    
+    // tracks.scrollChannelsDown()
+    // act.selectFirst()
 }
 
 //------------------------------------------------------------------------------
