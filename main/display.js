@@ -111,7 +111,11 @@ const drums_color_schemes = [
 
 //------------------------------------------------------------------------------
 
-function Display() {
+display = {
+    
+}
+
+display.init = function() {
 
     // Switch to Standalone Mode
     sendSysex("f000202902102101f7")
@@ -128,11 +132,12 @@ function Display() {
         this.next_grid[i] = 0
     }
 
+    this.clear_all()    
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.mark_all_buttons_modified = function() {
+display.mark_all_buttons_modified = function() {
     for(var i = 0; i < 32; ++i) {
         if(this.next_grid[ALL_BUTTONS[i]] === null) {
             this.next_grid[ALL_BUTTONS[i]] = this.current_grid[ALL_BUTTONS[i]]
@@ -143,7 +148,7 @@ Display.prototype.mark_all_buttons_modified = function() {
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_all = function() {
+display.clear_all = function() {
     sendSysex("f000202902100e00f7")
     for(var i = 0; i < 128; ++i) {
         this.current_grid[i] = 0
@@ -152,68 +157,68 @@ Display.prototype.clear_all = function() {
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_action_buttons = function(color) {
+display.clear_action_buttons = function(color) {
     for(var i = 0; i < 8; ++i) {
         this.set_action_button(i, color)
     }
 }
 
-Display.prototype.set_action_button = function(index, color) {
+display.set_action_button = function(index, color) {
     this.next_grid[ACTION_BUTTONS[index]] = color
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_arrow_buttons = function(color) {
+display.clear_arrow_buttons = function(color) {
     for(var i = 0; i < 4; ++i) {
         this.set_arrow_button(i, color)
     }
 }
 
-Display.prototype.set_arrow_button = function(index, color) {
+display.set_arrow_button = function(index, color) {
     this.next_grid[ARROW_BUTTONS[index]] = color
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_screen_buttons = function(color) {
+display.clear_screen_buttons = function(color) {
     for(var i = 0; i < 4; ++i) {
         this.set_screen_button(i, color)
     }
 }
 
-Display.prototype.set_screen_button = function(index, color) {
+display.set_screen_button = function(index, color) {
     this.next_grid[SCREEN_BUTTONS[index]] = color
     this.next_grid[0x63] = color
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_page_buttons = function(color) {
+display.clear_page_buttons = function(color) {
     for(var i = 0; i < 8; ++i) {
         this.set_page_button(i, color)
     }
 }
 
-Display.prototype.set_page_button = function(index, color) {
+display.set_page_button = function(index, color) {
     this.next_grid[PAGE_BUTTONS[index]] = color
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_scene_buttons = function(color) {
+display.clear_scene_buttons = function(color) {
     for(var i = 0; i < 8; ++i) {
         this.set_scene_button(i, color)
     }
 }
 
-Display.prototype.set_scene_button = function(index, color) {
+display.set_scene_button = function(index, color) {
     this.next_grid[SCENE_BUTTONS[index]] = color
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.clear_pads = function(color) {
+display.clear_pads = function(color) {
     for(var y = 0; y < 8; ++y) {
         for(var x = 0; x < 8; ++x) {
             this.set_pad(x, y, color)
@@ -221,27 +226,27 @@ Display.prototype.clear_pads = function(color) {
     }
 }
 
-Display.prototype.set_pad = function(x, y, color) {
+display.set_pad = function(x, y, color) {
     this.next_grid[0x0b + x + y * 0x0a] = color
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.pad_index = function (x, y) {
+display.pad_index = function (x, y) {
     return 0x0b + x + y * 0x0a
 }
 
-Display.prototype.pad_x = function (index) {
+display.pad_x = function (index) {
     return (index - 0x0b) % 0x0a
 }
 
-Display.prototype.pad_y = function (index) {
+display.pad_y = function (index) {
     return Math.floor((index - 0x0b) / 0x0a)
 }
 
 //------------------------------------------------------------------------------
 
-Display.prototype.flush = function() {
+display.flush = function() {
     var index, current_value, next_value
 
     for(var x = 0; x < 8; ++x) {
@@ -295,7 +300,7 @@ Display.prototype.flush = function() {
 
 //------------------------------------------------------------------------------
 
-Display.prototype.big_number = function (x, y, number, color) {
+display.big_number = function (x, y, number, color) {
     switch (number) {
         case 0:
             this.set_pad(x+0, y+4, color)

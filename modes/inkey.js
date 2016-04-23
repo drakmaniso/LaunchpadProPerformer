@@ -1,11 +1,9 @@
-load("../menus/in_key_layout_menu.js")
-
 //------------------------------------------------------------------------------
 
-function In_Key_Mode(screen) {
+function ModeInKey(screen) {
 	this.screen = screen
 
-    this.layout_menu = new In_Key_Layout_Menu(screen)
+    this.layout_menu = menuLayoutInKey
 
     this.translation = new_translation_table()
     this.origin_degree = 0
@@ -20,14 +18,13 @@ function In_Key_Mode(screen) {
     this.right_pressed = false
     this.nb_degrees = 0
     this.note_positions = new Array(12)
-    this.fill_translation()
 }
 
-In_Key_Mode.prototype.fill_translation = function () {
+ModeInKey.prototype.fill_translation = function () {
     for (i = 0; i < 12; i++) {
         this.note_positions[i] = null
     }
-    var s = this.screen.launchpad.scale
+    var s = launchpad.scale
     this.nb_degrees = 0
     var p = 0
     for (i = 0; i < 12; i++) {
@@ -37,7 +34,6 @@ In_Key_Mode.prototype.fill_translation = function () {
         }
         p++
     }
-    println(this.note_positions)
     for (x = 0; x < 8; x++) {
         for (y = 0; y < 8; y++) {
             var n = this.pad_note(x, y)
@@ -46,7 +42,7 @@ In_Key_Mode.prototype.fill_translation = function () {
     }
 }
 
-In_Key_Mode.prototype.pad_note = function(x, y) {
+ModeInKey.prototype.pad_note = function(x, y) {
     var deg = this.origin_degree + x * this.deltax + y * this.deltay
     var o = this.origin_octave + Math.floor(deg / this.nb_degrees)
     deg = deg % this.nb_degrees
@@ -59,30 +55,10 @@ In_Key_Mode.prototype.pad_note = function(x, y) {
 
 //------------------------------------------------------------------------------
 
-In_Key_Mode.prototype.on_midi = function (status, data1, data2) {
+ModeInKey.prototype.on_midi = function (status, data1, data2) {
     var h = false
     if (status == 0xb0) {
         switch (data1) {
-            case 0x60:
-                if (! this.screen.is_secondary) {
-                    if (data2 > 0) {
-                        this.screen_pressed = true
-                    } else {
-                        this.screen_pressed = false
-                    }
-                    h = true
-                }
-                break
-            case 0x62:
-                if (this.screen.is_secondary) {
-                    if (data2 > 0) {
-                        this.screen_pressed = true
-                    } else {
-                        this.screen_pressed = false
-                    }
-                    h = true
-                }
-                break
             case 0x5b:
                 if (data2 > 0) {
                     this.up_pressed = true
@@ -158,14 +134,12 @@ In_Key_Mode.prototype.on_midi = function (status, data1, data2) {
             this.update_and_draw()
         }
     } else if (status == 0x90) {
-        var l = this.screen.launchpad
-        var d = this.screen.launchpad.display
-        var x = d.pad_x(data1)
-        var y = d.pad_y(data1)
+        var x = display.pad_x(data1)
+        var y = display.pad_y(data1)
         var n = this.pad_note(x, y)
-        var nn = (n - l.root_key) % 12
+        var nn = (n - launchpad.root_key) % 12
         var no = Math.floor(n / 12)
-        var ns = l.scale.notes[nn]
+        var ns = launchpad.scale.notes[nn]
         var c = 0x0a
         if (data2 > 0) {
             if (n == -1) {
@@ -188,7 +162,7 @@ In_Key_Mode.prototype.on_midi = function (status, data1, data2) {
             for (y = 0; y < 8; y++) {
                 var xyn = this.pad_note(x, y)
                 if (xyn == n) {
-                    d.set_pad(x, y, c)
+                    display.set_pad(x, y, c)
                 }
             }
         }
@@ -200,52 +174,38 @@ In_Key_Mode.prototype.on_midi = function (status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-In_Key_Mode.prototype.update_and_draw = function () {
+ModeInKey.prototype.update_and_draw = function () {
     this.fill_translation()
-    this.screen.launchpad.note_input.setKeyTranslationTable(this.translation)
+    launchpad.note_input.setKeyTranslationTable(this.translation)
     this.draw_grid()
 }
 
 //------------------------------------------------------------------------------
 
-In_Key_Mode.prototype.enter = function() {
-    this.screen.menus[3] = this.layout_menu
-    this.screen.launchpad.display.clear_page_buttons(0x11)
+ModeInKey.prototype.enter = function() {
+    launchpad.screen.menus[3] = this.layout_menu
+    display.clear_page_buttons(0x11)
     this.update_and_draw()
 }
 
-In_Key_Mode.prototype.draw_grid = function () {
-    var l = this.screen.launchpad
-    var d = l.display
+ModeInKey.prototype.draw_grid = function () {
     for (x = 0; x < 8; x++) {
         for (y = 0; y < 8; y++) {
             var n = this.pad_note(x, y)
-            var nn = (n - l.root_key) % 12
+            var nn = (n - launchpad.root_key) % 12
             var no = Math.floor(n / 12)
-            var ns = l.scale.notes[nn]
+            var ns = launchpad.scale.notes[nn]
             if (n == -1) {
-                d.set_pad(x, y, 0x00)
+                display.set_pad(x, y, 0x00)
             } else if (ns === 0) {
-                d.set_pad(x, y, this.key_colors[no][ns])
+                display.set_pad(x, y, this.key_colors[no][ns])
             } else if (ns) {
-                d.set_pad(x, y, this.key_colors[no][ns])
+                display.set_pad(x, y, this.key_colors[no][ns])
             } else {
-                d.set_pad(x, y, 0x00)
+                display.set_pad(x, y, 0x00)
             }
         }
     }
-}
-
-//------------------------------------------------------------------------------
-
-In_Key_Mode.prototype.draw_menus = function() {
-	var d = this.screen.launchpad.display
-}
-
-//------------------------------------------------------------------------------
-
-In_Key_Mode.prototype.leave = function() {
-    var display = this.screen.launchpad.display
 }
 
 //------------------------------------------------------------------------------

@@ -1,21 +1,18 @@
 //------------------------------------------------------------------------------
 
-function Chords_Mode(screen) {
-	this.screen = screen
+function ModeChords() {
 }
 
 //------------------------------------------------------------------------------
 
-Chords_Mode.prototype.on_midi = function(status, data1, data2) {
+ModeChords.prototype.on_midi = function(status, data1, data2) {
     if(status == 0x90) {
     }
 }
 
 //------------------------------------------------------------------------------
 
-Chords_Mode.prototype.enter = function() {
-    var display = this.screen.launchpad.display
-
+ModeChords.prototype.enter = function() {
 	this.draw_menus()	
 
     display.clear_pads(0x0)
@@ -65,18 +62,6 @@ Chords_Mode.prototype.enter = function() {
     display.set_pad(4, 7, 0x7)
     display.set_pad(5, 7, 0x7)
     display.set_pad(7, 7, 0x7)
-}
-
-//------------------------------------------------------------------------------
-
-Chords_Mode.prototype.draw_menus = function() {
-	var d = this.screen.launchpad.display
-}
-
-//------------------------------------------------------------------------------
-
-Chords_Mode.prototype.leave = function() {
-    var display = this.screen.launchpad.display
 }
 
 //------------------------------------------------------------------------------

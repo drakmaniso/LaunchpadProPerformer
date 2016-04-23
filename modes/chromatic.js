@@ -1,11 +1,7 @@
-load("../menus/chromatic_layout_menu.js")
-
 //------------------------------------------------------------------------------
 
-function Chromatic_Mode(screen) {
-    this.screen = screen
-
-    this.layout_menu = new Chromatic_Layout_Menu(screen)
+function ModeChromatic() {
+    this.layout_menu = menuLayoutChromatic
 
     this.translation = new_translation_table()
     this.origin = 48
@@ -17,12 +13,11 @@ function Chromatic_Mode(screen) {
     this.down_pressed = false
     this.left_pressed = false
     this.right_pressed = false
-    this.fill_translation()
 }
 
 //------------------------------------------------------------------------------
 
-Chromatic_Mode.prototype.fill_translation = function () {
+ModeChromatic.prototype.fill_translation = function () {
     for (x = 0; x < 8; x++) {
         for (y = 0; y < 8; y++) {
             var n = this.pad_note(x, y)
@@ -31,29 +26,27 @@ Chromatic_Mode.prototype.fill_translation = function () {
     }
 }
 
-Chromatic_Mode.prototype.draw_grid = function () {
-    var l = this.screen.launchpad
-    var d = l.display
+ModeChromatic.prototype.draw_grid = function () {
     for (x = 0; x < 8; x++) {
         for (y = 0; y < 8; y++) {
             var n = this.pad_note(x, y)
-            var nn = (n - l.root_key) % 12
+            var nn = (n - launchpad.root_key) % 12
             var no = Math.floor(n / 12)
-            var ns = l.scale.notes[nn]
+            var ns = launchpad.scale.notes[nn]
             if (n == -1) {
-                d.set_pad(x, y, 0x00)
+                display.set_pad(x, y, 0x00)
             } else if (ns === 0) {
-                d.set_pad(x, y, this.key_colors[no][ns])
+                display.set_pad(x, y, this.key_colors[no][ns])
             } else if (ns) {
-                d.set_pad(x, y, this.key_colors[no][ns])
+                display.set_pad(x, y, this.key_colors[no][ns])
             } else {
-                d.set_pad(x, y, 0x00)
+                display.set_pad(x, y, 0x00)
             }
         }
     }
 }
 
-Chromatic_Mode.prototype.pad_note = function(x, y) {
+ModeChromatic.prototype.pad_note = function(x, y) {
     var n = this.origin + x * this.deltax + y * this.deltay
     if (n > 127 || n < 0) {
         n = -1
@@ -63,37 +56,17 @@ Chromatic_Mode.prototype.pad_note = function(x, y) {
 
 //------------------------------------------------------------------------------
 
-Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
+ModeChromatic.prototype.on_midi = function (status, data1, data2) {
     var h = false
     if (status == 0xb0) {
         switch (data1) {
-            case 0x60:
-                if (!this.screen.is_secondary) {
-                    if (data2 > 0) {
-                        this.screen_pressed = true
-                    } else {
-                        this.screen_pressed = false
-                    }
-                    h = true
-                }
-                break
-            case 0x62:
-                if (this.screen.is_secondary) {
-                    if (data2 > 0) {
-                        this.screen_pressed = true
-                    } else {
-                        this.screen_pressed = false
-                    }
-                    h = true
-                }
-                break
             case 0x5b:
                 if (data2 > 0) {
                     this.up_pressed = true
                     if (this.screen_pressed) {
                         this.origin = this.origin + 12
                     } else if (this.down_pressed) {
-                        this.origin = 48 + this.screen.launchpad.root_key
+                        this.origin = 48 + launchpad.root_key
                     } else {
                         this.origin = this.origin + this.deltay
                     }    
@@ -108,7 +81,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
                     if (this.screen_pressed) {
                         this.origin =  this.origin - 12
                     } else if (this.up_pressed) {
-                        this.origin = 48 + this.screen.launchpad.root_key
+                        this.origin = 48 + launchpad.root_key
                     } else {
                         this.origin = this.origin - this.deltay
                     }    
@@ -152,14 +125,12 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
             this.update_and_draw()
         }
     } else if (status == 0x90) {
-        var l = this.screen.launchpad
-        var d = this.screen.launchpad.display
-        var x = d.pad_x(data1)
-        var y = d.pad_y(data1)
+        var x = display.pad_x(data1)
+        var y = display.pad_y(data1)
         var n = this.pad_note(x, y)
-        var nn = (n - l.root_key) % 12
+        var nn = (n - launchpad.root_key) % 12
         var no = Math.floor(n / 12)
-        var ns = l.scale.notes[nn]
+        var ns = launchpad.scale.notes[nn]
         var c = 0x0a
         if (data2 > 0) {
             if (n == -1) {
@@ -182,7 +153,7 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
             for (y = 0; y < 8; y++) {
                 var xyn = this.pad_note(x, y)
                 if (xyn == n) {
-                    d.set_pad(x, y, c)
+                    display.set_pad(x, y, c)
                 }
             }
         }
@@ -194,24 +165,18 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Chromatic_Mode.prototype.update_and_draw = function () {
+ModeChromatic.prototype.update_and_draw = function () {
     this.fill_translation()
-    this.screen.launchpad.note_input.setKeyTranslationTable(this.translation)
+    launchpad.note_input.setKeyTranslationTable(this.translation)
     this.draw_grid()
 }
 
 //------------------------------------------------------------------------------
 
-Chromatic_Mode.prototype.enter = function () {
-    this.screen.menus[3] = this.layout_menu
-    this.screen.launchpad.display.clear_page_buttons(0x11)
+ModeChromatic.prototype.enter = function () {
+    launchpad.screen.menus[3] = this.layout_menu
+    display.clear_page_buttons(0x11)
     this.update_and_draw()
-}
-
-//------------------------------------------------------------------------------
-
-Chromatic_Mode.prototype.leave = function() {
-    var display = this.screen.launchpad.display
 }
 
 //------------------------------------------------------------------------------

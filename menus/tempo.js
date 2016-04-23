@@ -1,12 +1,11 @@
 //------------------------------------------------------------------------------
 
-function Tempo_Menu(screen) {
-	this.screen = screen
+menuTempo = {
 }
 
 //------------------------------------------------------------------------------
 
-Tempo_Menu.prototype.on_midi = function(status, data1, data2) {
+menuTempo.on_midi = function(status, data1, data2) {
     if(status == 0x90 && data2 > 0) {
     }
 
@@ -15,9 +14,8 @@ Tempo_Menu.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Tempo_Menu.prototype.enter = function() {
-    this.screen.launchpad.mute()
-    var display = this.screen.launchpad.display
+menuTempo.enter = function() {
+    launchpad.mute()
 
     display.clear_pads(0x00)
 
@@ -47,11 +45,6 @@ Tempo_Menu.prototype.enter = function() {
     display.set_pad(7, 4, 0x1)
     display.set_pad(6, 3, 0x1)
     display.set_pad(7, 3, 0x1)
-}
-
-//------------------------------------------------------------------------------
-
-Tempo_Menu.prototype.leave = function() {
 }
 
 //------------------------------------------------------------------------------

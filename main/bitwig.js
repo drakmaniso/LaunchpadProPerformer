@@ -1,6 +1,11 @@
 //------------------------------------------------------------------------------
 
-function Bitwig() {
+bitwig = {
+}
+
+//------------------------------------------------------------------------------
+
+bitwig.init = function() {
     this.trackBank = host.createMainTrackBank(8, 1, 8)
     this.trackBank.addChannelCountObserver(function (c) {
         // println("COUNT: " + c.toString())
@@ -28,17 +33,11 @@ function Bitwig() {
     }
     // act = host.createArrangerCursorTrack(0, 8)
 }
- 
-//------------------------------------------------------------------------------
-
-Bitwig.prototype.setLaunchpad = function (launchpad) {
-    this.launchpad = launchpad
-}
 
 //------------------------------------------------------------------------------
 
-Bitwig.prototype.on_has_content = function (track, slot, has_clip) {
-    // this.launchpad.display.set_pad(track, 7 - slot, has_clip ? 0x02 : 0x00)
+bitwig.on_has_content = function (track, slot, has_clip) {
+    // display.set_pad(track, 7 - slot, has_clip ? 0x02 : 0x00)
 }
 
 //------------------------------------------------------------------------------

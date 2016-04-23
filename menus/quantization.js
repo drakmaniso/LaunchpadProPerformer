@@ -1,12 +1,11 @@
 //------------------------------------------------------------------------------
 
-function Quantization_Menu(screen) {
-	this.screen = screen
+menuQuantization = {
 }
 
 //------------------------------------------------------------------------------
 
-Quantization_Menu.prototype.on_midi = function(status, data1, data2) {
+menuQuantization.on_midi = function(status, data1, data2) {
     if(status == 0x90 && data2 > 0) {
     }
 
@@ -15,9 +14,8 @@ Quantization_Menu.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Quantization_Menu.prototype.enter = function() {
-    this.screen.launchpad.mute()
-    var display = this.screen.launchpad.display
+menuQuantization.enter = function() {
+    launchpad.mute()
 
     display.clear_pads(0x00)
 
@@ -37,11 +35,6 @@ Quantization_Menu.prototype.enter = function() {
     display.set_pad(4, 4, 0x1)
     display.set_pad(3, 3, 0x1)
     display.set_pad(4, 3, 0x1)
-}
-
-//------------------------------------------------------------------------------
-
-Quantization_Menu.prototype.leave = function() {
 }
 
 //------------------------------------------------------------------------------

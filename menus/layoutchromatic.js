@@ -1,17 +1,15 @@
 //------------------------------------------------------------------------------
 
-function Chromatic_Layout_Menu(screen) {
-    this.screen = screen
+menuLayoutChromatic = {
 }
 
 //------------------------------------------------------------------------------
 
-Chromatic_Layout_Menu.prototype.on_midi = function(status, data1, data2) {
-    var d = this.screen.launchpad.display
-    var m = this.screen.mode
+menuLayoutChromatic.on_midi = function(status, data1, data2) {
+    var m = launchpad.screen.mode
     if (status == 0x90 && data2 > 0) {
-        var x = d.pad_x(data1)
-        var y = d.pad_y(data1)
+        var x = display.pad_x(data1)
+        var y = display.pad_y(data1)
         if (y < 5) {
             if (x < 4) {
                 if (y < 2 && m.deltax > 1) {
@@ -59,13 +57,13 @@ Chromatic_Layout_Menu.prototype.on_midi = function(status, data1, data2) {
     } else if (status == 0xb0 && data2 > 0) {
 		switch (data1) {
 			case 0x59:
-				this.screen.mode.key_colors = key_color_schemes[0]
+				launchpad.screen.mode.key_colors = key_color_schemes[0]
 				break
 			case 0x4f:
-				this.screen.mode.key_colors = key_color_schemes[1]
+				launchpad.screen.mode.key_colors = key_color_schemes[1]
 				break
 			case 0x45:
-				this.screen.mode.key_colors = key_color_schemes[2]
+				launchpad.screen.mode.key_colors = key_color_schemes[2]
 				break
 		}
         this.draw_grid()
@@ -76,48 +74,39 @@ Chromatic_Layout_Menu.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Chromatic_Layout_Menu.prototype.enter = function () {
-    this.screen.launchpad.mute()
-    var d = this.screen.launchpad.display
-    d.clear_page_buttons(0x00)
+menuLayoutChromatic.enter = function () {
+    launchpad.mute()
+    display.clear_page_buttons(0x00)
 
     this.draw_grid()
 }
 
-Chromatic_Layout_Menu.prototype.draw_grid = function () {
-    var d = this.screen.launchpad.display
-
-    var kc = this.screen.mode.key_colors    
-    d.set_page_button(0, kc === key_color_schemes[0] ? 0x12 : 0x13)
-    d.set_page_button(1, kc === key_color_schemes[1] ? 0x12 : 0x13)
-    d.set_page_button(2, kc === key_color_schemes[2] ? 0x12 : 0x13)
+menuLayoutChromatic.draw_grid = function () {
+    var kc = launchpad.screen.mode.key_colors    
+    display.set_page_button(0, kc === key_color_schemes[0] ? 0x12 : 0x13)
+    display.set_page_button(1, kc === key_color_schemes[1] ? 0x12 : 0x13)
+    display.set_page_button(2, kc === key_color_schemes[2] ? 0x12 : 0x13)
     
-    d.clear_pads(0x0)
+    display.clear_pads(0x0)
 
-    var m = this.screen.mode
+    var m = launchpad.screen.mode
     
-    d.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
-    d.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
-    d.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
-    d.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
-    d.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
+    display.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
+    display.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
+    display.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
+    display.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
+    display.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
 
     if (m.deltax >= 0) {
-        d.big_number(0, 0, m.deltax, 0x03)
+        display.big_number(0, 0, m.deltax, 0x03)
     } else {
-        d.big_number(0, 0, -m.deltax, 0x0b)
+        display.big_number(0, 0, -m.deltax, 0x0b)
     }    
     if (m.deltay >= 0) {
-        d.big_number(5, 0, m.deltay, 0x03)
+        display.big_number(5, 0, m.deltay, 0x03)
     } else {
-        d.big_number(5, 0, -m.deltay, 0x0b)
+        display.big_number(5, 0, -m.deltay, 0x0b)
     }    
-}
-
-//------------------------------------------------------------------------------
-
-Chromatic_Layout_Menu.prototype.leave = function() {
-    var display = this.screen.launchpad.display
 }
 
 //------------------------------------------------------------------------------

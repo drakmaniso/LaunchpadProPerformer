@@ -1,17 +1,12 @@
-load("../menus/tempo_menu.js")
-load("../menus/quantization_menu.js")
-
 //------------------------------------------------------------------------------
 
-function Session_Screen(launchpad) {
-	this.launchpad = launchpad
-	
+function ScreenSession() {
     this.menus = new Array(8)
     this.menus[0] = null // new Shift_Menu(this)
-    this.menus[1] = new Tempo_Menu(this)
+    this.menus[1] = menuTempo
     this.menus[2] = null // Undo
     this.menus[3] = null // Delete
-    this.menus[4] = new Quantization_Menu(this)
+    this.menus[4] = menuQuantization
     this.menus[5] = null // Duplicate
     this.menus[6] = null // Double
     this.menus[7] = null // Record
@@ -20,43 +15,40 @@ function Session_Screen(launchpad) {
 
 //------------------------------------------------------------------------------
 
-Session_Screen.prototype.on_midi = function(status, data1, data2) {
+ScreenSession.prototype.on_midi = function(status, data1, data2) {
 	var h
-
-	var d = this.launchpad.display	
-	var b = this.launchpad.bitwig	
 
 	var m = null
     if (status == 0xb0) {
         switch (data1) {
             case 0x5b:
                 if (data2 > 0) {
-                    b.trackBank.scrollScenesUp()
+                    bitwig.trackBank.scrollScenesUp()
                 }    
                 break
             case 0x5c:
                 if (data2 > 0) {
-                    b.trackBank.scrollScenesDown()
+                    bitwig.trackBank.scrollScenesDown()
                 }    
                 break
             case 0x5d:
                 if (data2 > 0) {
-                    b.trackBank.scrollChannelsUp()
+                    bitwig.trackBank.scrollChannelsUp()
                 }    
                 break
             case 0x5e:
                 if (data2 > 0) {
-                    b.trackBank.scrollChannelsDown()
+                    bitwig.trackBank.scrollChannelsDown()
                 }    
                 break
             case 0x50:
                 m = 0
                 if (data2 > 0) {
-                    d.clear_action_buttons(0x11)
+                    display.clear_action_buttons(0x11)
                 } else {
-                    d.set_action_button(1, 0x12)
-                    d.set_action_button(4, 0x12)
-                    d.set_action_button(6, 0x13)
+                    display.set_action_button(1, 0x12)
+                    display.set_action_button(4, 0x12)
+                    display.set_action_button(6, 0x13)
                 }
                 h = true
                 break
@@ -79,18 +71,18 @@ Session_Screen.prototype.on_midi = function(status, data1, data2) {
                 m = 6
                 if (data2 > 0) {
                     for (x = 0; x < 8; ++x) {
-                        d.set_pad(x, 1, 0x13)
-                        d.set_pad(x, 0, 0x12)
+                        display.set_pad(x, 1, 0x13)
+                        display.set_pad(x, 0, 0x12)
                     }
-                    d.clear_page_buttons(0x18)
-                    d.clear_scene_buttons(0x18)
+                    display.clear_page_buttons(0x18)
+                    display.clear_scene_buttons(0x18)
                 } else {
                     for (x = 0; x < 8; ++x) {
-                        d.set_pad(x, 1, 0x00)
-                        d.set_pad(x, 0, 0x00)
+                        display.set_pad(x, 1, 0x00)
+                        display.set_pad(x, 0, 0x00)
                     }
-                    d.clear_page_buttons(0x11)
-                    d.clear_scene_buttons(0x00)
+                    display.clear_page_buttons(0x11)
+                    display.clear_scene_buttons(0x00)
                 }
                 h = true
                 break
@@ -103,7 +95,6 @@ Session_Screen.prototype.on_midi = function(status, data1, data2) {
                 this.menu = this.menus[m]
                 this.menu.enter()
 			} else if (data2 <= 0 && this.menu != null) {
-				this.menu.leave()
 				this.menu = null
 				this.enter()
 			}
@@ -116,22 +107,21 @@ Session_Screen.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Session_Screen.prototype.enter = function() {
-    this.launchpad.mute()
-    var d = this.launchpad.display
+ScreenSession.prototype.enter = function() {
+    launchpad.mute()
 
-    d.set_screen_button(0, 0x12)
+    display.set_screen_button(0, 0x12)
     
-	d.set_action_button(0, 0x11)
-	d.set_action_button(1, 0x11)
-	d.set_action_button(2, 0x11)
-	d.set_action_button(3, 0x18)
-	d.set_action_button(4, 0x17)
-	d.set_action_button(5, 0x15)
-	d.set_action_button(6, 0x13)
-	d.set_action_button(7, 0x11)
+	display.set_action_button(0, 0x11)
+	display.set_action_button(1, 0x11)
+	display.set_action_button(2, 0x11)
+	display.set_action_button(3, 0x18)
+	display.set_action_button(4, 0x17)
+	display.set_action_button(5, 0x15)
+	display.set_action_button(6, 0x13)
+	display.set_action_button(7, 0x11)
 
-    d.clear_pads(0x00)
+    display.clear_pads(0x00)
 
     // d.set_pad(0, 7, 0x02)
     // d.set_pad(0, 6, 0x02 | BLINKING_COLOR)
@@ -173,13 +163,6 @@ Session_Screen.prototype.enter = function() {
     // tracks.getClipLauncherScenes().setIndication(true)    
     // tracks.scrollChannelsDown()
     // act.selectFirst()
-}
-
-//------------------------------------------------------------------------------
-
-Session_Screen.prototype.leave = function() {
-    //Screen.prototype.leave.call(this)
-    this.launchpad.display.set_screen_button(0, 0x11)
 }
 
 //------------------------------------------------------------------------------

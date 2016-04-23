@@ -1,44 +1,28 @@
-load("../modes/drums_mode.js")
-load("../modes/chromatic_mode.js")
-load("../modes/in_key_mode.js")
-load("../modes/chords_mode.js")
-load("../menus/mode_menu.js")
-load("../menus/velocity_menu.js")
-load("../menus/key_menu.js")
-load("../menus/scale_menu.js")
-load("../menus/voicing_menu.js")
-
 //------------------------------------------------------------------------------
 
-function Note_Screen(launchpad, is_secondary) {
-	this.launchpad = launchpad
-    this.is_secondary = is_secondary
-
+function ScreenNote() {
     this.modes = new Array(4)
-    this.modes[0] = new Chromatic_Mode(this)
-    this.modes[1] = new Drums_Mode(this)
-    this.modes[2] = new In_Key_Mode(this)
-    this.modes[3] = new Chords_Mode(this)
+    this.modes[0] = new ModeChromatic()
+    this.modes[1] = new ModeDrum()
+    this.modes[2] = new ModeInKey()
+    this.modes[3] = new ModeChords()
     this.mode = this.modes[0]
-    if (is_secondary) {
-        this.mode = this.modes[1]
-    }
 	
     this.menus = new Array(8)
     this.menus[0] = null // new Shift_Menu(this)
-    this.menus[1] = new Mode_Menu(this)
+    this.menus[1] = menuMode
     this.menus[2] = null // Undo
-    this.menus[3] = null //new Voicing_Menu(this)
-    this.menus[4] = new Velocity_Menu(this)
-    this.menus[5] = new Scale_Menu(this)
-    this.menus[6] = new Key_Menu(this)
+    this.menus[3] = null // menuLayout
+    this.menus[4] = null
+    this.menus[5] = menuScale
+    this.menus[6] = menuRootKey
     this.menus[7] = null // Record
 	this.menu = null
 }
 
 //------------------------------------------------------------------------------
 
-Note_Screen.prototype.on_midi = function(status, data1, data2) {
+ScreenNote.prototype.on_midi = function(status, data1, data2) {
     var h
 
 	if (this.menu != null) {
@@ -82,7 +66,6 @@ Note_Screen.prototype.on_midi = function(status, data1, data2) {
                 this.menu = this.menus[m]
                 this.menu.enter()
 			} else if (data2 <= 0 && this.menu != null) {
-				this.menu.leave()
 				this.menu = null
 				this.mode.enter()
 			}
@@ -95,34 +78,17 @@ Note_Screen.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Note_Screen.prototype.enter = function() {
-    var d = this.launchpad.display
-    if(this.is_secondary) {
-        d.set_screen_button(3, 0x15)
-    } else {
-        d.set_screen_button(1, 0x17)
-    }
-	d.set_action_button(0, 0x11)
-	d.set_action_button(1, 0x12)
-	d.set_action_button(2, 0x11)
-	d.set_action_button(3, 0x13)
-	d.set_action_button(4, 0x15)
-	d.set_action_button(5, 0x17)
-	d.set_action_button(6, 0x18)
-	d.set_action_button(7, 0x11)
-    d.clear_page_buttons(0x11)
+ScreenNote.prototype.enter = function() {
+	display.set_action_button(0, 0x11)
+	display.set_action_button(1, 0x12)
+	display.set_action_button(2, 0x11)
+	display.set_action_button(3, 0x13)
+	display.set_action_button(4, 0x15)
+	display.set_action_button(5, 0x17)
+	display.set_action_button(6, 0x18)
+	display.set_action_button(7, 0x11)
+    display.clear_page_buttons(0x11)
 	this.mode.enter()
-}
-
-//------------------------------------------------------------------------------
-
-Note_Screen.prototype.leave = function() {
-    if(this.is_secondary) {
-        this.launchpad.display.set_screen_button(3, 0x11)
-    } else {
-        this.launchpad.display.set_screen_button(1, 0x11)
-    }
-	this.mode.leave()
 }
 
 //------------------------------------------------------------------------------

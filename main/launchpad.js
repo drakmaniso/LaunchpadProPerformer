@@ -1,68 +1,58 @@
-load("tools.js")
-load("display.js")
-load("../screens/session_screen.js")
-load("../screens/note_screen.js")
-load("../screens/sequencer_screen.js")
-load("../scales.js")
+//------------------------------------------------------------------------------
+
+launchpad = {
+    
+}
 
 //------------------------------------------------------------------------------
 
-function Launchpad(bitwig, input, output) {
-    this.bitwig = bitwig
-    bitwig.setLaunchpad(this)
-    this.input = input
-    this.output = output
+launchpad.init = function() {
+    this.input = host.getMidiInPort(0)
+    this.output = host.getMidiOutPort(0) 
 
     this.root_key = 0
     this.scale = scales[0][0]
 
     this.mute_translation = new_translation_table()
 
-    this.display = new Display()
-    this.display.clear_all()
-    this.setup_buttons()
-
     this.screens = new Array(4)
-    this.screens[0] = new Session_Screen(this)
-    this.screens[1] = new Note_Screen(this, false)
-    this.screens[2] = new Sequencer_Screen(this)
-    this.screens[3] = new Note_Screen(this, true)
+    this.screens[0] = new ScreenSession()
+    this.screens[1] = new ScreenNote()
+    this.screens[2] = new ScreenNote()
+    this.screens[3] = new ScreenNote()
+
+    this.screens[2].mode = this.screens[2].modes[1]
+    this.screens[3].mode = this.screens[2].modes[2]
 
     this.screen = this.screens[1]
 	
     var lp = this
-    input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})
-    input.setSysexCallback(function(data) {lp.on_sysex(data)})
-    output.setShouldSendMidiBeatClock(true)
+    this.input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})
+    this.input.setSysexCallback(function(data) {lp.on_sysex(data)})
+    this.output.setShouldSendMidiBeatClock(true)
 
     this.note_input = this.input.createNoteInput("Note", "80????", "90????", "A0????", "D0????")
     this.note_input.setShouldConsumeEvents(false)
     // this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
     // this.user_input.setShouldConsumeEvents(false)
 
+    display.clear_action_buttons(0x11)
+    display.clear_arrow_buttons(0x11)
+    display.clear_screen_buttons(0x11)
+    display.set_screen_button(1, 0x17)
+    display.clear_page_buttons(0x11)
     this.screen.enter()
-
-    this.display.flush()
 }
 
 //------------------------------------------------------------------------------
 
-Launchpad.prototype.mute = function () {
+launchpad.mute = function () {
     this.note_input.setKeyTranslationTable(this.mute_translation)
 }
 
 //------------------------------------------------------------------------------
 
-Launchpad.prototype.setup_buttons = function() {
-    this.display.clear_action_buttons(0x11)
-    this.display.clear_arrow_buttons(0x11)
-    this.display.clear_screen_buttons(0x11)
-    this.display.clear_page_buttons(0x11)
-}
-
-//------------------------------------------------------------------------------
-
-Launchpad.prototype.on_midi = function(status, data1, data2) {
+launchpad.on_midi = function(status, data1, data2) {
     var h = this.screen.on_midi(status, data1, data2)
 
     var s = null
@@ -70,20 +60,33 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
         switch (data1) {
             case 0x5F:
                 s = 0
+                display.clear_screen_buttons(0x11)
+                display.set_screen_button(s, 0x12)
                 break
             case 0x60:
                 s = 1
+                display.clear_screen_buttons(0x11)
+                display.set_screen_button(s, 0x17)
                 break
             case 0x61:
                 s = 2
+                display.clear_screen_buttons(0x11)
+                display.set_screen_button(s, 0x19)
                 break
             case 0x62:
                 s = 3
+                display.clear_screen_buttons(0x11)
+                display.set_screen_button(s, 0x15)
                 break
             default:
         }
         if(s != null) {
-            this.on_screen_button(s, data2)
+            if(data2 != 0) {
+                if(this.screen !== this.screens[s]) {
+                    this.screen = this.screens[s]
+                    this.screen.enter()
+                }
+            }
             h = true
         }
     }
@@ -97,27 +100,14 @@ Launchpad.prototype.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-Launchpad.prototype.on_sysex = function(data) {
+launchpad.on_sysex = function(data) {
     println("SYSEX: " + data)
 }
 
 //------------------------------------------------------------------------------
 
-Launchpad.prototype.flush = function() {
-    this.display.flush()
-}
-
-//------------------------------------------------------------------------------
-
-Launchpad.prototype.on_screen_button = function (screen_index, data2) {
-    var screen = this.screens[screen_index]
-    if(data2 != 0) {
-        if(this.screen !== screen) {
-            this.screen.leave()
-            this.screen = screen
-            this.screen.enter()
-        }
-    }
+launchpad.flush = function() {
+    display.flush()
 }
 
 //------------------------------------------------------------------------------
