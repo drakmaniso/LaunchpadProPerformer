@@ -36,11 +36,11 @@ launchpad.init = function() {
     // this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
     // this.user_input.setShouldConsumeEvents(false)
 
-    display.clear_action_buttons(0x11)
-    display.clear_arrow_buttons(0x11)
-    display.clear_screen_buttons(0x11)
-    display.set_screen_button(1, 0x17)
-    display.clear_page_buttons(0x11)
+    display.clearMenuButtons(0x11)
+    display.clearArrowButtons(0x11)
+    display.clearScreenButtons(0x11)
+    display.setScreenButton(1, 0x17)
+    display.clearSceneButtons(0x11)
     this.screen.enter()
 }
 
@@ -60,23 +60,23 @@ launchpad.on_midi = function(status, data1, data2) {
         switch (data1) {
             case 0x5F:
                 s = 0
-                display.clear_screen_buttons(0x11)
-                display.set_screen_button(s, 0x12)
+                display.clearScreenButtons(0x11)
+                display.setScreenButton(s, 0x12)
                 break
             case 0x60:
                 s = 1
-                display.clear_screen_buttons(0x11)
-                display.set_screen_button(s, 0x17)
+                display.clearScreenButtons(0x11)
+                display.setScreenButton(s, 0x17)
                 break
             case 0x61:
                 s = 2
-                display.clear_screen_buttons(0x11)
-                display.set_screen_button(s, 0x19)
+                display.clearScreenButtons(0x11)
+                display.setScreenButton(s, 0x19)
                 break
             case 0x62:
                 s = 3
-                display.clear_screen_buttons(0x11)
-                display.set_screen_button(s, 0x15)
+                display.clearScreenButtons(0x11)
+                display.setScreenButton(s, 0x15)
                 break
             default:
         }

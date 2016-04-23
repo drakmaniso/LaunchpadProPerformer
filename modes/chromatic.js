@@ -7,7 +7,7 @@ function ModeChromatic() {
     this.origin = 48
     this.deltax = 1
     this.deltay = 5
-    this.key_colors = key_color_schemes[0]
+    this.key_colors = keyColorSchemes[0]
     this.screen_pressed = false
     this.up_pressed = false
     this.down_pressed = false
@@ -34,13 +34,13 @@ ModeChromatic.prototype.draw_grid = function () {
             var no = Math.floor(n / 12)
             var ns = launchpad.scale.notes[nn]
             if (n == -1) {
-                display.set_pad(x, y, 0x00)
+                display.setPad(x, y, 0x00)
             } else if (ns === 0) {
-                display.set_pad(x, y, this.key_colors[no][ns])
+                display.setPad(x, y, this.key_colors[no][ns])
             } else if (ns) {
-                display.set_pad(x, y, this.key_colors[no][ns])
+                display.setPad(x, y, this.key_colors[no][ns])
             } else {
-                display.set_pad(x, y, 0x00)
+                display.setPad(x, y, 0x00)
             }
         }
     }
@@ -125,8 +125,8 @@ ModeChromatic.prototype.on_midi = function (status, data1, data2) {
             this.update_and_draw()
         }
     } else if (status == 0x90) {
-        var x = display.pad_x(data1)
-        var y = display.pad_y(data1)
+        var x = display.padX(data1)
+        var y = display.padY(data1)
         var n = this.pad_note(x, y)
         var nn = (n - launchpad.root_key) % 12
         var no = Math.floor(n / 12)
@@ -153,7 +153,7 @@ ModeChromatic.prototype.on_midi = function (status, data1, data2) {
             for (y = 0; y < 8; y++) {
                 var xyn = this.pad_note(x, y)
                 if (xyn == n) {
-                    display.set_pad(x, y, c)
+                    display.setPad(x, y, c)
                 }
             }
         }
@@ -175,7 +175,7 @@ ModeChromatic.prototype.update_and_draw = function () {
 
 ModeChromatic.prototype.enter = function () {
     launchpad.screen.menus[3] = this.layout_menu
-    display.clear_page_buttons(0x11)
+    display.clearSceneButtons(0x11)
     this.update_and_draw()
 }
 

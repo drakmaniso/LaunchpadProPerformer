@@ -8,8 +8,8 @@ menuLayoutChromatic = {
 menuLayoutChromatic.on_midi = function(status, data1, data2) {
     var m = launchpad.screen.mode
     if (status == 0x90 && data2 > 0) {
-        var x = display.pad_x(data1)
-        var y = display.pad_y(data1)
+        var x = display.padX(data1)
+        var y = display.padY(data1)
         if (y < 5) {
             if (x < 4) {
                 if (y < 2 && m.deltax > 1) {
@@ -29,27 +29,27 @@ menuLayoutChromatic.on_midi = function(status, data1, data2) {
                 case 0:
                     m.deltax = 1
                     m.deltay = 5
-                    m.key_colors = key_color_schemes[0]
+                    m.key_colors = keyColorSchemes[0]
                     break;
                 case 1:
                     m.deltax = 1
                     m.deltay = 7
-                    m.key_colors = key_color_schemes[0]
+                    m.key_colors = keyColorSchemes[0]
                     break;
                 case 2:
                     m.deltax = 2
                     m.deltay = 5
-                    m.key_colors = key_color_schemes[0]
+                    m.key_colors = keyColorSchemes[0]
                     break;
                 case 4:
                     m.deltax = 4
                     m.deltay = 3
-                    m.key_colors = key_color_schemes[1]
+                    m.key_colors = keyColorSchemes[1]
                     break;
                 case 5:
                     m.deltax = 4
                     m.deltay = 7
-                    m.key_colors = key_color_schemes[1]
+                    m.key_colors = keyColorSchemes[1]
                     break;
             }
         }
@@ -57,13 +57,13 @@ menuLayoutChromatic.on_midi = function(status, data1, data2) {
     } else if (status == 0xb0 && data2 > 0) {
 		switch (data1) {
 			case 0x59:
-				launchpad.screen.mode.key_colors = key_color_schemes[0]
+				launchpad.screen.mode.key_colors = keyColorSchemes[0]
 				break
 			case 0x4f:
-				launchpad.screen.mode.key_colors = key_color_schemes[1]
+				launchpad.screen.mode.key_colors = keyColorSchemes[1]
 				break
 			case 0x45:
-				launchpad.screen.mode.key_colors = key_color_schemes[2]
+				launchpad.screen.mode.key_colors = keyColorSchemes[2]
 				break
 		}
         this.draw_grid()
@@ -76,36 +76,36 @@ menuLayoutChromatic.on_midi = function(status, data1, data2) {
 
 menuLayoutChromatic.enter = function () {
     launchpad.mute()
-    display.clear_page_buttons(0x00)
+    display.clearSceneButtons(0x00)
 
     this.draw_grid()
 }
 
 menuLayoutChromatic.draw_grid = function () {
     var kc = launchpad.screen.mode.key_colors    
-    display.set_page_button(0, kc === key_color_schemes[0] ? 0x12 : 0x13)
-    display.set_page_button(1, kc === key_color_schemes[1] ? 0x12 : 0x13)
-    display.set_page_button(2, kc === key_color_schemes[2] ? 0x12 : 0x13)
+    display.setSceneButton(0, kc === keyColorSchemes[0] ? 0x12 : 0x13)
+    display.setSceneButton(1, kc === keyColorSchemes[1] ? 0x12 : 0x13)
+    display.setSceneButton(2, kc === keyColorSchemes[2] ? 0x12 : 0x13)
     
-    display.clear_pads(0x0)
+    display.clearPads(0x0)
 
     var m = launchpad.screen.mode
     
-    display.set_pad(0, 7, m.deltax == 1 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
-    display.set_pad(1, 7, m.deltax == 1 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
-    display.set_pad(2, 7, m.deltax == 2 && m.deltay == 5 ? SELECTED_OPTION_COLOR : 0x03)
-    display.set_pad(4, 7, m.deltax == 4 && m.deltay == 3 ? SELECTED_OPTION_COLOR : 0x03)
-    display.set_pad(5, 7, m.deltax == 4 && m.deltay == 7 ? SELECTED_OPTION_COLOR : 0x03)
+    display.setPad(0, 7, m.deltax == 1 && m.deltay == 5 ? colorSelectedOption : 0x03)
+    display.setPad(1, 7, m.deltax == 1 && m.deltay == 7 ? colorSelectedOption : 0x03)
+    display.setPad(2, 7, m.deltax == 2 && m.deltay == 5 ? colorSelectedOption : 0x03)
+    display.setPad(4, 7, m.deltax == 4 && m.deltay == 3 ? colorSelectedOption : 0x03)
+    display.setPad(5, 7, m.deltax == 4 && m.deltay == 7 ? colorSelectedOption : 0x03)
 
     if (m.deltax >= 0) {
-        display.big_number(0, 0, m.deltax, 0x03)
+        display.drawBigNumber(0, 0, m.deltax, 0x03)
     } else {
-        display.big_number(0, 0, -m.deltax, 0x0b)
+        display.drawBigNumber(0, 0, -m.deltax, 0x0b)
     }    
     if (m.deltay >= 0) {
-        display.big_number(5, 0, m.deltay, 0x03)
+        display.drawBigNumber(5, 0, m.deltay, 0x03)
     } else {
-        display.big_number(5, 0, -m.deltay, 0x0b)
+        display.drawBigNumber(5, 0, -m.deltay, 0x0b)
     }    
 }
 

@@ -19,6 +19,7 @@ if (host.platformIsWindows()) {
 //------------------------------------------------------------------------------
 
 load("scales.js")
+load("colors.js")
 
 load("main/tools.js")
 load("main/bitwig.js")
@@ -41,7 +42,7 @@ load("menus/rootkey.js")
 load("menus/scale.js")
 load("menus/tempo.js")
 load("menus/quantization.js")
- 
+
 //------------------------------------------------------------------------------
 
 function init() {
@@ -52,7 +53,7 @@ function init() {
     launchpad.init()
 
     display.flush()
-    
+
     println("Initialized")
 }
 

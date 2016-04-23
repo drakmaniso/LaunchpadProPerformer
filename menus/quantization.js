@@ -17,24 +17,24 @@ menuQuantization.on_midi = function(status, data1, data2) {
 menuQuantization.enter = function() {
     launchpad.mute()
 
-    display.clear_pads(0x00)
+    display.clearPads(0x00)
 
-    display.set_pad(1, 7, 0x1)
-    display.set_pad(0, 6, 0x1)
-    display.set_pad(1, 6, 0x1)
-    display.set_pad(1, 5, 0x1)
-    display.set_pad(1, 4, 0x1)
-    display.set_pad(1, 3, 0x1)
+    display.setPad(1, 7, 0x1)
+    display.setPad(0, 6, 0x1)
+    display.setPad(1, 6, 0x1)
+    display.setPad(1, 5, 0x1)
+    display.setPad(1, 4, 0x1)
+    display.setPad(1, 3, 0x1)
 
-    display.set_pad(3, 7, 0x1)
-    display.set_pad(4, 7, 0x1)
-    display.set_pad(3, 6, 0x1)
-    display.set_pad(3, 5, 0x1)
-    display.set_pad(4, 5, 0x1)
-    display.set_pad(3, 4, 0x1)
-    display.set_pad(4, 4, 0x1)
-    display.set_pad(3, 3, 0x1)
-    display.set_pad(4, 3, 0x1)
+    display.setPad(3, 7, 0x1)
+    display.setPad(4, 7, 0x1)
+    display.setPad(3, 6, 0x1)
+    display.setPad(3, 5, 0x1)
+    display.setPad(4, 5, 0x1)
+    display.setPad(3, 4, 0x1)
+    display.setPad(4, 4, 0x1)
+    display.setPad(3, 3, 0x1)
+    display.setPad(4, 3, 0x1)
 }
 
 //------------------------------------------------------------------------------

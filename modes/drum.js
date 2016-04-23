@@ -6,7 +6,7 @@ function ModeDrum(screen) {
     this.layout_menu = menuLayoutDrum
 
     this.wide_pads = false
-    this.colors = drums_color_schemes[0]
+    this.colors = drumColorSchemes[0]
     this.translation = new_translation_table()
     this.origin = 36
 }
@@ -51,15 +51,15 @@ ModeDrum.prototype.on_midi = function(status, data1, data2) {
         }
     } else if (status == 0x90) {
         h = true
-        var x = display.pad_x(data1)
-        var y = display.pad_y(data1)
+        var x = display.padX(data1)
+        var y = display.padY(data1)
         if (data2 > 0) {
             if (this.wide_pads) {
                 x = 2 * Math.floor(x / 2)
-                display.set_pad(x, y, 0x0a)
-                display.set_pad(x+1, y, 0x0a)
+                display.setPad(x, y, 0x0a)
+                display.setPad(x+1, y, 0x0a)
             } else {
-                display.set_pad(x, y, 0x0a)
+                display.setPad(x, y, 0x0a)
             }    
         } else {
             var n = this.pad_note(x, y)
@@ -68,10 +68,10 @@ ModeDrum.prototype.on_midi = function(status, data1, data2) {
                 var sq = 2 * Math.floor(n / 16) + Math.floor(n + n / 4) % 2
                 if (this.wide_pads) {
                     x = 2 * Math.floor(x / 2)
-                    display.set_pad(x, y, this.colors[sq])
-                    display.set_pad(x + 1, y, this.colors[sq])
+                    display.setPad(x, y, this.colors[sq])
+                    display.setPad(x + 1, y, this.colors[sq])
                 } else {
-                    display.set_pad(x, y, this.colors[sq])
+                    display.setPad(x, y, this.colors[sq])
                 }    
             }
         }
@@ -100,7 +100,7 @@ ModeDrum.prototype.fill_translation = function () {
 
 ModeDrum.prototype.enter = function() {
     launchpad.screen.menus[3] = this.layout_menu
-    display.clear_page_buttons(0x11)
+    display.clearSceneButtons(0x11)
     this.update_and_draw()    
 }
 
@@ -111,9 +111,9 @@ ModeDrum.prototype.draw_grid = function() {
             if (n > -1) {
                 n = modulo(n - 4, 128)
                 var sq = 2 * Math.floor(n / 16) + Math.floor(n + n / 4) % 2
-                display.set_pad(x, y, this.colors[sq])
+                display.setPad(x, y, this.colors[sq])
             } else {
-                display.set_pad(x, y, 0x00)
+                display.setPad(x, y, 0x00)
             } 
         }
     }

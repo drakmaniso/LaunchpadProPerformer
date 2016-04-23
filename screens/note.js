@@ -79,15 +79,15 @@ ScreenNote.prototype.on_midi = function(status, data1, data2) {
 //------------------------------------------------------------------------------
 
 ScreenNote.prototype.enter = function() {
-	display.set_action_button(0, 0x11)
-	display.set_action_button(1, 0x12)
-	display.set_action_button(2, 0x11)
-	display.set_action_button(3, 0x13)
-	display.set_action_button(4, 0x15)
-	display.set_action_button(5, 0x17)
-	display.set_action_button(6, 0x18)
-	display.set_action_button(7, 0x11)
-    display.clear_page_buttons(0x11)
+	display.setMenuButton(0, 0x11)
+	display.setMenuButton(1, 0x12)
+	display.setMenuButton(2, 0x11)
+	display.setMenuButton(3, 0x13)
+	display.setMenuButton(4, 0x15)
+	display.setMenuButton(5, 0x17)
+	display.setMenuButton(6, 0x18)
+	display.setMenuButton(7, 0x11)
+    display.clearSceneButtons(0x11)
 	this.mode.enter()
 }
 

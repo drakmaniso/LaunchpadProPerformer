@@ -44,11 +44,11 @@ ScreenSession.prototype.on_midi = function(status, data1, data2) {
             case 0x50:
                 m = 0
                 if (data2 > 0) {
-                    display.clear_action_buttons(0x11)
+                    display.clearMenuButtons(0x11)
                 } else {
-                    display.set_action_button(1, 0x12)
-                    display.set_action_button(4, 0x12)
-                    display.set_action_button(6, 0x13)
+                    display.setMenuButton(1, 0x12)
+                    display.setMenuButton(4, 0x12)
+                    display.setMenuButton(6, 0x13)
                 }
                 h = true
                 break
@@ -71,18 +71,18 @@ ScreenSession.prototype.on_midi = function(status, data1, data2) {
                 m = 6
                 if (data2 > 0) {
                     for (x = 0; x < 8; ++x) {
-                        display.set_pad(x, 1, 0x13)
-                        display.set_pad(x, 0, 0x12)
+                        display.setPad(x, 1, 0x13)
+                        display.setPad(x, 0, 0x12)
                     }
-                    display.clear_page_buttons(0x18)
-                    display.clear_scene_buttons(0x18)
+                    display.clearSceneButtons(0x18)
+                    display.clearBottomButtons(0x18)
                 } else {
                     for (x = 0; x < 8; ++x) {
-                        display.set_pad(x, 1, 0x00)
-                        display.set_pad(x, 0, 0x00)
+                        display.setPad(x, 1, 0x00)
+                        display.setPad(x, 0, 0x00)
                     }
-                    display.clear_page_buttons(0x11)
-                    display.clear_scene_buttons(0x00)
+                    display.clearSceneButtons(0x11)
+                    display.clearBottomButtons(0x00)
                 }
                 h = true
                 break
@@ -110,55 +110,55 @@ ScreenSession.prototype.on_midi = function(status, data1, data2) {
 ScreenSession.prototype.enter = function() {
     launchpad.mute()
 
-    display.set_screen_button(0, 0x12)
+    display.setScreenButton(0, 0x12)
     
-	display.set_action_button(0, 0x11)
-	display.set_action_button(1, 0x11)
-	display.set_action_button(2, 0x11)
-	display.set_action_button(3, 0x18)
-	display.set_action_button(4, 0x17)
-	display.set_action_button(5, 0x15)
-	display.set_action_button(6, 0x13)
-	display.set_action_button(7, 0x11)
+	display.setMenuButton(0, 0x11)
+	display.setMenuButton(1, 0x11)
+	display.setMenuButton(2, 0x11)
+	display.setMenuButton(3, 0x18)
+	display.setMenuButton(4, 0x17)
+	display.setMenuButton(5, 0x15)
+	display.setMenuButton(6, 0x13)
+	display.setMenuButton(7, 0x11)
 
-    display.clear_pads(0x00)
+    display.clearPads(0x00)
 
-    // d.set_pad(0, 7, 0x02)
-    // d.set_pad(0, 6, 0x02 | BLINKING_COLOR)
-    // d.set_pad(0, 5, 0x02)
-    // d.set_pad(0, 4, 0x02)
+    // d.setPad(0, 7, 0x02)
+    // d.setPad(0, 6, 0x02 | BLINKING_COLOR)
+    // d.setPad(0, 5, 0x02)
+    // d.setPad(0, 4, 0x02)
 
-    // d.set_pad(1, 7, 0x03)
-    // d.set_pad(1, 6, 0x03 | BLINKING_COLOR)
-    // d.set_pad(1, 5, 0x03)
-    // d.set_pad(1, 4, 0x03)
-    // d.set_pad(1, 3, 0x03)
+    // d.setPad(1, 7, 0x03)
+    // d.setPad(1, 6, 0x03 | BLINKING_COLOR)
+    // d.setPad(1, 5, 0x03)
+    // d.setPad(1, 4, 0x03)
+    // d.setPad(1, 3, 0x03)
 
-    // d.set_pad(2, 7, 0x04 | BLINKING_COLOR)
-    // d.set_pad(2, 6, 0x04)
-    // d.set_pad(2, 5, 0x04)
+    // d.setPad(2, 7, 0x04 | BLINKING_COLOR)
+    // d.setPad(2, 6, 0x04)
+    // d.setPad(2, 5, 0x04)
 
-    // d.set_pad(3, 6, 0x05)
-    // d.set_pad(3, 5, 0x05)
-    // d.set_pad(3, 4, 0x05)
-    // d.set_pad(3, 2, 0x05)
+    // d.setPad(3, 6, 0x05)
+    // d.setPad(3, 5, 0x05)
+    // d.setPad(3, 4, 0x05)
+    // d.setPad(3, 2, 0x05)
 
-    // d.set_pad(4, 6, 0x06)
-    // d.set_pad(4, 5, 0x06)
-    // d.set_pad(4, 4, 0x06 | BLINKING_COLOR)
-    // d.set_pad(4, 3, 0x06)
+    // d.setPad(4, 6, 0x06)
+    // d.setPad(4, 5, 0x06)
+    // d.setPad(4, 4, 0x06 | BLINKING_COLOR)
+    // d.setPad(4, 3, 0x06)
 
-    // d.set_pad(5, 7, 0x07)
-    // d.set_pad(5, 6, 0x07)
-    // d.set_pad(5, 5, 0x07)
+    // d.setPad(5, 7, 0x07)
+    // d.setPad(5, 6, 0x07)
+    // d.setPad(5, 5, 0x07)
 
-    // d.set_pad(6, 6, 0x08)
-    // d.set_pad(6, 5, 0x08)
-    // d.set_pad(6, 4, 0x08)
+    // d.setPad(6, 6, 0x08)
+    // d.setPad(6, 5, 0x08)
+    // d.setPad(6, 4, 0x08)
 
-    // d.set_pad(7, 5, 0x09)
-    // d.set_pad(7, 4, 0x09)
-    // d.set_pad(7, 3, 0x09)
+    // d.setPad(7, 5, 0x09)
+    // d.setPad(7, 4, 0x09)
+    // d.setPad(7, 3, 0x09)
 
     // tracks.getClipLauncherScenes().setIndication(true)    
     // tracks.scrollChannelsDown()

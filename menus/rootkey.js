@@ -80,82 +80,82 @@ menuRootKey.on_midi = function(status, data1, data2) {
 menuRootKey.enter = function () {
     launchpad.mute()
 
-    display.clear_pads(0x0)
+    display.clearPads(0x0)
 
     this.draw_grid()    
 }
 
 menuRootKey.draw_grid = function () {
-    display.set_pad(0, 7, 0x8)
-    display.set_pad(1, 7, 0x8)
-    display.set_pad(3, 7, 0x8)
-    display.set_pad(4, 7, 0x8)
-    display.set_pad(5, 7, 0x8)
+    display.setPad(0, 7, 0x8)
+    display.setPad(1, 7, 0x8)
+    display.setPad(3, 7, 0x8)
+    display.setPad(4, 7, 0x8)
+    display.setPad(5, 7, 0x8)
     for(var x = 0; x < 7; ++x) {
-        display.set_pad(x, 6, 0x1)
+        display.setPad(x, 6, 0x1)
     }
 
-    display.set_pad(1+1, 4, 0x1)
-    display.set_pad(1+2, 4, 0x1)
-    display.set_pad(1+3, 4, 0x1)
-    display.set_pad(1+4, 3, 0x1)
-    display.set_pad(1+4, 2, 0x1)
-    display.set_pad(1+4, 1, 0x1)
-    display.set_pad(1+3, 0, 0x1)
-    display.set_pad(1+2, 0, 0x8)
-    display.set_pad(1+1, 0, 0x8)
-    display.set_pad(1+0, 1, 0x8)
-    display.set_pad(1+0, 2, 0x8)
-    display.set_pad(1+0, 3, 0x8)
+    display.setPad(1+1, 4, 0x1)
+    display.setPad(1+2, 4, 0x1)
+    display.setPad(1+3, 4, 0x1)
+    display.setPad(1+4, 3, 0x1)
+    display.setPad(1+4, 2, 0x1)
+    display.setPad(1+4, 1, 0x1)
+    display.setPad(1+3, 0, 0x1)
+    display.setPad(1+2, 0, 0x8)
+    display.setPad(1+1, 0, 0x8)
+    display.setPad(1+0, 1, 0x8)
+    display.setPad(1+0, 2, 0x8)
+    display.setPad(1+0, 3, 0x8)
 
     switch (launchpad.root_key) {
         case 0: // C
-            display.set_pad(0, 6, 0x2)
-            display.set_pad(1+2, 4, 0x2)
+            display.setPad(0, 6, 0x2)
+            display.setPad(1+2, 4, 0x2)
             break
         case 1: // C#
-            display.set_pad(0, 7, 0x2)
-            display.set_pad(1+1, 0, 0x2)
+            display.setPad(0, 7, 0x2)
+            display.setPad(1+1, 0, 0x2)
             break
         case 2: // D
-            display.set_pad(1, 6, 0x2)
-            display.set_pad(1+4, 3, 0x2)
+            display.setPad(1, 6, 0x2)
+            display.setPad(1+4, 3, 0x2)
             break
         case 3: // D#
-            display.set_pad(1, 7, 0x2)
-            display.set_pad(1+0, 2, 0x2)
+            display.setPad(1, 7, 0x2)
+            display.setPad(1+0, 2, 0x2)
             break
         case 4: // E
-            display.set_pad(2, 6, 0x2)
-            display.set_pad(1+4, 1, 0x2)
+            display.setPad(2, 6, 0x2)
+            display.setPad(1+4, 1, 0x2)
             break
         case 5: // F
-            display.set_pad(3, 6, 0x2)
-            display.set_pad(1+1, 4, 0x2)
+            display.setPad(3, 6, 0x2)
+            display.setPad(1+1, 4, 0x2)
             break
         case 6: // F#
-            display.set_pad(3, 7, 0x2)
-            display.set_pad(1+2, 0, 0x2)
+            display.setPad(3, 7, 0x2)
+            display.setPad(1+2, 0, 0x2)
             break
         case 7: // G
-            display.set_pad(4, 6, 0x2)
-            display.set_pad(1+3, 4, 0x2)
+            display.setPad(4, 6, 0x2)
+            display.setPad(1+3, 4, 0x2)
             break
         case 8: // G#
-            display.set_pad(4, 7, 0x2)
-            display.set_pad(1+0, 1, 0x2)
+            display.setPad(4, 7, 0x2)
+            display.setPad(1+0, 1, 0x2)
             break
         case 9: // A
-            display.set_pad(5, 6, 0x2)
-            display.set_pad(1+4, 2, 0x2)
+            display.setPad(5, 6, 0x2)
+            display.setPad(1+4, 2, 0x2)
             break
         case 10: // A#
-            display.set_pad(5, 7, 0x2)
-            display.set_pad(1+0, 3, 0x2)
+            display.setPad(5, 7, 0x2)
+            display.setPad(1+0, 3, 0x2)
             break
         case 11: // B
-            display.set_pad(6, 6, 0x2)
-            display.set_pad(1+3, 0, 0x2)
+            display.setPad(6, 6, 0x2)
+            display.setPad(1+3, 0, 0x2)
             break
     }
 }
