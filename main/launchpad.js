@@ -112,7 +112,7 @@ Launchpad.prototype.flush = function() {
 Launchpad.prototype.on_screen_button = function (screen_index, data2) {
     var screen = this.screens[screen_index]
     if(data2 != 0) {
-        if(this.screen != screen) {
+        if(this.screen !== screen) {
             this.screen.leave()
             this.screen = screen
             this.screen.enter()

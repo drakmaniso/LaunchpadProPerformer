@@ -68,12 +68,24 @@ Chromatic_Mode.prototype.on_midi = function (status, data1, data2) {
     if (status == 0xb0) {
         switch (data1) {
             case 0x60:
-                if (data2 > 0) {
-                    this.screen_pressed = true
-                } else {
-                    this.screen_pressed = false
+                if (!this.screen.is_secondary) {
+                    if (data2 > 0) {
+                        this.screen_pressed = true
+                    } else {
+                        this.screen_pressed = false
+                    }
+                    h = true
                 }
-                h = true
+                break
+            case 0x62:
+                if (this.screen.is_secondary) {
+                    if (data2 > 0) {
+                        this.screen_pressed = true
+                    } else {
+                        this.screen_pressed = false
+                    }
+                    h = true
+                }
                 break
             case 0x5b:
                 if (data2 > 0) {
