@@ -30,7 +30,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
       case 0x5b:
         if (data2 > 0) {
           this.upPressed = true
-          if (this.screenPressed) {
+          if (launchpad.shifted) {
             this.origin = this.origin + 12
           } else if (this.downPressed) {
             this.origin = 48 + launchpad.tonic
@@ -45,7 +45,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
       case 0x5c:
         if (data2 > 0) {
           this.downPressed = true
-          if (this.screenPressed) {
+          if (launchpad.shifted) {
             this.origin = this.origin - 12
           } else if (this.upPressed) {
             this.origin = 48 + launchpad.tonic
@@ -60,7 +60,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
       case 0x5d:
         if (data2 > 0) {
           this.leftPressed = true
-          if (this.screenPressed) {
+          if (launchpad.shifted) {
             this.origin = this.origin - 1
           } else if (this.rightPressed) {
             this.origin = 48
@@ -75,7 +75,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
       case 0x5e:
         if (data2 > 0) {
           this.rightPressed = true
-          if (this.screenPressed) {
+          if (launchpad.shifted) {
             this.origin = this.origin + 1
           } else if (this.leftPressed) {
             this.origin = 48

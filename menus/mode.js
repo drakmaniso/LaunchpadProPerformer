@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 
 var menuMode = {
-  color: 0x05
+  color: 0x02
 }
 
 // -----------------------------------------------------------------------------
@@ -64,14 +64,14 @@ menuMode.drawGrid = function () {
   } else {
     c = this.color
   }
-  display.setPad(4, 7, c)
   display.setPad(5, 7, c)
-  display.setPad(4, 6, c)
-  display.setPad(6, 6, c)
-  display.setPad(4, 5, c)
-  display.setPad(6, 5, c)
-  display.setPad(4, 4, c)
+  display.setPad(6, 7, c)
+  display.setPad(5, 6, c)
+  display.setPad(7, 6, c)
+  display.setPad(5, 5, c)
+  display.setPad(7, 5, c)
   display.setPad(5, 4, c)
+  display.setPad(6, 4, c)
 
   // In Key Mode
   if (launchpad.screen.mode === launchpad.screen.modes[2]) {
@@ -92,13 +92,13 @@ menuMode.drawGrid = function () {
   } else {
     c = this.color
   }
-  display.setPad(4, 2, c)
-  display.setPad(6, 2, c)
-  display.setPad(4, 1, c)
+  display.setPad(5, 2, c)
+  display.setPad(7, 2, c)
   display.setPad(5, 1, c)
   display.setPad(6, 1, c)
-  display.setPad(4, 0, c)
-  display.setPad(6, 0, c)
+  display.setPad(7, 1, c)
+  display.setPad(5, 0, c)
+  display.setPad(7, 0, c)
 }
 
 // -----------------------------------------------------------------------------

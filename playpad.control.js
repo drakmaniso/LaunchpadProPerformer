@@ -34,6 +34,7 @@ load('modes/chromatic.js')
 load('modes/drum.js')
 load('modes/inkey.js')
 
+load('menus/clip.js')
 load('menus/mode.js')
 load('menus/layoutchromatic.js')
 load('menus/layoutdrum.js')
@@ -41,6 +42,7 @@ load('menus/layoutinkey.js')
 load('menus/tonic.js')
 load('menus/scale.js')
 load('menus/tempo.js')
+load('menus/mutesolostop.js')
 load('menus/quantization.js')
 
 // -----------------------------------------------------------------------------

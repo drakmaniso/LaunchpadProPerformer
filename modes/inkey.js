@@ -33,7 +33,7 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
       case 0x5b:
         if (data2 > 0) {
           this.upPressed = true
-          if (this.screenPressed) {
+          if (launchpad.shifted) {
             this.originOctave = this.originOctave + 1
           } else if (this.downPressed) {
             this.originOctave = 3
@@ -50,7 +50,7 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
       case 0x5c:
         if (data2 > 0) {
           this.downPressed = true
-          if (this.screenPressed) {
+          if (launchpad.shifted) {
             this.originOctave = this.originOctave - 1
           } else if (this.upPressed) {
             this.originOctave = 3
@@ -67,8 +67,8 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
       case 0x5d:
         if (data2 > 0) {
           this.leftPressed = true
-          if (this.screenPressed) {
-            this.origin = this.origin - 1
+          if (launchpad.shifted) {
+            // TODO
           } else if (this.rightPressed) {
             // TODO
             this.originOctave = 3
@@ -85,8 +85,8 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
       case 0x5e:
         if (data2 > 0) {
           this.rightPressed = true
-          if (this.screenPressed) {
-            this.origin = this.origin + 1
+          if (launchpad.shifted) {
+            // TODO
           } else if (this.leftPressed) {
             // TODO
             this.originOctave = 3

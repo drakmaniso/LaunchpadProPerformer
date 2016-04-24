@@ -9,9 +9,13 @@ ScreenSession.prototype.enter = function () {
   launchpad.mute()
 
   launchpad.unbindMenus()
-  launchpad.bindMenu(1, menuTempo)
+  launchpad.bindMenu(1, menuClip)
+  launchpad.bindMenu(3, menuTempo)
   launchpad.bindMenu(4, menuQuantization)
-  display.setScreenButton(0, 0x12)
+  launchpad.bindMenu(6, menuMuteSoloStop)
+
+  display.clearSceneButtons(0x11)
+  display.clearBottomButtons(0x00)
 
   display.clearPads(0x00)
 
@@ -85,22 +89,22 @@ ScreenSession.prototype.onMidi = function (status, data1, data2) {
         }
         break
       case 0x14:
-        if (data2 > 0) {
-          for (var x = 0; x < 8; ++x) {
-            display.setPad(x, 1, 0x13)
-            display.setPad(x, 0, 0x12)
-          }
-          display.clearSceneButtons(0x18)
-          display.clearBottomButtons(0x18)
-        } else {
-          for (var x = 0; x < 8; ++x) {
-            display.setPad(x, 1, 0x00)
-            display.setPad(x, 0, 0x00)
-          }
-          display.clearSceneButtons(0x11)
-          display.clearBottomButtons(0x00)
-        }
-        h = true
+        // if (data2 > 0) {
+        //   for (var x = 0; x < 8; ++x) {
+        //     display.setPad(x, 1, 0x13)
+        //     display.setPad(x, 0, 0x12)
+        //   }
+        //   display.clearSceneButtons(0x18)
+        //   display.clearBottomButtons(0x18)
+        // } else {
+        //   for (var x = 0; x < 8; ++x) {
+        //     display.setPad(x, 1, 0x00)
+        //     display.setPad(x, 0, 0x00)
+        //   }
+        //   display.clearSceneButtons(0x11)
+        //   display.clearBottomButtons(0x00)
+        // }
+        // h = true
         break
     }
   }

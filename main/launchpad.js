@@ -27,6 +27,8 @@ launchpad.init = function () {
   this.menus = new Array(8)
   this.menu = null
 
+  this.shifted = false
+
   var lp = this
   this.input.setMidiCallback(function (status, data1, data2) { lp.onMidi(status, data1, data2) })
   this.input.setSysexCallback(function (data) { lp.onSysEx(data) })
@@ -88,7 +90,7 @@ launchpad.onMidi = function (status, data1, data2) {
       // Menu Buttons
 
       case 0x50:
-        m = 0
+        this.shifted = data2 > 0
         break
       case 0x46:
         m = 1
