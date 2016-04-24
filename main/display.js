@@ -14,7 +14,7 @@ const buttonsAll = [
 
 // -----------------------------------------------------------------------------
 
-display = {
+var display = {
 
 }
 
@@ -26,11 +26,11 @@ display.init = function () {
   sendSysex('f000202902102c03f7')
 
   this.currentGrid = new Array(128)
-  for (var i = 0; i < 128; ++i) {
+  for (var i = 0; i < 128; i++) {
     this.currentGrid[i] = null
   }
   this.nextGrid = new Array(128)
-  for (var i = 0; i < 128; ++i) {
+  for (var i = 0; i < 128; i++) {
     this.nextGrid[i] = 0
   }
 
@@ -40,7 +40,7 @@ display.init = function () {
 // -----------------------------------------------------------------------------
 
 display.markAllButtonsModified = function () {
-  for (var i = 0; i < 32; ++i) {
+  for (var i = 0; i < 32; i++) {
     if (this.nextGrid[buttonsAll[i]] === null) {
       this.nextGrid[buttonsAll[i]] = this.currentGrid[buttonsAll[i]]
     }
@@ -52,7 +52,7 @@ display.markAllButtonsModified = function () {
 
 display.clearAll = function () {
   sendSysex('f000202902100e00f7')
-  for (var i = 0; i < 128; ++i) {
+  for (var i = 0; i < 128; i++) {
     this.currentGrid[i] = 0
   }
 }
@@ -60,7 +60,7 @@ display.clearAll = function () {
 // -----------------------------------------------------------------------------
 
 display.clearMenuButtons = function (color) {
-  for (var i = 0; i < 8; ++i) {
+  for (var i = 0; i < 8; i++) {
     this.setMenuButton(i, color)
   }
 }
@@ -74,7 +74,7 @@ display.setMenuButton = function (index, color) {
 // -----------------------------------------------------------------------------
 
 display.clearArrowButtons = function (color) {
-  for (var i = 0; i < 4; ++i) {
+  for (var i = 0; i < 4; i++) {
     this.setArrowButton(i, color)
   }
 }
@@ -88,7 +88,7 @@ display.setArrowButton = function (index, color) {
 // -----------------------------------------------------------------------------
 
 display.clearScreenButtons = function (color) {
-  for (var i = 0; i < 4; ++i) {
+  for (var i = 0; i < 4; i++) {
     this.setScreenButton(i, color)
   }
 }
@@ -103,7 +103,7 @@ display.setScreenButton = function (index, color) {
 // -----------------------------------------------------------------------------
 
 display.clearSceneButtons = function (color) {
-  for (var i = 0; i < 8; ++i) {
+  for (var i = 0; i < 8; i++) {
     this.setSceneButton(i, color)
   }
 }
@@ -117,7 +117,7 @@ display.setSceneButton = function (index, color) {
 // -----------------------------------------------------------------------------
 
 display.clearBottomButtons = function (color) {
-  for (var i = 0; i < 8; ++i) {
+  for (var i = 0; i < 8; i++) {
     this.setBottomButton(i, color)
   }
 }
@@ -131,8 +131,8 @@ display.setBottomButton = function (index, color) {
 // -----------------------------------------------------------------------------
 
 display.clearPads = function (color) {
-  for (var y = 0; y < 8; ++y) {
-    for (var x = 0; x < 8; ++x) {
+  for (var y = 0; y < 8; y++) {
+    for (var x = 0; x < 8; x++) {
       this.setPad(x, y, color)
     }
   }
@@ -161,8 +161,8 @@ display.padY = function (index) {
 display.flush = function () {
   var idx, cv, nv
 
-  for (var x = 0; x < 8; ++x) {
-    for (var y = 0; y < 8; ++y) {
+  for (var x = 0; x < 8; x++) {
+    for (var y = 0; y < 8; y++) {
       idx = 0x0b + x + y * 0x0a
       cv = this.currentGrid[idx]
       nv = this.nextGrid[idx]
@@ -178,8 +178,8 @@ display.flush = function () {
     }
   }
 
-  for (var x = 0; x < 8; ++x) {
-    for (var y = 0; y < 8; ++y) {
+  for (var x = 0; x < 8; x++) {
+    for (var y = 0; y < 8; y++) {
       idx = 0x0b + x + y * 0x0a
       cv = this.currentGrid[idx]
       nv = this.nextGrid[idx]

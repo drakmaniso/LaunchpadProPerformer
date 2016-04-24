@@ -134,7 +134,7 @@ ModeDrum.prototype.padNote = function (x, y) {
   }
   n += x
   if (n > 127) {
-    return n -= 128
+    n -= 128
   } else if (n < 0) {
     n += 128
   }

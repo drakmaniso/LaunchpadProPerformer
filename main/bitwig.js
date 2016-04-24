@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 
-bitwig = {
+var bitwig = {
 }
 
 // -----------------------------------------------------------------------------
@@ -11,18 +11,18 @@ bitwig.init = function () {
     // println("COUNT: " + c.toString())
   })
   for (var i = 0; i < 8; i++) {
-    t = this.trackBank.getChannel(i)
+    var t = this.trackBank.getChannel(i)
     t.addPositionObserver(function (bw, idx) {
       return function (position) {
         // println("Track " + idx.toString() + " is at " + position.toString())
       }
     }(this, i))
-    t.addNameObserver(16, '', function (bw, idx) {
+    t.addNameObserver(16, '', (function (bw, idx) {
       return function (name) {
         // println("Track " + idx.toString() + " is named " + name)
       }
-    }(this, i))
-    cls = t.getClipLauncherSlots()
+    }(this, i)))
+    var cls = t.getClipLauncherSlots()
     cls.setIndication(true)
     cls.addHasContentObserver(function (bw, track) {
       return function (slot, has_clip) {

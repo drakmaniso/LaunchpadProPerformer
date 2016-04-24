@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 
-menuLayoutDrum = {
+var menuLayoutDrum = {
 }
 
 // -----------------------------------------------------------------------------
@@ -14,7 +14,6 @@ menuLayoutDrum.enter = function () {
 // -----------------------------------------------------------------------------
 
 menuLayoutDrum.onMidi = function (status, data1, data2) {
-  var m = launchpad.screen.mode
   if (status === 0x90 && data2 > 0) {
     var y = display.padY(data1)
     if (y < 4) {
@@ -27,7 +26,7 @@ menuLayoutDrum.onMidi = function (status, data1, data2) {
     this.drawGrid()
   }
 
-  return ! (status === 0xb0 && data1 === 0x32 && data2 === 0x00)
+  return !(status === 0xb0 && data1 === 0x32 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 
-launchpad = {
+var launchpad = {
 
 }
 
@@ -25,8 +25,8 @@ launchpad.init = function () {
   this.screen = this.screens[1]
 
   var lp = this
-  this.input.setMidiCallback(function (status, data1, data2) {lp.onMidi(status, data1, data2)})
-  this.input.setSysexCallback(function (data) {lp.onSysEx(data)})
+  this.input.setMidiCallback(function (status, data1, data2) { lp.onMidi(status, data1, data2) })
+  this.input.setSysexCallback(function (data) { lp.onSysEx(data) })
   this.output.setShouldSendMidiBeatClock(true)
 
   this.noteInput = this.input.createNoteInput('Note', '80????', '90????', 'A0????', 'D0????')
@@ -89,7 +89,7 @@ launchpad.onMidi = function (status, data1, data2) {
     }
   }
 
-  if (! h && status !== 0xa0) {
+  if (!h && status !== 0xa0) {
     println('Unhandled Midi Event: ' + byteToHexString(status) + ' ' + byteToHexString(data1) + ' ' + byteToHexString(data2))
   }
 

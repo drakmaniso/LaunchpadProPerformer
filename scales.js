@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 
-scales = [
+var scales = [
   [
     {name: 'Major', notes: [0, false, 1, false, 2, 3, false, 4, false, 5, false, 6]},
     {name: 'Minor', notes: [0, false, 1, 2, false, 3, false, 4, 5, false, 6, false]},
@@ -28,7 +28,7 @@ scales = [
     null,
     null,
     null,
-    null,
+    null
   ],
   [
     {name: 'Japanese Hirajoshi', notes: [0, false, 1, 2, false, false, false, 3, 4, false, false, false]},
