@@ -30,7 +30,7 @@ ModeInKey.prototype.enter = function () {
 
 ModeInKey.prototype.onMidi = function (status, data1, data2) {
   var h = false
-  if (status == 0xb0) {
+  if (status === 0xb0) {
     switch (data1) {
       case 0x5b:
         if (data2 > 0) {
@@ -106,7 +106,7 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
     if (h) {
       this.updateAndDraw()
     }
-  } else if (status == 0x90) {
+  } else if (status === 0x90) {
     var x = display.padX(data1)
     var y = display.padY(data1)
     var n = this.padNote(x, y)
@@ -115,13 +115,13 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
     var ns = launchpad.scale.notes[nn]
     var c = 0x0a
     if (data2 > 0) {
-      if (n == -1) {
+      if (n === -1) {
         c = 0x00
       } else {
         c = colorPressedKey
       }
     } else {
-      if (n == -1) {
+      if (n === -1) {
         c = 0x00
       } else if (ns === 0) {
         c = this.keyColors[no][ns]
@@ -134,7 +134,7 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
     for (var x = 0; x < 8; x++) {
       for (var y = 0; y < 8; y++) {
         var xyn = this.padNote(x, y)
-        if (xyn == n) {
+        if (xyn === n) {
           display.setPad(x, y, c)
         }
       }
@@ -186,7 +186,7 @@ ModeInKey.prototype.drawGrid = function () {
       var nn = (n - launchpad.tonic) % 12
       var no = Math.floor(n / 12)
       var ns = launchpad.scale.notes[nn]
-      if (n == -1) {
+      if (n === -1) {
         display.setPad(x, y, 0x00)
       } else if (ns === 0) {
         display.setPad(x, y, this.keyColors[no][ns])

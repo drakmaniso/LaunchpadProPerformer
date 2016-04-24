@@ -14,7 +14,7 @@ menuTonic.enter = function () {
 // -----------------------------------------------------------------------------
 
 menuTonic.onMidi = function (status, data1, data2) {
-  if (status == 0x90 && data2 > 0) {
+  if (status === 0x90 && data2 > 0) {
     switch (data1) {
       case 0x47: // C
       case 0x36:
@@ -66,8 +66,8 @@ menuTonic.onMidi = function (status, data1, data2) {
         break
     }
     this.drawGrid()
-  } else if (status == 0xb0 && data2 > 0) {
-    if (data1 == 0x1e) {
+  } else if (status === 0xb0 && data2 > 0) {
+    if (data1 === 0x1e) {
       if (launchpad.scale === scales[0][0]) {
         launchpad.scale = scales[0][1]
         launchpad.tonic += 9
@@ -80,7 +80,7 @@ menuTonic.onMidi = function (status, data1, data2) {
       this.drawGrid()
     }
   }
-  return ! (status == 0xb0 && data1 == 0x14 && data2 == 0x00)
+  return ! (status === 0xb0 && data1 === 0x14 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------

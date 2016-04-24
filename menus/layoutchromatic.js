@@ -15,7 +15,7 @@ menuLayoutChromatic.enter = function () {
 
 menuLayoutChromatic.onMidi = function (status, data1, data2) {
   var m = launchpad.screen.mode
-  if (status == 0x90 && data2 > 0) {
+  if (status === 0x90 && data2 > 0) {
     var x = display.padX(data1)
     var y = display.padY(data1)
     if (y < 5) {
@@ -32,7 +32,7 @@ menuLayoutChromatic.onMidi = function (status, data1, data2) {
           m.deltaY = m.deltaY + 1
         }
       }
-    } else if (y == 7) {
+    } else if (y === 7) {
       switch (x) {
         case 0:
           m.deltaX = 1
@@ -62,7 +62,7 @@ menuLayoutChromatic.onMidi = function (status, data1, data2) {
       }
     }
     this.drawGrid()
-  } else if (status == 0xb0 && data2 > 0) {
+  } else if (status === 0xb0 && data2 > 0) {
     switch (data1) {
       case 0x59:
         launchpad.screen.mode.keyColors = keyColorSchemes[0]
@@ -77,7 +77,7 @@ menuLayoutChromatic.onMidi = function (status, data1, data2) {
     this.drawGrid()
   }
 
-  return ! (status == 0xb0 && data1 == 0x32 && data2 == 0x00)
+  return ! (status === 0xb0 && data1 === 0x32 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------
@@ -92,11 +92,11 @@ menuLayoutChromatic.drawGrid = function () {
 
   var m = launchpad.screen.mode
 
-  display.setPad(0, 7, m.deltaX == 1 && m.deltaY == 5 ? colorSelectedOption : 0x03)
-  display.setPad(1, 7, m.deltaX == 1 && m.deltaY == 7 ? colorSelectedOption : 0x03)
-  display.setPad(2, 7, m.deltaX == 2 && m.deltaY == 5 ? colorSelectedOption : 0x03)
-  display.setPad(4, 7, m.deltaX == 4 && m.deltaY == 3 ? colorSelectedOption : 0x03)
-  display.setPad(5, 7, m.deltaX == 4 && m.deltaY == 7 ? colorSelectedOption : 0x03)
+  display.setPad(0, 7, m.deltaX === 1 && m.deltaY === 5 ? colorSelectedOption : 0x03)
+  display.setPad(1, 7, m.deltaX === 1 && m.deltaY === 7 ? colorSelectedOption : 0x03)
+  display.setPad(2, 7, m.deltaX === 2 && m.deltaY === 5 ? colorSelectedOption : 0x03)
+  display.setPad(4, 7, m.deltaX === 4 && m.deltaY === 3 ? colorSelectedOption : 0x03)
+  display.setPad(5, 7, m.deltaX === 4 && m.deltaY === 7 ? colorSelectedOption : 0x03)
 
   if (m.deltaX >= 0) {
     display.drawBigNumber(0, 0, m.deltaX, 0x03)

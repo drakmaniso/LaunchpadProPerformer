@@ -48,7 +48,7 @@ ScreenNote.prototype.onMidi = function (status, data1, data2) {
     h = this.mode.onMidi(status, data1, data2)
   }
 
-  if (!h && status == 0xb0) {
+  if (!h && status === 0xb0) {
     var m = null
     switch (data1) {
       case 0x50:

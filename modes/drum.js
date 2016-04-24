@@ -21,7 +21,7 @@ ModeDrum.prototype.enter = function () {
 
 ModeDrum.prototype.onMidi = function (status, data1, data2) {
   var h = false
-  if (status == 0xb0 && data2 > 0) {
+  if (status === 0xb0 && data2 > 0) {
     switch (data1) {
       case 0x5b:
         if (this.widePads) {
@@ -55,7 +55,7 @@ ModeDrum.prototype.onMidi = function (status, data1, data2) {
     if (h) {
       this.updateAndDraw()
     }
-  } else if (status == 0x90) {
+  } else if (status === 0x90) {
     h = true
     var x = display.padX(data1)
     var y = display.padY(data1)

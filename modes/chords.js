@@ -58,7 +58,7 @@ ModeChords.prototype.enter = function () {
 // -----------------------------------------------------------------------------
 
 ModeChords.prototype.onMidi = function (status, data1, data2) {
-  if (status == 0x90) {
+  if (status === 0x90) {
   }
 }
 

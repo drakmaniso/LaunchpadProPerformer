@@ -166,7 +166,7 @@ display.flush = function () {
       idx = 0x0b + x + y * 0x0a
       cv = this.currentGrid[idx]
       nv = this.nextGrid[idx]
-      if (nv != null && cv != nv) {
+      if (nv != null && cv !== nv) {
         if (nv & maskBlinking) {
           sendMidi(0x90, idx, 0)
         } else {
@@ -183,7 +183,7 @@ display.flush = function () {
       idx = 0x0b + x + y * 0x0a
       cv = this.currentGrid[idx]
       nv = this.nextGrid[idx]
-      if (nv != null && cv != nv) {
+      if (nv != null && cv !== nv) {
         if (nv & maskBlinking) {
           sendSysex('f0002029021023' + byteToHexString(idx) + byteToHexString(colors[nv & 0x0f]) + 'f7')
         }
@@ -196,7 +196,7 @@ display.flush = function () {
     idx = buttonsAll[i]
     cv = this.currentGrid[idx]
     nv = this.nextGrid[idx]
-    if (nv != null && cv != nv) {
+    if (nv != null && cv !== nv) {
       sendMidi(0xB0, idx, colors[nv & 0xff])
       this.currentGrid[idx] = nv
     }
@@ -204,7 +204,7 @@ display.flush = function () {
 
   cv = this.currentGrid[0x63]
   nv = this.nextGrid[0x63]
-  if (nv != null && cv != nv) {
+  if (nv != null && cv !== nv) {
     sendSysex('f000202902100a63' + byteToHexString(colors[nv & 0xff]) + 'f7')
     this.currentGrid[0x63] = nv
   }

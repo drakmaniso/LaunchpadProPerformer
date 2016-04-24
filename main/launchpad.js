@@ -54,7 +54,7 @@ launchpad.onMidi = function (status, data1, data2) {
   var h = this.screen.onMidi(status, data1, data2)
 
   var s = null
-  if (!h && status == 0xb0) {
+  if (!h && status === 0xb0) {
     switch (data1) {
       case 0x5F:
         s = 0
@@ -79,7 +79,7 @@ launchpad.onMidi = function (status, data1, data2) {
       default:
     }
     if (s != null) {
-      if (data2 != 0) {
+      if (data2 !== 0) {
         if (this.screen !== this.screens[s]) {
           this.screen = this.screens[s]
           this.screen.enter()
@@ -89,7 +89,7 @@ launchpad.onMidi = function (status, data1, data2) {
     }
   }
 
-  if (! h && status != 0xa0) {
+  if (! h && status !== 0xa0) {
     println('Unhandled Midi Event: ' + byteToHexString(status) + ' ' + byteToHexString(data1) + ' ' + byteToHexString(data2))
   }
 

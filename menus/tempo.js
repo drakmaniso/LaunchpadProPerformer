@@ -6,10 +6,10 @@ menuTempo = {
 // -----------------------------------------------------------------------------
 
 menuTempo.onMidi = function (status, data1, data2) {
-  if (status == 0x90 && data2 > 0) {
+  if (status === 0x90 && data2 > 0) {
   }
 
-  return ! (status == 0xb0 && data1 == 0x46 && data2 == 0x00)
+  return ! (status === 0xb0 && data1 === 0x46 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------

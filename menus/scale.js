@@ -6,18 +6,17 @@ menuScale = {
 // -----------------------------------------------------------------------------
 
 menuScale.onMidi = function (status, data1, data2) {
-  if (status == 0x90 && data2 > 0) {
+  if (status === 0x90 && data2 > 0) {
     var x = display.padX(data1)
     var y = display.padY(data1)
-    println('Pad: 0x' + byteToHexString(data1) + ' x=' + x + ' y=' + y)
     if (y >= 4) {
       if (scales[7 - y][x] != null) {
         launchpad.scale = scales[7 - y][x]
       }
     }
     this.drawGrid()
-  } else if (status == 0xb0 && data2 > 0) {
-    if (data1 == 0x14) {
+  } else if (status === 0xb0 && data2 > 0) {
+    if (data1 === 0x14) {
       if (launchpad.scale === scales[0][0]) {
         launchpad.scale = scales[0][1]
         launchpad.tonic += 9
@@ -30,7 +29,7 @@ menuScale.onMidi = function (status, data1, data2) {
       this.drawGrid()
     }
   }
-  return ! (status == 0xb0 && data1 == 0x1e && data2 == 0x00)
+  return ! (status === 0xb0 && data1 === 0x1e && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +48,7 @@ menuScale.drawGrid = function () {
       if (scales[y][x] != null) {
         var eq = true
         for (var i = 0; i < 12; i++) {
-          if ((launchpad.scale.notes[i]) != (scales[y][x].notes[i])) {
+          if ((launchpad.scale.notes[i]) !== (scales[y][x].notes[i])) {
             eq = false
           }
         }

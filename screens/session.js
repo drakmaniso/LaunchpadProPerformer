@@ -79,7 +79,7 @@ ScreenSession.prototype.onMidi = function (status, data1, data2) {
   var h
 
   var m = null
-  if (status == 0xb0) {
+  if (status === 0xb0) {
     switch (data1) {
       case 0x5b:
         if (data2 > 0) {
