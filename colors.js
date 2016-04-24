@@ -9,7 +9,7 @@ const colors = [
 
 const colorSelectedOption = 0x01
 
-const colorPressedkey = 0x0a
+const colorPressedKey = 0x0a
 
 //------------------------------------------------------------------------------
 

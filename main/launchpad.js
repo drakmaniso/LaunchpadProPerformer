@@ -1,19 +1,17 @@
 //------------------------------------------------------------------------------
 
 launchpad = {
-    
+
 }
 
 //------------------------------------------------------------------------------
 
 launchpad.init = function() {
     this.input = host.getMidiInPort(0)
-    this.output = host.getMidiOutPort(0) 
+    this.output = host.getMidiOutPort(0)
 
-    this.root_key = 0
+    this.tonic = 0
     this.scale = scales[0][0]
-
-    this.mute_translation = new_translation_table()
 
     this.screens = new Array(4)
     this.screens[0] = new ScreenSession()
@@ -25,14 +23,14 @@ launchpad.init = function() {
     this.screens[3].mode = this.screens[2].modes[2]
 
     this.screen = this.screens[1]
-	
+
     var lp = this
-    this.input.setMidiCallback(function(status, data1, data2) {lp.on_midi(status, data1, data2)})
-    this.input.setSysexCallback(function(data) {lp.on_sysex(data)})
+    this.input.setMidiCallback(function(status, data1, data2) {lp.onMidi(status, data1, data2)})
+    this.input.setSysexCallback(function(data) {lp.onSysEx(data)})
     this.output.setShouldSendMidiBeatClock(true)
 
-    this.note_input = this.input.createNoteInput("Note", "80????", "90????", "A0????", "D0????")
-    this.note_input.setShouldConsumeEvents(false)
+    this.noteInput = this.input.createNoteInput("Note", "80????", "90????", "A0????", "D0????")
+    this.noteInput.setShouldConsumeEvents(false)
     // this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
     // this.user_input.setShouldConsumeEvents(false)
 
@@ -47,13 +45,13 @@ launchpad.init = function() {
 //------------------------------------------------------------------------------
 
 launchpad.mute = function () {
-    this.note_input.setKeyTranslationTable(this.mute_translation)
+    this.noteInput.setKeyTranslationTable(muteTable)
 }
 
 //------------------------------------------------------------------------------
 
-launchpad.on_midi = function(status, data1, data2) {
-    var h = this.screen.on_midi(status, data1, data2)
+launchpad.onMidi = function(status, data1, data2) {
+    var h = this.screen.onMidi(status, data1, data2)
 
     var s = null
     if(!h && status == 0xb0) {
@@ -92,7 +90,7 @@ launchpad.on_midi = function(status, data1, data2) {
     }
 
     if(! h && status != 0xa0){
-        println("Unhandled Midi Event: " + byte_to_hex_string(status) + " " + byte_to_hex_string(data1) + " " + byte_to_hex_string(data2))
+        println("Unhandled Midi Event: " + byteToHexString(status) + " " + byteToHexString(data1) + " " + byteToHexString(data2))
     }
 
     return h
@@ -100,8 +98,8 @@ launchpad.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-launchpad.on_sysex = function(data) {
-    println("SYSEX: " + data)
+launchpad.onSysEx = function(data) {
+    println("SysEx: " + data)
 }
 
 //------------------------------------------------------------------------------

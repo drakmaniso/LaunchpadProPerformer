@@ -5,15 +5,6 @@ menuQuantization = {
 
 //------------------------------------------------------------------------------
 
-menuQuantization.on_midi = function(status, data1, data2) {
-    if(status == 0x90 && data2 > 0) {
-    }
-
-    return ! (status == 0xb0 && data1 == 0x28 && data2 == 0x00)
-}
-
-//------------------------------------------------------------------------------
-
 menuQuantization.enter = function() {
     launchpad.mute()
 
@@ -35,6 +26,15 @@ menuQuantization.enter = function() {
     display.setPad(4, 4, 0x1)
     display.setPad(3, 3, 0x1)
     display.setPad(4, 3, 0x1)
+}
+
+//------------------------------------------------------------------------------
+
+menuQuantization.onMidi = function(status, data1, data2) {
+    if(status == 0x90 && data2 > 0) {
+    }
+
+    return ! (status == 0xb0 && data1 == 0x28 && data2 == 0x00)
 }
 
 //------------------------------------------------------------------------------

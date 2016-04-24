@@ -5,29 +5,29 @@ menuScale = {
 
 //------------------------------------------------------------------------------
 
-menuScale.on_midi = function(status, data1, data2) {
+menuScale.onMidi = function(status, data1, data2) {
     if (status == 0x90 && data2 > 0) {
         var x = display.padX(data1)
         var y = display.padY(data1)
-        println("Pad: 0x" + byte_to_hex_string(data1) + " x=" + x + " y=" + y)
+        println("Pad: 0x" + byteToHexString(data1) + " x=" + x + " y=" + y)
         if (y >= 4) {
             if (scales[7 - y][x] != null) {
                 launchpad.scale = scales[7 - y][x]
             }
         }
-        this.draw_grid()
+        this.drawGrid()
     } else if (status == 0xb0 && data2 > 0) {
-        if (data1 == 0x14) { 
+        if (data1 == 0x14) {
             if (launchpad.scale === scales[0][0]) {
                 launchpad.scale = scales[0][1]
-                launchpad.root_key += 9
-                launchpad.root_key %= 12
+                launchpad.tonic += 9
+                launchpad.tonic %= 12
             } else if (launchpad.scale === scales[0][1]) {
                 launchpad.scale = scales[0][0]
-                launchpad.root_key -= 9
-                launchpad.root_key %= 12
+                launchpad.tonic -= 9
+                launchpad.tonic %= 12
             }
-        this.draw_grid()
+        this.drawGrid()
         }
     }
     return ! (status == 0xb0 && data1 == 0x1e && data2 == 0x00)
@@ -40,15 +40,15 @@ menuScale.enter = function() {
 
     display.clearPads(0x0)
 
-    this.draw_grid()    
+    this.drawGrid()
 }
 
-menuScale.draw_grid = function () {
-    for (x = 0; x < 8; x++) {
-        for (y = 0; y < 4; y++) {
+menuScale.drawGrid = function () {
+    for (var x = 0; x < 8; x++) {
+        for (var y = 0; y < 4; y++) {
             if (scales[y][x] != null) {
                 var eq = true
-                for (i = 0; i < 12; i++) {
+                for (var i = 0; i < 12; i++) {
                     if ((launchpad.scale.notes[i]) != (scales[y][x].notes[i])) {
                         eq = false
                     }
@@ -59,7 +59,7 @@ menuScale.draw_grid = function () {
     }
 
     if (true) {
-        // Display the scale as bass guitar    
+        // Display the scale as bass guitar
         display.setPad(1 + 0, 0, 0x3)
         display.setPad(1 + 1, 0, launchpad.scale.notes[1] ? 0x01 : 0x07)
         display.setPad(1 + 2, 0, launchpad.scale.notes[2] ? 0x01 : 0x07)
@@ -74,7 +74,7 @@ menuScale.draw_grid = function () {
         display.setPad(1 + 1, 2, launchpad.scale.notes[11] ? 0x01 : 0x07)
         display.setPad(1 + 2, 2, 0x5)
     } else {
-        // Display the scale on piano    
+        // Display the scale on piano
         display.setPad(0, 0, 0x3)
         display.setPad(0, 1, launchpad.scale.notes[1] ? 0x01 : 0x07)
         display.setPad(1, 0, launchpad.scale.notes[2] ? 0x01 : 0x07)

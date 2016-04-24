@@ -168,7 +168,7 @@ display.flush = function() {
                 if(nv & maskBlinking) {
                     sendMidi(0x90, idx, 0)
                 } else {
-                    //println("PAD " + x + ", " + y + " = " + byte_to_hex_string(colors[next_value & 0xff]))
+                    //println("PAD " + x + ", " + y + " = " + byteToHexString(colors[next_value & 0xff]))
                     sendMidi(0x90, idx, colors[nv & 0xff])
                     this.currentGrid[idx] = nv
                 }
@@ -183,7 +183,7 @@ display.flush = function() {
             nv = this.nextGrid[idx]
             if(nv != null && cv != nv) {
                 if(nv & maskBlinking) {
-                    sendSysex("f0002029021023" + byte_to_hex_string(idx) + byte_to_hex_string(colors[nv & 0x0f]) + "f7")
+                    sendSysex("f0002029021023" + byteToHexString(idx) + byteToHexString(colors[nv & 0x0f]) + "f7")
                 }
                 this.currentGrid[idx] = nv
             }
@@ -203,7 +203,7 @@ display.flush = function() {
     cv = this.currentGrid[0x63]
     nv = this.nextGrid[0x63]
     if(nv != null && cv != nv) {
-        sendSysex("f000202902100a63" + byte_to_hex_string(colors[nv & 0xff]) + "f7")
+        sendSysex("f000202902100a63" + byteToHexString(colors[nv & 0xff]) + "f7")
         this.currentGrid[0x63] = nv
     }
 }

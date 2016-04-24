@@ -5,7 +5,7 @@ menuTempo = {
 
 //------------------------------------------------------------------------------
 
-menuTempo.on_midi = function(status, data1, data2) {
+menuTempo.onMidi = function(status, data1, data2) {
     if(status == 0x90 && data2 > 0) {
     }
 

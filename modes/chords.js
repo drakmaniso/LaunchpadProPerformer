@@ -5,13 +5,6 @@ function ModeChords() {
 
 //------------------------------------------------------------------------------
 
-ModeChords.prototype.on_midi = function(status, data1, data2) {
-    if(status == 0x90) {
-    }
-}
-
-//------------------------------------------------------------------------------
-
 ModeChords.prototype.enter = function() {
     display.clearPads(0x0)
 
@@ -60,6 +53,13 @@ ModeChords.prototype.enter = function() {
     display.setPad(4, 7, 0x7)
     display.setPad(5, 7, 0x7)
     display.setPad(7, 7, 0x7)
+}
+
+//------------------------------------------------------------------------------
+
+ModeChords.prototype.onMidi = function(status, data1, data2) {
+    if(status == 0x90) {
+    }
 }
 
 //------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ function ScreenNote() {
     this.modes[2] = new ModeInKey()
     this.modes[3] = new ModeChords()
     this.mode = this.modes[0]
-	
+
     this.menus = new Array(8)
     this.menus[0] = null // new Shift_Menu(this)
     this.menus[1] = menuMode
@@ -15,23 +15,38 @@ function ScreenNote() {
     this.menus[3] = null // menuLayout
     this.menus[4] = null
     this.menus[5] = menuScale
-    this.menus[6] = menuRootKey
+    this.menus[6] = menuTonic
     this.menus[7] = null // Record
 	this.menu = null
 }
 
 //------------------------------------------------------------------------------
 
-ScreenNote.prototype.on_midi = function(status, data1, data2) {
+ScreenNote.prototype.enter = function() {
+	display.setMenuButton(0, 0x11)
+	display.setMenuButton(1, 0x12)
+	display.setMenuButton(2, 0x11)
+	display.setMenuButton(3, 0x13)
+	display.setMenuButton(4, 0x15)
+	display.setMenuButton(5, 0x17)
+	display.setMenuButton(6, 0x18)
+	display.setMenuButton(7, 0x11)
+    display.clearSceneButtons(0x11)
+	this.mode.enter()
+}
+
+//------------------------------------------------------------------------------
+
+ScreenNote.prototype.onMidi = function(status, data1, data2) {
     var h
 
 	if (this.menu != null) {
-		h = this.menu.on_midi(status, data1, data2)
+		h = this.menu.onMidi(status, data1, data2)
     }
 
     if (!h) {
-        h = this.mode.on_midi(status, data1, data2)
-    }    
+        h = this.mode.onMidi(status, data1, data2)
+    }
 
 	if (!h && status == 0xb0) {
     	var m = null
@@ -74,21 +89,6 @@ ScreenNote.prototype.on_midi = function(status, data1, data2) {
     }
 
     return h
-}
-
-//------------------------------------------------------------------------------
-
-ScreenNote.prototype.enter = function() {
-	display.setMenuButton(0, 0x11)
-	display.setMenuButton(1, 0x12)
-	display.setMenuButton(2, 0x11)
-	display.setMenuButton(3, 0x13)
-	display.setMenuButton(4, 0x15)
-	display.setMenuButton(5, 0x17)
-	display.setMenuButton(6, 0x18)
-	display.setMenuButton(7, 0x11)
-    display.clearSceneButtons(0x11)
-	this.mode.enter()
 }
 
 //------------------------------------------------------------------------------

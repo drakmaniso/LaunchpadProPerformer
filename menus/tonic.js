@@ -1,75 +1,83 @@
 //------------------------------------------------------------------------------
 
-menuRootKey = {
+menuTonic = {
 }
 
 //------------------------------------------------------------------------------
 
-menuRootKey.on_midi = function(status, data1, data2) {
+menuTonic.enter = function () {
+    launchpad.mute()
+    display.clearPads(0x0)
+    this.drawGrid()
+}
+
+//------------------------------------------------------------------------------
+
+menuTonic.onMidi = function(status, data1, data2) {
     if (status == 0x90 && data2 > 0) {
         switch (data1) {
             case 0x47: // C
             case 0x36:
-                launchpad.root_key = 0
+                launchpad.tonic = 0
                 break
             case 0x51: // C#
             case 0x0d:
-                launchpad.root_key = 1
+                launchpad.tonic = 1
                 break
             case 0x48: // D
             case 0x2e:
-                launchpad.root_key = 2
+                launchpad.tonic = 2
                 break
             case 0x52: // D#
             case 0x20:
-                launchpad.root_key = 3
+                launchpad.tonic = 3
                 break
             case 0x49: // E
             case 0x1a:
-                launchpad.root_key = 4
+                launchpad.tonic = 4
                 break
             case 0x4a: // F
             case 0x35:
-                launchpad.root_key = 5
+                launchpad.tonic = 5
                 break
             case 0x54: // F#
             case 0x0e:
-                launchpad.root_key = 6
+                launchpad.tonic = 6
                 break
             case 0x4b: // G
             case 0x37:
-                launchpad.root_key = 7
+                launchpad.tonic = 7
                 break
             case 0x55: // G#
             case 0x16:
-                launchpad.root_key = 8
+                launchpad.tonic = 8
                 break
             case 0x4c: // A
             case 0x24:
-                launchpad.root_key = 9
+                launchpad.tonic = 9
                 break
             case 0x56: // A#
             case 0x2a:
-                launchpad.root_key = 10
+                launchpad.tonic = 10
                 break
             case 0x4d: // B
             case 0x0f:
-                launchpad.root_key = 11
+                launchpad.tonic = 11
                 break
         }
-        this.draw_grid()
+        this.drawGrid()
     } else if (status == 0xb0 && data2 > 0) {
-        if (data1 == 0x1e) { 
+        if (data1 == 0x1e) {
             if (launchpad.scale === scales[0][0]) {
                 launchpad.scale = scales[0][1]
-                launchpad.root_key += 9
-                launchpad.root_key %= 12
+                launchpad.tonic += 9
+                launchpad.tonic %= 12
             } else if (launchpad.scale === scales[0][1]) {
                 launchpad.scale = scales[0][0]
-                launchpad.root_key -= 9
-                launchpad.root_key %= 12
+                launchpad.tonic -= 9
+                launchpad.tonic %= 12
             }
-        this.draw_grid()
+        this.drawGrid()
         }
     }
     return ! (status == 0xb0 && data1 == 0x14 && data2 == 0x00)
@@ -77,15 +85,7 @@ menuRootKey.on_midi = function(status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-menuRootKey.enter = function () {
-    launchpad.mute()
-
-    display.clearPads(0x0)
-
-    this.draw_grid()    
-}
-
-menuRootKey.draw_grid = function () {
+menuTonic.drawGrid = function () {
     display.setPad(0, 7, 0x8)
     display.setPad(1, 7, 0x8)
     display.setPad(3, 7, 0x8)
@@ -108,7 +108,7 @@ menuRootKey.draw_grid = function () {
     display.setPad(1+0, 2, 0x8)
     display.setPad(1+0, 3, 0x8)
 
-    switch (launchpad.root_key) {
+    switch (launchpad.tonic) {
         case 0: // C
             display.setPad(0, 6, 0x2)
             display.setPad(1+2, 4, 0x2)

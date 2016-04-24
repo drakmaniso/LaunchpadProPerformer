@@ -5,25 +5,33 @@ menuMode = {
 
 //------------------------------------------------------------------------------
 
-menuMode.on_midi = function (status, data1, data2) {
+menuMode.enter = function() {
+    launchpad.mute()
+    display.clearPads(0x0)
+	this.drawGrid()
+}
+
+//------------------------------------------------------------------------------
+
+menuMode.onMidi = function (status, data1, data2) {
     if (status == 0x90 && data2 > 0) {
 		var x = display.padX(data1)
 		var y = display.padY(data1)
 		if (y >= 4) {
 			if (x < 4) {
-			launchpad.screen.mode = launchpad.screen.modes[0]
-			this.draw_grid()
+    			launchpad.screen.mode = launchpad.screen.modes[0]
+    			this.drawGrid()
 			} else {
-			launchpad.screen.mode = launchpad.screen.modes[1]
-			this.draw_grid()
+    			launchpad.screen.mode = launchpad.screen.modes[1]
+    			this.drawGrid()
 			}
 		} else {
 			if (x < 4) {
-			launchpad.screen.mode = launchpad.screen.modes[2]
-			this.draw_grid()
+    			launchpad.screen.mode = launchpad.screen.modes[2]
+    			this.drawGrid()
 			} else {
-			launchpad.screen.mode = launchpad.screen.modes[3]
-			this.draw_grid()
+    			launchpad.screen.mode = launchpad.screen.modes[3]
+    			this.drawGrid()
 			}
 		}
     }
@@ -33,22 +41,12 @@ menuMode.on_midi = function (status, data1, data2) {
 
 //------------------------------------------------------------------------------
 
-menuMode.enter = function() {
-    launchpad.mute()
-
-    display.clearPads(0x0)
-
-	this.draw_grid()	
-}
-
-//------------------------------------------------------------------------------
-
-menuMode.draw_grid = function() {
+menuMode.drawGrid = function() {
 	var c
 
 	// Chromatic Mode
 	if (launchpad.screen.mode === launchpad.screen.modes[0]) {
-		c = colorSelectedOption 
+		c = colorSelectedOption
 	} else {
 		c = 0x02
 	}
@@ -61,7 +59,7 @@ menuMode.draw_grid = function() {
 
 	// Drums Mode
 	if (launchpad.screen.mode === launchpad.screen.modes[1]) {
-		c = colorSelectedOption 
+		c = colorSelectedOption
 	} else {
 		c = 0x02
 	}
@@ -76,7 +74,7 @@ menuMode.draw_grid = function() {
 
 	// In Key Mode
 	if (launchpad.screen.mode === launchpad.screen.modes[2]) {
-		c = colorSelectedOption 
+		c = colorSelectedOption
 	} else {
 		c = 0x02
 	}
@@ -89,7 +87,7 @@ menuMode.draw_grid = function() {
 
 	// Chords Mode
 	if (launchpad.screen.mode === launchpad.screen.modes[3]) {
-		c = colorSelectedOption 
+		c = colorSelectedOption
 	} else {
 		c = 0x02
 	}
