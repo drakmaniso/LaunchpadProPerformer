@@ -1,8 +1,6 @@
 // -----------------------------------------------------------------------------
 
 function ModeChromatic () {
-  this.layoutMenu = menuLayoutChromatic
-
   this.translation = newTranslationTable()
   this.origin = 48
   this.deltaX = 1
@@ -18,7 +16,7 @@ function ModeChromatic () {
 // -----------------------------------------------------------------------------
 
 ModeChromatic.prototype.enter = function () {
-  launchpad.screen.menus[3] = this.layoutMenu
+  launchpad.bindMenu(3, menuLayoutChromatic)
   display.clearSceneButtons(0x11)
   this.updateAndDraw()
 }

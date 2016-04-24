@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 
 var menuScale = {
+  color: 0x07
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +30,7 @@ menuScale.onMidi = function (status, data1, data2) {
       this.drawGrid()
     }
   }
-  return !(status === 0xb0 && data1 === 0x1e && data2 === 0x00)
+  return !(status === 0xb0 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ menuScale.drawGrid = function () {
             eq = false
           }
         }
-        display.setPad(x, 7 - y, eq ? colorSelectedOption : 0x07)
+        display.setPad(x, 7 - y, eq ? colorSelectedOption : this.color)
       }
     }
   }
@@ -60,32 +61,32 @@ menuScale.drawGrid = function () {
   if (true) {
     // Display the scale as bass guitar
     display.setPad(1 + 0, 0, 0x3)
-    display.setPad(1 + 1, 0, launchpad.scale.notes[1] ? 0x01 : 0x07)
-    display.setPad(1 + 2, 0, launchpad.scale.notes[2] ? 0x01 : 0x07)
-    display.setPad(1 + 3, 0, launchpad.scale.notes[3] ? 0x01 : 0x07)
-    display.setPad(1 + 4, 0, launchpad.scale.notes[4] ? 0x01 : 0x07)
-    display.setPad(1 + 0, 1, launchpad.scale.notes[5] ? 0x01 : 0x07)
-    display.setPad(1 + 1, 1, launchpad.scale.notes[6] ? 0x01 : 0x07)
-    display.setPad(1 + 2, 1, launchpad.scale.notes[7] ? 0x01 : 0x07)
-    display.setPad(1 + 3, 1, launchpad.scale.notes[8] ? 0x01 : 0x07)
-    display.setPad(1 + 4, 1, launchpad.scale.notes[9] ? 0x01 : 0x07)
-    display.setPad(1 + 0, 2, launchpad.scale.notes[10] ? 0x01 : 0x07)
-    display.setPad(1 + 1, 2, launchpad.scale.notes[11] ? 0x01 : 0x07)
+    display.setPad(1 + 1, 0, launchpad.scale.notes[1] ? 0x01 : this.color)
+    display.setPad(1 + 2, 0, launchpad.scale.notes[2] ? 0x01 : this.color)
+    display.setPad(1 + 3, 0, launchpad.scale.notes[3] ? 0x01 : this.color)
+    display.setPad(1 + 4, 0, launchpad.scale.notes[4] ? 0x01 : this.color)
+    display.setPad(1 + 0, 1, launchpad.scale.notes[5] ? 0x01 : this.color)
+    display.setPad(1 + 1, 1, launchpad.scale.notes[6] ? 0x01 : this.color)
+    display.setPad(1 + 2, 1, launchpad.scale.notes[7] ? 0x01 : this.color)
+    display.setPad(1 + 3, 1, launchpad.scale.notes[8] ? 0x01 : this.color)
+    display.setPad(1 + 4, 1, launchpad.scale.notes[9] ? 0x01 : this.color)
+    display.setPad(1 + 0, 2, launchpad.scale.notes[10] ? 0x01 : this.color)
+    display.setPad(1 + 1, 2, launchpad.scale.notes[11] ? 0x01 : this.color)
     display.setPad(1 + 2, 2, 0x5)
   } else {
     // Display the scale on piano
     display.setPad(0, 0, 0x3)
-    display.setPad(0, 1, launchpad.scale.notes[1] ? 0x01 : 0x07)
-    display.setPad(1, 0, launchpad.scale.notes[2] ? 0x01 : 0x07)
-    display.setPad(1, 1, launchpad.scale.notes[3] ? 0x01 : 0x07)
-    display.setPad(2, 0, launchpad.scale.notes[4] ? 0x01 : 0x07)
-    display.setPad(3, 0, launchpad.scale.notes[5] ? 0x01 : 0x07)
-    display.setPad(3, 1, launchpad.scale.notes[6] ? 0x01 : 0x07)
-    display.setPad(4, 0, launchpad.scale.notes[7] ? 0x01 : 0x07)
-    display.setPad(4, 1, launchpad.scale.notes[8] ? 0x01 : 0x07)
-    display.setPad(5, 0, launchpad.scale.notes[9] ? 0x01 : 0x07)
-    display.setPad(5, 1, launchpad.scale.notes[10] ? 0x01 : 0x07)
-    display.setPad(6, 0, launchpad.scale.notes[11] ? 0x01 : 0x07)
+    display.setPad(0, 1, launchpad.scale.notes[1] ? 0x01 : this.color)
+    display.setPad(1, 0, launchpad.scale.notes[2] ? 0x01 : this.color)
+    display.setPad(1, 1, launchpad.scale.notes[3] ? 0x01 : this.color)
+    display.setPad(2, 0, launchpad.scale.notes[4] ? 0x01 : this.color)
+    display.setPad(3, 0, launchpad.scale.notes[5] ? 0x01 : this.color)
+    display.setPad(3, 1, launchpad.scale.notes[6] ? 0x01 : this.color)
+    display.setPad(4, 0, launchpad.scale.notes[7] ? 0x01 : this.color)
+    display.setPad(4, 1, launchpad.scale.notes[8] ? 0x01 : this.color)
+    display.setPad(5, 0, launchpad.scale.notes[9] ? 0x01 : this.color)
+    display.setPad(5, 1, launchpad.scale.notes[10] ? 0x01 : this.color)
+    display.setPad(6, 0, launchpad.scale.notes[11] ? 0x01 : this.color)
     display.setPad(7, 0, 0x5)
   }
 }

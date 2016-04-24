@@ -58,7 +58,7 @@ function init () {
 }
 
 function flush () {
-  launchpad.flush()
+  display.flush()
 }
 
 function exit () {

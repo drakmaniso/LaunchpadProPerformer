@@ -1,8 +1,6 @@
 // -----------------------------------------------------------------------------
 
 function ModeDrum () {
-  this.layoutMenu = menuLayoutDrum
-
   this.widePads = false
   this.colors = drumColorSchemes[0]
   this.translation = newTranslationTable()
@@ -12,7 +10,7 @@ function ModeDrum () {
 // -----------------------------------------------------------------------------
 
 ModeDrum.prototype.enter = function () {
-  launchpad.screen.menus[3] = this.layoutMenu
+  launchpad.bindMenu(3, menuLayoutDrum)
   display.clearSceneButtons(0x11)
   this.updateAndDraw()
 }

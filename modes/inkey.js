@@ -1,8 +1,6 @@
 // -----------------------------------------------------------------------------
 
 function ModeInKey () {
-  this.layoutMenu = menuLayoutInKey
-
   this.translation = newTranslationTable()
   this.originDegree = 0
   this.originOctave = 3
@@ -21,7 +19,7 @@ function ModeInKey () {
 // -----------------------------------------------------------------------------
 
 ModeInKey.prototype.enter = function () {
-  launchpad.screen.menus[3] = this.layoutMenu
+  launchpad.bindMenu(3, menuLayoutInKey)
   display.clearSceneButtons(0x11)
   this.updateAndDraw()
 }

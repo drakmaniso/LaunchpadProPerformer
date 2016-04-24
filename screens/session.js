@@ -1,16 +1,6 @@
 // -----------------------------------------------------------------------------
 
 function ScreenSession () {
-  this.menus = new Array(8)
-  this.menus[0] = null // new Shift_Menu(this)
-  this.menus[1] = menuTempo
-  this.menus[2] = null // Undo
-  this.menus[3] = null // Delete
-  this.menus[4] = menuQuantization
-  this.menus[5] = null // Duplicate
-  this.menus[6] = null // Double
-  this.menus[7] = null // Record
-  this.menu = null
 }
 
 // -----------------------------------------------------------------------------
@@ -18,16 +8,10 @@ function ScreenSession () {
 ScreenSession.prototype.enter = function () {
   launchpad.mute()
 
+  launchpad.unbindMenus()
+  launchpad.bindMenu(1, menuTempo)
+  launchpad.bindMenu(4, menuQuantization)
   display.setScreenButton(0, 0x12)
-
-  display.setMenuButton(0, 0x11)
-  display.setMenuButton(1, 0x11)
-  display.setMenuButton(2, 0x11)
-  display.setMenuButton(3, 0x18)
-  display.setMenuButton(4, 0x17)
-  display.setMenuButton(5, 0x15)
-  display.setMenuButton(6, 0x13)
-  display.setMenuButton(7, 0x11)
 
   display.clearPads(0x00)
 
@@ -78,7 +62,6 @@ ScreenSession.prototype.enter = function () {
 ScreenSession.prototype.onMidi = function (status, data1, data2) {
   var h
 
-  var m = null
   if (status === 0xb0) {
     switch (data1) {
       case 0x5b:
@@ -101,34 +84,7 @@ ScreenSession.prototype.onMidi = function (status, data1, data2) {
           bitwig.trackBank.scrollChannelsDown()
         }
         break
-      case 0x50:
-        m = 0
-        if (data2 > 0) {
-          display.clearMenuButtons(0x11)
-        } else {
-          display.setMenuButton(1, 0x12)
-          display.setMenuButton(4, 0x12)
-          display.setMenuButton(6, 0x13)
-        }
-        h = true
-        break
-      case 0x46:
-        m = 1
-        break
-      case 0x3c:
-        m = 2
-        break
-      case 0x32:
-        m = 3
-        break
-      case 0x28:
-        m = 4
-        break
-      case 0x1e:
-        m = 5
-        break
       case 0x14:
-        m = 6
         if (data2 > 0) {
           for (var x = 0; x < 8; ++x) {
             display.setPad(x, 1, 0x13)
@@ -146,19 +102,6 @@ ScreenSession.prototype.onMidi = function (status, data1, data2) {
         }
         h = true
         break
-      case 0x0a:
-        m = 7
-        break
-    }
-    if (m != null) {
-      if (data2 > 0 && this.menu === null && this.menus[m] != null) {
-        this.menu = this.menus[m]
-        this.menu.enter()
-      } else if (data2 <= 0 && this.menu != null) {
-        this.menu = null
-        this.enter()
-      }
-      h = true
     }
   }
 

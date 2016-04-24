@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 
 var menuTonic = {
+  color: 0x08
 }
 
 // -----------------------------------------------------------------------------
@@ -80,33 +81,33 @@ menuTonic.onMidi = function (status, data1, data2) {
       this.drawGrid()
     }
   }
-  return !(status === 0xb0 && data1 === 0x14 && data2 === 0x00)
+  return !(status === 0xb0 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------
 
 menuTonic.drawGrid = function () {
-  display.setPad(0, 7, 0x8)
-  display.setPad(1, 7, 0x8)
-  display.setPad(3, 7, 0x8)
-  display.setPad(4, 7, 0x8)
-  display.setPad(5, 7, 0x8)
+  display.setPad(0, 7, this.color)
+  display.setPad(1, 7, this.color)
+  display.setPad(3, 7, this.color)
+  display.setPad(4, 7, this.color)
+  display.setPad(5, 7, this.color)
   for (var x = 0; x < 7; ++x) {
     display.setPad(x, 6, 0x1)
   }
 
-  display.setPad(1 + 1, 4, 0x1)
-  display.setPad(1 + 2, 4, 0x1)
-  display.setPad(1 + 3, 4, 0x1)
-  display.setPad(1 + 4, 3, 0x1)
-  display.setPad(1 + 4, 2, 0x1)
-  display.setPad(1 + 4, 1, 0x1)
-  display.setPad(1 + 3, 0, 0x1)
-  display.setPad(1 + 2, 0, 0x8)
-  display.setPad(1 + 1, 0, 0x8)
-  display.setPad(1 + 0, 1, 0x8)
-  display.setPad(1 + 0, 2, 0x8)
-  display.setPad(1 + 0, 3, 0x8)
+  display.setPad(1 + 1, 4, 0x01)
+  display.setPad(1 + 2, 4, 0x01)
+  display.setPad(1 + 3, 4, 0x01)
+  display.setPad(1 + 4, 3, 0x01)
+  display.setPad(1 + 4, 2, 0x01)
+  display.setPad(1 + 4, 1, 0x01)
+  display.setPad(1 + 3, 0, 0x01)
+  display.setPad(1 + 2, 0, this.color)
+  display.setPad(1 + 1, 0, this.color)
+  display.setPad(1 + 0, 1, this.color)
+  display.setPad(1 + 0, 2, this.color)
+  display.setPad(1 + 0, 3, this.color)
 
   switch (launchpad.tonic) {
     case 0: // C

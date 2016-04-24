@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 
 var menuMode = {
+  color: 0x05
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ menuMode.onMidi = function (status, data1, data2) {
     }
   }
 
-  return !(status === 0xb0 && data1 === 0x46 && data2 === 0x00)
+  return !(status === 0xb0 && data2 === 0x00)
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +49,7 @@ menuMode.drawGrid = function () {
   if (launchpad.screen.mode === launchpad.screen.modes[0]) {
     c = colorSelectedOption
   } else {
-    c = 0x02
+    c = this.color
   }
   display.setPad(1, 7, c)
   display.setPad(2, 7, c)
@@ -61,7 +62,7 @@ menuMode.drawGrid = function () {
   if (launchpad.screen.mode === launchpad.screen.modes[1]) {
     c = colorSelectedOption
   } else {
-    c = 0x02
+    c = this.color
   }
   display.setPad(4, 7, c)
   display.setPad(5, 7, c)
@@ -76,7 +77,7 @@ menuMode.drawGrid = function () {
   if (launchpad.screen.mode === launchpad.screen.modes[2]) {
     c = colorSelectedOption
   } else {
-    c = 0x02
+    c = this.color
   }
   display.setPad(0, 2, c)
   display.setPad(2, 2, c)
@@ -89,7 +90,7 @@ menuMode.drawGrid = function () {
   if (launchpad.screen.mode === launchpad.screen.modes[3]) {
     c = colorSelectedOption
   } else {
-    c = 0x02
+    c = this.color
   }
   display.setPad(4, 2, c)
   display.setPad(6, 2, c)
