@@ -2,7 +2,6 @@
 
 function ModeChromatic () {
   this.translation = newTranslationTable()
-  this.origin = 48
   this.deltaX = 1
   this.deltaY = 5
   this.keyColors = keyColorSchemes[0]
@@ -31,11 +30,11 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.upPressed = true
           if (launchpad.shifted) {
-            this.origin = this.origin + 12
+            state.setChromaticOrigin (state.getChromaticOrigin() + 12)
           } else if (this.downPressed) {
-            this.origin = 48 + state.tonic
+            state.setChromaticOrigin (48 + state.tonic)
           } else {
-            this.origin = this.origin + this.deltaY
+            state.setChromaticOrigin (state.getChromaticOrigin() + this.deltaY)
           }
         } else {
           this.upPressed = false
@@ -46,11 +45,11 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.downPressed = true
           if (launchpad.shifted) {
-            this.origin = this.origin - 12
+            state.setChromaticOrigin (state.getChromaticOrigin() - 12)
           } else if (this.upPressed) {
-            this.origin = 48 + state.tonic
+            state.setChromaticOrigin (48 + state.tonic)
           } else {
-            this.origin = this.origin - this.deltaY
+            state.setChromaticOrigin (state.getChromaticOrigin() - this.deltaY)
           }
         } else {
           this.downPressed = false
@@ -61,11 +60,11 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.leftPressed = true
           if (launchpad.shifted) {
-            this.origin = this.origin - 1
+            state.setChromaticOrigin (state.getChromaticOrigin() - 1)
           } else if (this.rightPressed) {
-            this.origin = 48
+            state.setChromaticOrigin (48)
           } else {
-            this.origin = this.origin - this.deltaX
+            state.setChromaticOrigin (state.getChromaticOrigin() - this.deltaX)
           }
         } else {
           this.leftPressed = false
@@ -76,11 +75,11 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.rightPressed = true
           if (launchpad.shifted) {
-            this.origin = this.origin + 1
+            state.setChromaticOrigin (state.getChromaticOrigin() + 1)
           } else if (this.leftPressed) {
-            this.origin = 48
+            state.setChromaticOrigin (48)
           } else {
-            this.origin = this.origin + this.deltaX
+            state.setChromaticOrigin (state.getChromaticOrigin() + this.deltaX)
           }
         } else {
           this.rightPressed = false
@@ -174,7 +173,7 @@ ModeChromatic.prototype.drawGrid = function () {
 // -----------------------------------------------------------------------------
 
 ModeChromatic.prototype.padNote = function (x, y) {
-  var n = this.origin + x * this.deltaX + y * this.deltaY
+  var n = state.getChromaticOrigin() + x * this.deltaX + y * this.deltaY
   if (n > 127 || n < 0) {
     n = -1
   }

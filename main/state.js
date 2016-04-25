@@ -56,6 +56,25 @@ state.init = function () {
         launchpad.enter()
       }
     } (this.screens[s])))
+
+    // Chromatic Origin
+    this.screens[s].chromaticOrigin = 48
+    this.screens[s].chromaticOriginValue = ds.getNumberSetting(
+      "C: Origin",
+      enumScreen[s] + " Screen",
+      0,
+      127,
+      1,
+      "semitones",
+      48
+    )
+    this.screens[s].chromaticOriginValue.addValueObserver(128, (function (scr) {
+      return function (v) {
+        println(v)
+        scr.chromaticOrigin = v
+        launchpad.enter()
+      }
+    } (this.screens[s])))
   }
 }
 
@@ -87,6 +106,16 @@ const enumMode = ["Chromatic", "Drum", "In Key", "Chords"]
 
 state.setMode = function (m) {
   this.screens[this.screen].modeValue.set(enumMode[m])
+}
+
+// -----------------------------------------------------------------------------
+
+state.setChromaticOrigin = function (v) {
+  this.screens[this.screen].chromaticOriginValue.set(v, 128)
+}
+
+state.getChromaticOrigin = function () {
+  return this.screens[this.screen].chromaticOrigin
 }
 
 // -----------------------------------------------------------------------------
