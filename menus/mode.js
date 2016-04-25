@@ -20,19 +20,15 @@ menuMode.onMidi = function (status, data1, data2) {
     var y = display.padY(data1)
     if (y >= 4) {
       if (x < 4) {
-        launchpad.screen.mode = launchpad.screen.modes[0]
-        this.drawGrid()
+        state.setMode(0)
       } else {
-        launchpad.screen.mode = launchpad.screen.modes[1]
-        this.drawGrid()
+        state.setMode(1)
       }
     } else {
       if (x < 4) {
-        launchpad.screen.mode = launchpad.screen.modes[2]
-        this.drawGrid()
+        state.setMode(2)
       } else {
-        launchpad.screen.mode = launchpad.screen.modes[3]
-        this.drawGrid()
+        state.setMode(3)
       }
     }
   }
@@ -46,7 +42,7 @@ menuMode.drawGrid = function () {
   var c
 
   // Chromatic Mode
-  if (launchpad.screen.mode === launchpad.screen.modes[0]) {
+  if (launchpad.screen().mode() === launchpad.screen().modes[0]) {
     c = colorSelectedOption
   } else {
     c = this.color
@@ -59,7 +55,7 @@ menuMode.drawGrid = function () {
   display.setPad(2, 4, c)
 
   // Drums Mode
-  if (launchpad.screen.mode === launchpad.screen.modes[1]) {
+  if (launchpad.screen().mode() === launchpad.screen().modes[1]) {
     c = colorSelectedOption
   } else {
     c = this.color
@@ -74,7 +70,7 @@ menuMode.drawGrid = function () {
   display.setPad(6, 4, c)
 
   // In Key Mode
-  if (launchpad.screen.mode === launchpad.screen.modes[2]) {
+  if (launchpad.screen().mode() === launchpad.screen().modes[2]) {
     c = colorSelectedOption
   } else {
     c = this.color
@@ -87,7 +83,7 @@ menuMode.drawGrid = function () {
   display.setPad(2, 0, c)
 
   // Chords Mode
-  if (launchpad.screen.mode === launchpad.screen.modes[3]) {
+  if (launchpad.screen().mode() === launchpad.screen().modes[3]) {
     c = colorSelectedOption
   } else {
     c = this.color

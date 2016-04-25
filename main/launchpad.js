@@ -10,19 +10,14 @@ launchpad.init = function () {
   this.input = host.getMidiInPort(0)
   this.output = host.getMidiOutPort(0)
 
-  this.tonic = 0
   this.scale = scales[0][0]
 
-  this.screens = new Array(4)
-  this.screens[0] = new ScreenSession()
-  this.screens[1] = new ScreenNote()
-  this.screens[2] = new ScreenNote()
-  this.screens[3] = new ScreenNote()
-
-  this.screens[2].mode = this.screens[2].modes[1]
-  this.screens[3].mode = this.screens[3].modes[2]
-
-  this.screen = this.screens[1]
+  this.screens = [
+    new ScreenSession(),
+    new ScreenNote(),
+    new ScreenNote(),
+    new ScreenNote()
+  ]
 
   this.menus = new Array(8)
   this.menu = null
@@ -38,13 +33,23 @@ launchpad.init = function () {
   this.noteInput.setShouldConsumeEvents(false)
   // this.user_input = this.input.createNoteInput("User", "80????", "90????", "A0????", "D0????")
   // this.user_input.setShouldConsumeEvents(false)
+}
 
+// -----------------------------------------------------------------------------
+
+launchpad.enter = function () {
+  println("*refresh*")
   display.clearMenuButtons(0x11)
   display.clearArrowButtons(0x11)
-  display.clearScreenButtons(0x11)
-  display.setScreenButton(1, 0x17)
   display.clearSceneButtons(0x11)
-  this.screen.enter()
+  display.clearBottomButtons(0x00)
+  display.clearScreenButtons(0x11)
+  const c = [0x12, 0x17, 0x19, 0x15]
+  display.setScreenButton(state.screen, c[state.screen])
+  this.screen().enter()
+  if (this.menu != null) {
+    this.menu.enter()
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +62,7 @@ launchpad.onMidi = function (status, data1, data2) {
   }
 
   if (!h) {
-    h = this.screen.onMidi(status, data1, data2)
+    h = this.screen().onMidi(status, data1, data2)
   }
 
   var s = null
@@ -68,23 +73,15 @@ launchpad.onMidi = function (status, data1, data2) {
 
       case 0x5F:
         s = 0
-        display.clearScreenButtons(0x11)
-        display.setScreenButton(s, 0x12)
         break
       case 0x60:
         s = 1
-        display.clearScreenButtons(0x11)
-        display.setScreenButton(s, 0x17)
         break
       case 0x61:
         s = 2
-        display.clearScreenButtons(0x11)
-        display.setScreenButton(s, 0x19)
         break
       case 0x62:
         s = 3
-        display.clearScreenButtons(0x11)
-        display.setScreenButton(s, 0x15)
         break
 
       // Menu Buttons
@@ -120,12 +117,13 @@ launchpad.onMidi = function (status, data1, data2) {
         this.menu.enter()
       } else if (data2 <= 0 && this.menu != null) {
         this.menu = null
-        this.screen.enter()
+        this.screen().enter()
       }
     } else if (s != null && data2 > 0) {
-      if (this.screen !== this.screens[s]) {
-        this.screen = this.screens[s]
-        this.screen.enter()
+      if (this.screen() !== this.screens[s]) {
+        state.setScreen(s)
+        // this.screen() = this.screens[s]
+        // this.screen().enter()
       }
     }
     h = true
@@ -142,6 +140,12 @@ launchpad.onMidi = function (status, data1, data2) {
 
 launchpad.onSysEx = function (data) {
   println('Received SysEx: ' + data)
+}
+
+// -----------------------------------------------------------------------------
+
+launchpad.screen = function () {
+  return this.screens[state.screen]
 }
 
 // -----------------------------------------------------------------------------

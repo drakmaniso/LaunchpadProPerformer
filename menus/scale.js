@@ -20,14 +20,13 @@ menuScale.onMidi = function (status, data1, data2) {
     if (data1 === 0x14) {
       if (launchpad.scale === scales[0][0]) {
         launchpad.scale = scales[0][1]
-        launchpad.tonic += 9
-        launchpad.tonic %= 12
+        var t = modulo(state.tonic + 9, 12)
+        state.setTonic(t)
       } else if (launchpad.scale === scales[0][1]) {
         launchpad.scale = scales[0][0]
-        launchpad.tonic -= 9
-        launchpad.tonic %= 12
+        var t = modulo(state.tonic - 9, 12)
+        state.setTonic(t)
       }
-      this.drawGrid()
     }
   }
   return !(status === 0xb0 && data2 === 0x00)

@@ -24,6 +24,7 @@ load('colors.js')
 load('main/tools.js')
 load('main/bitwig.js')
 load('main/display.js')
+load('main/state.js')
 load('main/launchpad.js')
 
 load('screens/session.js')
@@ -52,6 +53,7 @@ function init () {
 
   bitwig.init()
   display.init()
+  state.init()
   launchpad.init()
 
   display.flush()

@@ -108,7 +108,7 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
     var x = display.padX(data1)
     var y = display.padY(data1)
     var n = this.padNote(x, y)
-    var nn = (n - launchpad.tonic) % 12
+    var nn = (n - state.tonic) % 12
     var no = Math.floor(n / 12)
     var ns = launchpad.scale.notes[nn]
     var c = 0x0a
@@ -181,7 +181,7 @@ ModeInKey.prototype.drawGrid = function () {
   for (var x = 0; x < 8; x++) {
     for (var y = 0; y < 8; y++) {
       var n = this.padNote(x, y)
-      var nn = (n - launchpad.tonic) % 12
+      var nn = (n - state.tonic) % 12
       var no = Math.floor(n / 12)
       var ns = launchpad.scale.notes[nn]
       if (n === -1) {

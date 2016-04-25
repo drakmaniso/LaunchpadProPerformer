@@ -15,7 +15,7 @@ menuLayoutInKey.enter = function () {
 // -----------------------------------------------------------------------------
 
 menuLayoutInKey.onMidi = function (status, data1, data2) {
-  var m = launchpad.screen.mode
+  var m = launchpad.screen().mode()
   if (status === 0x90 && data2 > 0) {
     var x = display.padX(data1)
     var y = display.padY(data1)
@@ -58,7 +58,7 @@ menuLayoutInKey.onMidi = function (status, data1, data2) {
 menuLayoutInKey.drawGrid = function () {
   display.clearPads(0x0)
 
-  var m = launchpad.screen.mode
+  var m = launchpad.screen().mode()
 
   display.setPad(0, 7, m.deltaX === 1 && m.deltaY === 3 ? colorSelectedOption : this.color)
   display.setPad(4, 7, m.deltaX === 2 && m.deltaY === 3 ? colorSelectedOption : this.color)

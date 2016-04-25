@@ -31,9 +31,9 @@ var scales = [
     null
   ],
   [
-    {name: 'Japanese Hirajoshi', notes: [0, false, 1, 2, false, false, false, 3, 4, false, false, false]},
-    {name: 'Japanese In Sen', notes: [0, 1, false, false, false, 2, false, 3, false, false, 4, false]},
-    {name: 'Japanese Kumoi', notes: [0, false, 1, 2, false, false, false, 3, false, 4, false, false]},
+    {name: 'Hirajoshi', notes: [0, false, 1, 2, false, false, false, 3, 4, false, false, false]},
+    {name: 'In Sen', notes: [0, 1, false, false, false, 2, false, 3, false, false, 4, false]},
+    {name: 'Kumoi', notes: [0, false, 1, 2, false, false, false, 3, false, 4, false, false]},
     null,
     null,
     null,

@@ -33,7 +33,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           if (launchpad.shifted) {
             this.origin = this.origin + 12
           } else if (this.downPressed) {
-            this.origin = 48 + launchpad.tonic
+            this.origin = 48 + state.tonic
           } else {
             this.origin = this.origin + this.deltaY
           }
@@ -48,7 +48,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           if (launchpad.shifted) {
             this.origin = this.origin - 12
           } else if (this.upPressed) {
-            this.origin = 48 + launchpad.tonic
+            this.origin = 48 + state.tonic
           } else {
             this.origin = this.origin - this.deltaY
           }
@@ -95,7 +95,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
     var x = display.padX(data1)
     var y = display.padY(data1)
     var n = this.padNote(x, y)
-    var nn = (n - launchpad.tonic) % 12
+    var nn = (n - state.tonic) % 12
     var no = Math.floor(n / 12)
     var ns = launchpad.scale.notes[nn]
     var c = 0x0a
@@ -155,7 +155,7 @@ ModeChromatic.prototype.drawGrid = function () {
   for (var x = 0; x < 8; x++) {
     for (var y = 0; y < 8; y++) {
       var n = this.padNote(x, y)
-      var nn = (n - launchpad.tonic) % 12
+      var nn = (n - state.tonic) % 12
       var no = Math.floor(n / 12)
       var ns = launchpad.scale.notes[nn]
       if (n === -1) {

@@ -15,7 +15,7 @@ menuLayoutChromatic.enter = function () {
 // -----------------------------------------------------------------------------
 
 menuLayoutChromatic.onMidi = function (status, data1, data2) {
-  var m = launchpad.screen.mode
+  var m = launchpad.screen().mode()
   if (status === 0x90 && data2 > 0) {
     var x = display.padX(data1)
     var y = display.padY(data1)
@@ -73,7 +73,7 @@ menuLayoutChromatic.onMidi = function (status, data1, data2) {
 menuLayoutChromatic.drawGrid = function () {
   display.clearPads(0x0)
 
-  var m = launchpad.screen.mode
+  var m = launchpad.screen().mode()
 
   display.setPad(0, 7, m.deltaX === 1 && m.deltaY === 5 ? colorSelectedOption : this.color)
   display.setPad(1, 7, m.deltaX === 1 && m.deltaY === 7 ? colorSelectedOption : this.color)

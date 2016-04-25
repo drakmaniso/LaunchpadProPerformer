@@ -6,7 +6,12 @@ function ScreenNote () {
   this.modes[1] = new ModeDrum()
   this.modes[2] = new ModeInKey()
   this.modes[3] = new ModeChords()
-  this.mode = this.modes[0]
+}
+
+// -----------------------------------------------------------------------------
+
+ScreenNote.prototype.mode = function () {
+  return this.modes[state.screens[state.screen].mode]
 }
 
 // -----------------------------------------------------------------------------
@@ -18,13 +23,13 @@ ScreenNote.prototype.enter = function () {
   launchpad.bindMenu(5, menuScale)
   launchpad.bindMenu(6, menuTonic)
   display.clearSceneButtons(0x11)
-  this.mode.enter()
+  this.mode().enter()
 }
 
 // -----------------------------------------------------------------------------
 
 ScreenNote.prototype.onMidi = function (status, data1, data2) {
-  return this.mode.onMidi(status, data1, data2)
+  return this.mode().onMidi(status, data1, data2)
 }
 
 // -----------------------------------------------------------------------------
