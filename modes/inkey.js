@@ -108,9 +108,9 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
     var x = display.padX(data1)
     var y = display.padY(data1)
     var n = this.padNote(x, y)
-    var nn = (n - state.tonic) % 12
+    var nn = modulo(n - state.tonic, 12)
     var no = Math.floor(n / 12)
-    var ns = launchpad.scale.notes[nn]
+    var ns = state.scale[nn]
     var c = 0x0a
     if (data2 > 0) {
       if (n === -1) {
@@ -121,10 +121,10 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
     } else {
       if (n === -1) {
         c = 0x00
-      } else if (ns === 0) {
-        c = this.keyColors[no][ns]
+      } else if (nn === 0) {
+        c = this.keyColors[no][0]
       } else if (ns) {
-        c = this.keyColors[no][ns]
+        c = this.keyColors[no][1]
       } else {
         c = 0x00
       }
@@ -157,11 +157,10 @@ ModeInKey.prototype.fillTranslation = function () {
   for (var i = 0; i < 12; i++) {
     this.notePositions[i] = null
   }
-  var s = launchpad.scale
   this.nbDegrees = 0
   var p = 0
   for (var i = 0; i < 12; i++) {
-    if (s.notes[i] !== false) {
+    if (state.scale[i] !== false) {
       this.nbDegrees++
       this.notePositions[this.nbDegrees - 1] = p
     }
@@ -181,15 +180,15 @@ ModeInKey.prototype.drawGrid = function () {
   for (var x = 0; x < 8; x++) {
     for (var y = 0; y < 8; y++) {
       var n = this.padNote(x, y)
-      var nn = (n - state.tonic) % 12
+      var nn = modulo(n - state.tonic, 12)
       var no = Math.floor(n / 12)
-      var ns = launchpad.scale.notes[nn]
+      var ns = state.scale[nn]
       if (n === -1) {
         display.setPad(x, y, 0x00)
-      } else if (ns === 0) {
-        display.setPad(x, y, this.keyColors[no][ns])
+      } else if (nn === 0) {
+        display.setPad(x, y, this.keyColors[no][0])
       } else if (ns) {
-        display.setPad(x, y, this.keyColors[no][ns])
+        display.setPad(x, y, this.keyColors[no][1])
       } else {
         display.setPad(x, y, 0x00)
       }
@@ -200,6 +199,7 @@ ModeInKey.prototype.drawGrid = function () {
 // -----------------------------------------------------------------------------
 
 ModeInKey.prototype.padNote = function (x, y) {
+  //FIXME
   var deg = this.originDegree + x * this.deltaX + y * this.deltaY
   var o = this.originOctave + Math.floor(deg / this.nbDegrees)
   deg = deg % this.nbDegrees

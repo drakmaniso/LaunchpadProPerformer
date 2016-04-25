@@ -20,8 +20,16 @@ state.init = function () {
   })
 
   // Scale
-  this.scale = [0, false, 1, false, 2, 3, false, 4, false, 5, false, 6]
+  this.scale = scaleMajor.slice()
   this.scaleValue = ds.getStringSetting("Scale", "Global", 12, "1_2_34_5_6_7")
+  this.scaleValue.addValueObserver(function (s) {
+    for (var i = 0; i < 12; i++) {
+      var c = s.charAt(i)
+      state.scale[i] = (c !== "_") && (c !== "")
+    }
+    println(state.scale)
+    launchpad.enter()
+  })
 
   // Screen
   this.screen = 1
@@ -65,6 +73,12 @@ const enumTonic = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "
 
 state.setTonic = function (t) {
   this.tonicValue.set(enumTonic[t])
+}
+
+// -----------------------------------------------------------------------------
+
+state.setScale = function(s) {
+  this.scaleValue.set(s)
 }
 
 // -----------------------------------------------------------------------------

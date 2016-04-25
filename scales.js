@@ -2,45 +2,45 @@
 
 var scales = [
   [
-    {name: 'Major', notes: [0, false, 1, false, 2, 3, false, 4, false, 5, false, 6]},
-    {name: 'Minor', notes: [0, false, 1, 2, false, 3, false, 4, 5, false, 6, false]},
-    {name: 'Harmonic Minor', notes: [0, false, 1, 2, false, 3, false, 4, 5, false, false, 6]},
-    {name: 'Melodic Minor', notes: [0, false, 1, 2, false, 3, false, 4, false, 5, false, 6]},
+    {name: 'Major', notes: "1_2_34_5_6_7"},
+    {name: 'Minor', notes: "1_23_4_56_7_"},
+    {name: 'Harmonic Minor', notes: "1_23_4_56__7"},
+    {name: 'Melodic Minor', notes: "1_23_4_5_6_7"},
     null,
-    {name: 'Major Pentatonic', notes: [0, false, 1, false, 2, false, false, 3, false, 4, false, false]},
-    {name: 'Minor Pentatonic', notes: [0, false, false, 1, false, 2, false, 3, false, false, 4, false]},
-    {name: 'Blues', notes: [0, false, false, 1, false, 2, 3, 4, false, false, 5, false]}
+    {name: 'Major Pentatonic', notes: "1_2_3__4_5__"},
+    {name: 'Minor Pentatonic', notes: "1__2_3_4__5_"},
+    {name: 'Blues', notes: "1__2_345__6_"}
   ],
   [
-    {name: 'Ionian Mode', notes: [0, false, 1, false, 2, 3, false, 4, false, 5, false, 6]},
-    {name: 'Dorian Mode', notes: [0, false, 1, 2, false, 3, false, 4, false, 5, 6, false]},
-    {name: 'Phrygian Mode', notes: [0, 1, false, 2, false, 3, false, 4, 5, false, 6, false]},
-    {name: 'Lydian Mode', notes: [0, false, 1, false, 2, false, 3, 4, false, 5, false, 6]},
-    {name: 'Mixolydian Mode', notes: [0, false, 1, false, 2, 3, false, 4, false, 5, 6, false]},
-    {name: 'Aeolian Mode', notes: [0, false, 1, 2, false, 3, false, 4, 5, false, 6, false]},
-    {name: 'Locrian Mode', notes: [0, 1, false, 2, false, 3, 4, false, 5, false, 6, false]}
+    {name: 'Ionian Mode', notes: "1_2_34_5_6_7"},
+    {name: 'Dorian Mode', notes: "1_23_4_5_67_"},
+    {name: 'Phrygian Mode', notes: "12_3_4_56_7_"},
+    {name: 'Lydian Mode', notes: "1_2_3_45_6_7"},
+    {name: 'Mixolydian Mode', notes: "1_2_34_5_67_"},
+    {name: 'Aeolian Mode', notes: "1_23_4_56_7_"},
+    {name: 'Locrian Mode', notes: "12_3_45_6_7_"}
   ],
   [
-    {name: 'Phrygian Dominant', notes: [0, 1, false, false, 2, 3, false, 4, 5, false, 6, false]},
-    {name: 'Gypsy', notes: [0, 1, false, false, 2, 3, false, 4, 5, false, false, 6]},
-    {name: 'Hungarian', notes: [0, false, 1, 2, false, false, 3, 4, 5, false, false, 6]},
-    {name: 'Persian', notes: [0, 1, false, false, 2, 3, 4, false, 5, false, false, 6]},
+    {name: 'Phrygian Dominant', notes: "12__34_56_7_"},
+    {name: 'Gypsy', notes: "12__34_56__7"},
+    {name: 'Hungarian', notes: "1_23__456__7"},
+    {name: 'Persian', notes: "12__345_6__7"},
     null,
     null,
     null,
     null
   ],
   [
-    {name: 'Hirajoshi', notes: [0, false, 1, 2, false, false, false, 3, 4, false, false, false]},
-    {name: 'In Sen', notes: [0, 1, false, false, false, 2, false, 3, false, false, 4, false]},
-    {name: 'Kumoi', notes: [0, false, 1, 2, false, false, false, 3, false, 4, false, false]},
+    {name: 'Hirajoshi', notes: "1_23___45___"},
+    {name: 'In Sen', notes: "12___3_4__5_"},
+    {name: 'Kumoi', notes: "1_23___4_5__"},
     null,
     null,
     null,
-    {name: 'Symetric Diminished', notes: [0, false, 1, 2, false, 3, 4, false, 5, 6, false, 7]},
-    {name: 'Whole Tone', notes: [0, false, 1, false, 2, false, 3, false, 4, false, 5, false]}
+    {name: 'Symetric Diminished', notes: "1_23_45_67_8"},
+    {name: 'Whole Tone', notes: "1_2_3_4_5_6_"}
   ]
 ]
 
 // -----------------------------------------------------------------------------
-// Copyright (c) 2015-2016 - Laurent Moussault <moussault.laurent@gmail.com>
+// Copyright (c) 3126-3127 - Laurent Moussault <moussault.laurent@gmail.com>

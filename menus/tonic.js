@@ -68,12 +68,12 @@ menuTonic.onMidi = function (status, data1, data2) {
     }
   } else if (status === 0xb0 && data2 > 0) {
     if (data1 === 0x1e) {
-      if (launchpad.scale === scales[0][0]) {
-        launchpad.scale = scales[0][1]
+      if (scalesAreEquals(state.scale, scaleMajor)) {
+        state.setScale("1_23_4_56_7_")
         var t = modulo(state.tonic + 9, 12)
         state.setTonic(t)
-      } else if (launchpad.scale === scales[0][1]) {
-        launchpad.scale = scales[0][0]
+      } else if (scalesAreEquals(state.scale, scaleMinor)) {
+        state.setScale("1_2_34_5_6_7")
         var t = modulo(state.tonic - 9, 12)
         state.setTonic(t)
       }

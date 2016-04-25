@@ -61,6 +61,20 @@ function setPadTranslation (table, x, y, note) {
 
 // -----------------------------------------------------------------------------
 
+const scaleMajor = [true, false, true, false, true, true, false, true, false, true, false, true]
+const scaleMinor = [true, false, true, true, false, true, false, true, true, false, true, false]
+
+function scalesAreEquals(a, b) {
+  for (var i = 0; i < 12; i++) {
+    if (a[i] != b[i]) {
+      return false
+    }
+  }
+  return true
+}
+
+// -----------------------------------------------------------------------------
+
 function modulo (a, b) {
   return ((a % b) + b) % b
 }
