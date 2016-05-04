@@ -38,7 +38,7 @@ launchpad.init = function () {
 // -----------------------------------------------------------------------------
 
 launchpad.enter = function () {
-  println("*refresh*")
+  // println("*refresh*")
   display.clearMenuButtons(0x11)
   display.clearArrowButtons(0x11)
   display.clearSceneButtons(0x11)

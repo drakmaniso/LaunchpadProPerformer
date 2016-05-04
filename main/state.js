@@ -27,7 +27,6 @@ state.init = function () {
       var c = s.charAt(i)
       state.scale[i] = (c !== "_") && (c !== "")
     }
-    println(state.scale)
     launchpad.enter()
   })
 
@@ -70,7 +69,6 @@ state.init = function () {
     )
     this.screens[s].chromaticOriginValue.addValueObserver(128, (function (scr) {
       return function (v) {
-        println(v)
         scr.chromaticOrigin = v
         launchpad.enter()
       }

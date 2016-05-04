@@ -31,7 +31,19 @@ bitwig.init = function () {
       }
     }(this, i))
   }
-// act = host.createArrangerCursorTrack(0, 8)
+  // act = host.createArrangerCursorTrack(0, 8)
+
+  // this.arrangerCursor = host.createArrangerCursorTrack(0, 8)
+  // this.cursor = host.createCursorTrack("Playpad", 0, 8)
+  // var c = this.cursor.createMainTrackBank(1, 0, 0, false)
+  // this.cursor.selectChannel(c.getChannel(0))
+  // this.arrangerCursor.addNameObserver(16, '', function (name) {
+  //   println('Cursor Track is named "' + name + '"')
+  // })
+  // this.arrangerCursor.selectFirst()
+  // this.arrangerCursor.selectNext()
+  // this.arrangerCursor.selectNext()
+  // this.arrangerCursor.selectLast()
 }
 
 // -----------------------------------------------------------------------------
