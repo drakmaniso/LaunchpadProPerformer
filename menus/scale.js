@@ -6,6 +6,15 @@ var menuScale = {
 
 // -----------------------------------------------------------------------------
 
+menuScale.enter = function () {
+  launchpad.mute()
+  display.clearPads(0x0)
+  display.clearSceneButtons(0x0)
+  this.drawGrid()
+}
+
+// -----------------------------------------------------------------------------
+
 menuScale.onMidi = function (status, data1, data2) {
   if (status === 0x90 && data2 > 0) {
     var x = display.padX(data1)
@@ -33,14 +42,6 @@ menuScale.onMidi = function (status, data1, data2) {
 }
 
 // -----------------------------------------------------------------------------
-
-menuScale.enter = function () {
-  launchpad.mute()
-
-  display.clearPads(0x0)
-
-  this.drawGrid()
-}
 
 menuScale.drawGrid = function () {
   for (var x = 0; x < 8; x++) {

@@ -10,7 +10,7 @@ function ModeDrum () {
 // -----------------------------------------------------------------------------
 
 ModeDrum.prototype.enter = function () {
-  launchpad.bindMenu(3, menuLayoutDrum)
+  menuSettings.submenus[1] =  menuLayoutDrum
   display.clearSceneButtons(0x11)
   this.updateAndDraw()
 }

@@ -15,7 +15,7 @@ function ModeChromatic () {
 // -----------------------------------------------------------------------------
 
 ModeChromatic.prototype.enter = function () {
-  launchpad.bindMenu(3, menuLayoutChromatic)
+  menuSettings.submenus[1] =  menuLayoutChromatic
   display.clearSceneButtons(0x11)
   this.updateAndDraw()
 }

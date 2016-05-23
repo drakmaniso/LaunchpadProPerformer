@@ -18,10 +18,11 @@ ScreenNote.prototype.mode = function () {
 
 ScreenNote.prototype.enter = function () {
   launchpad.unbindMenus()
-  launchpad.bindMenu(1, menuMode)
-  launchpad.bindMenu(4, menuQuantization)
-  launchpad.bindMenu(5, menuScale)
-  launchpad.bindMenu(6, menuTonic)
+  launchpad.bindMenu(1, menuClip)
+  launchpad.bindMenu(3, menuSettings)
+  launchpad.bindMenu(4, menuScale)
+  launchpad.bindMenu(5, menuTonic)
+  launchpad.bindMenu(6, menuQuantization)
   display.clearSceneButtons(0x11)
   this.mode().enter()
 }

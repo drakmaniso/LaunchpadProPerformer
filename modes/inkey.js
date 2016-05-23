@@ -19,7 +19,7 @@ function ModeInKey () {
 // -----------------------------------------------------------------------------
 
 ModeInKey.prototype.enter = function () {
-  launchpad.bindMenu(3, menuLayoutInKey)
+  menuSettings.submenus[1] = menuLayoutInKey
   display.clearSceneButtons(0x11)
   this.updateAndDraw()
 }

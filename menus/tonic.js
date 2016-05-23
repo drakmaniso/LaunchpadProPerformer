@@ -9,6 +9,7 @@ var menuTonic = {
 menuTonic.enter = function () {
   launchpad.mute()
   display.clearPads(0x0)
+  display.clearSceneButtons(0x0)
   this.drawGrid()
 }
 

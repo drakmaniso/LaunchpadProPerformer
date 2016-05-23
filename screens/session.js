@@ -11,8 +11,8 @@ ScreenSession.prototype.enter = function () {
   launchpad.unbindMenus()
   launchpad.bindMenu(1, menuClip)
   launchpad.bindMenu(3, menuTempo)
-  launchpad.bindMenu(4, menuQuantization)
-  launchpad.bindMenu(6, menuMuteSoloStop)
+  launchpad.bindMenu(5, menuMuteSoloStop)
+  launchpad.bindMenu(6, menuQuantization)
 
   display.clearSceneButtons(0x11)
   display.clearBottomButtons(0x00)
