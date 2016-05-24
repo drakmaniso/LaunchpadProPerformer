@@ -73,6 +73,43 @@ state.init = function () {
         launchpad.enter()
       }
     } (this.screens[s])))
+
+    // Chromatic Horizontal
+    this.screens[s].chromaticHorizontal = 1
+    this.screens[s].chromaticHorizontalValue = ds.getNumberSetting(
+      "C: Horizontal",
+      enumScreen[s] + " Screen",
+      1,
+      8,
+      1,
+      "semitones",
+      1
+    )
+    this.screens[s].chromaticHorizontalValue.addValueObserver(8, (function (scr) {
+      return function (v) {
+        scr.chromaticHorizontal = v
+        launchpad.enter()
+      }
+    } (this.screens[s])))
+
+    // Chromatic Vertical
+    this.screens[s].chromaticVertical = 1
+    this.screens[s].chromaticVerticalValue = ds.getNumberSetting(
+      "C: Vertical",
+      enumScreen[s] + " Screen",
+      1,
+      8,
+      1,
+      "semitones",
+      5
+    )
+    this.screens[s].chromaticVerticalValue.addValueObserver(8, (function (scr) {
+      return function (v) {
+        scr.chromaticVertical = v
+        launchpad.enter()
+      }
+    } (this.screens[s])))
+
   }
 }
 
@@ -114,6 +151,24 @@ state.setChromaticOrigin = function (v) {
 
 state.getChromaticOrigin = function () {
   return this.screens[this.screen].chromaticOrigin
+}
+
+// -----------------------------------------------------------------------------
+
+state.setChromaticHorizontal = function (v) {
+  this.screens[this.screen].chromaticHorizontalValue.set(v-1, 8)
+}
+
+state.getChromaticHorizontal = function () {
+  return this.screens[this.screen].chromaticHorizontal
+}
+
+state.setChromaticVertical = function (v) {
+  this.screens[this.screen].chromaticVerticalValue.set(v-1, 8)
+}
+
+state.getChromaticVertical = function () {
+  return this.screens[this.screen].chromaticVertical
 }
 
 // -----------------------------------------------------------------------------

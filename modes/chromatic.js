@@ -2,10 +2,7 @@
 
 function ModeChromatic () {
   this.translation = newTranslationTable()
-  this.deltaX = 1
-  this.deltaY = 5
   this.keyColors = keyColorSchemes[0]
-  this.screenPressed = false
   this.upPressed = false
   this.downPressed = false
   this.leftPressed = false
@@ -34,7 +31,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.downPressed) {
             state.setChromaticOrigin (48 + state.tonic)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() + this.deltaY)
+            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticVertical())
           }
         } else {
           this.upPressed = false
@@ -49,7 +46,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.upPressed) {
             state.setChromaticOrigin (48 + state.tonic)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() - this.deltaY)
+            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticVertical())
           }
         } else {
           this.downPressed = false
@@ -64,7 +61,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.rightPressed) {
             state.setChromaticOrigin (48)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() - this.deltaX)
+            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticHorizontal())
           }
         } else {
           this.leftPressed = false
@@ -79,7 +76,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.leftPressed) {
             state.setChromaticOrigin (48)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() + this.deltaX)
+            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticHorizontal())
           }
         } else {
           this.rightPressed = false
@@ -173,7 +170,7 @@ ModeChromatic.prototype.drawGrid = function () {
 // -----------------------------------------------------------------------------
 
 ModeChromatic.prototype.padNote = function (x, y) {
-  var n = state.getChromaticOrigin() + x * this.deltaX + y * this.deltaY
+  var n = state.getChromaticOrigin() + x * state.getChromaticHorizontal() + y * state.getChromaticVertical()
   if (n > 127 || n < 0) {
     n = -1
   }

@@ -7,7 +7,6 @@ function ModeInKey () {
   this.deltaX = 1
   this.deltaY = 3
   this.keyColors = keyColorSchemes[0]
-  this.screenPressed = false
   this.upPressed = false
   this.downPressed = false
   this.leftPressed = false
