@@ -74,10 +74,10 @@ state.init = function () {
       }
     } (this.screens[s])))
 
-    // Chromatic Horizontal
-    this.screens[s].chromaticHorizontal = 1
-    this.screens[s].chromaticHorizontalValue = ds.getNumberSetting(
-      "C: Horizontal",
+    // Chromatic Delta X
+    this.screens[s].chromaticDeltaX = 1
+    this.screens[s].chromaticDeltaXValue = ds.getNumberSetting(
+      "C: DeltaX",
       enumScreen[s] + " Screen",
       1,
       8,
@@ -85,17 +85,17 @@ state.init = function () {
       "semitones",
       1
     )
-    this.screens[s].chromaticHorizontalValue.addValueObserver(8, (function (scr) {
+    this.screens[s].chromaticDeltaXValue.addValueObserver(8, (function (scr) {
       return function (v) {
-        scr.chromaticHorizontal = v
+        scr.chromaticDeltaX = v
         launchpad.enter()
       }
     } (this.screens[s])))
 
-    // Chromatic Vertical
-    this.screens[s].chromaticVertical = 1
-    this.screens[s].chromaticVerticalValue = ds.getNumberSetting(
-      "C: Vertical",
+    // Chromatic Delta Y
+    this.screens[s].chromaticDeltaY = 1
+    this.screens[s].chromaticDeltaYValue = ds.getNumberSetting(
+      "C: DeltaY",
       enumScreen[s] + " Screen",
       1,
       8,
@@ -103,9 +103,46 @@ state.init = function () {
       "semitones",
       5
     )
-    this.screens[s].chromaticVerticalValue.addValueObserver(8, (function (scr) {
+    this.screens[s].chromaticDeltaYValue.addValueObserver(8, (function (scr) {
       return function (v) {
-        scr.chromaticVertical = v
+        scr.chromaticDeltaY = v
+        launchpad.enter()
+      }
+    } (this.screens[s])))
+
+
+    // InKey Delta X
+    this.screens[s].inKeyDeltaX = 1
+    this.screens[s].inKeyDeltaXValue = ds.getNumberSetting(
+      "C: DeltaX",
+      enumScreen[s] + " Screen",
+      1,
+      8,
+      1,
+      "semitones",
+      1
+    )
+    this.screens[s].inKeyDeltaXValue.addValueObserver(8, (function (scr) {
+      return function (v) {
+        scr.inKeyDeltaX = v
+        launchpad.enter()
+      }
+    } (this.screens[s])))
+
+    // InKey Delta Y
+    this.screens[s].inKeyDeltaY = 1
+    this.screens[s].inKeyDeltaYValue = ds.getNumberSetting(
+      "C: DeltaY",
+      enumScreen[s] + " Screen",
+      1,
+      8,
+      1,
+      "semitones",
+      5
+    )
+    this.screens[s].inKeyDeltaYValue.addValueObserver(8, (function (scr) {
+      return function (v) {
+        scr.inKeyDeltaY = v
         launchpad.enter()
       }
     } (this.screens[s])))
@@ -155,20 +192,38 @@ state.getChromaticOrigin = function () {
 
 // -----------------------------------------------------------------------------
 
-state.setChromaticHorizontal = function (v) {
-  this.screens[this.screen].chromaticHorizontalValue.set(v-1, 8)
+state.setChromaticDeltaX = function (v) {
+  this.screens[this.screen].chromaticDeltaXValue.set(v-1, 8)
 }
 
-state.getChromaticHorizontal = function () {
-  return this.screens[this.screen].chromaticHorizontal
+state.getChromaticDeltaX = function () {
+  return this.screens[this.screen].chromaticDeltaX
 }
 
-state.setChromaticVertical = function (v) {
-  this.screens[this.screen].chromaticVerticalValue.set(v-1, 8)
+state.setChromaticDeltaY = function (v) {
+  this.screens[this.screen].chromaticDeltaYValue.set(v-1, 8)
 }
 
-state.getChromaticVertical = function () {
-  return this.screens[this.screen].chromaticVertical
+state.getChromaticDeltaY = function () {
+  return this.screens[this.screen].chromaticDeltaY
+}
+
+// -----------------------------------------------------------------------------
+
+state.setInKeyDeltaX = function (v) {
+  this.screens[this.screen].chromaticDeltaXValue.set(v-1, 8)
+}
+
+state.getInKeyDeltaX = function () {
+  return this.screens[this.screen].chromaticDeltaX
+}
+
+state.setInKeyDeltaY = function (v) {
+  this.screens[this.screen].chromaticDeltaYValue.set(v-1, 8)
+}
+
+state.getInKeyDeltaY = function () {
+  return this.screens[this.screen].chromaticDeltaY
 }
 
 // -----------------------------------------------------------------------------

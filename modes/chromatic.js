@@ -31,7 +31,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.downPressed) {
             state.setChromaticOrigin (48 + state.tonic)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticVertical())
+            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticDeltaY())
           }
         } else {
           this.upPressed = false
@@ -46,7 +46,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.upPressed) {
             state.setChromaticOrigin (48 + state.tonic)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticVertical())
+            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticDeltaY())
           }
         } else {
           this.downPressed = false
@@ -61,7 +61,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.rightPressed) {
             state.setChromaticOrigin (48)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticHorizontal())
+            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticDeltaX())
           }
         } else {
           this.leftPressed = false
@@ -76,7 +76,7 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
           } else if (this.leftPressed) {
             state.setChromaticOrigin (48)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticHorizontal())
+            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticDeltaX())
           }
         } else {
           this.rightPressed = false
@@ -170,7 +170,7 @@ ModeChromatic.prototype.drawGrid = function () {
 // -----------------------------------------------------------------------------
 
 ModeChromatic.prototype.padNote = function (x, y) {
-  var n = state.getChromaticOrigin() + x * state.getChromaticHorizontal() + y * state.getChromaticVertical()
+  var n = state.getChromaticOrigin() + x * state.getChromaticDeltaX() + y * state.getChromaticDeltaY()
   if (n > 127 || n < 0) {
     n = -1
   }

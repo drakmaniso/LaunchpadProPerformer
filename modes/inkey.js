@@ -4,8 +4,8 @@ function ModeInKey () {
   this.translation = newTranslationTable()
   this.originDegree = 0
   this.originOctave = 3
-  this.deltaX = 1
-  this.deltaY = 3
+  dx = 1
+  dy = 3
   this.keyColors = keyColorSchemes[0]
   this.upPressed = false
   this.downPressed = false
@@ -28,6 +28,8 @@ ModeInKey.prototype.enter = function () {
 ModeInKey.prototype.onMidi = function (status, data1, data2) {
   var h = false
   if (status === 0xb0) {
+    var dx = state.getInKeyDeltaX()
+    var dy = state.getInKeyDeltaY()
     switch (data1) {
       case 0x5b:
         if (data2 > 0) {
@@ -38,8 +40,8 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
             this.originOctave = 3
             this.originDegree = 0
           } else {
-            this.originOctave += Math.floor((this.originDegree + this.deltaY) / this.nbDegrees)
-            this.originDegree = modulo(this.originDegree + this.deltaY, this.nbDegrees)
+            this.originOctave += Math.floor((this.originDegree + dy) / this.nbDegrees)
+            this.originDegree = modulo(this.originDegree + dy, this.nbDegrees)
           }
         } else {
           this.upPressed = false
@@ -55,8 +57,8 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
             this.originOctave = 3
             this.originDegree = 0
           } else {
-            this.originOctave += Math.floor((this.originDegree - this.deltaY) / this.nbDegrees)
-            this.originDegree = modulo(this.originDegree - this.deltaY, this.nbDegrees)
+            this.originOctave += Math.floor((this.originDegree - dy) / this.nbDegrees)
+            this.originDegree = modulo(this.originDegree - dy, this.nbDegrees)
           }
         } else {
           this.downPressed = false
@@ -73,8 +75,8 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
             this.originOctave = 3
             this.originDegree = 0
           } else {
-            this.originOctave += Math.floor((this.originDegree - this.deltaX) / this.nbDegrees)
-            this.originDegree = modulo(this.originDegree - this.deltaX, this.nbDegrees)
+            this.originOctave += Math.floor((this.originDegree - dx) / this.nbDegrees)
+            this.originDegree = modulo(this.originDegree - dx, this.nbDegrees)
           }
         } else {
           this.leftPressed = false
@@ -91,8 +93,8 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
             this.originOctave = 3
             this.originDegree = 0
           } else {
-            this.originOctave += Math.floor((this.originDegree + this.deltaX) / this.nbDegrees)
-            this.originDegree = modulo(this.originDegree + this.deltaX, this.nbDegrees)
+            this.originOctave += Math.floor((this.originDegree + dx) / this.nbDegrees)
+            this.originDegree = modulo(this.originDegree + dx, this.nbDegrees)
           }
         } else {
           this.rightPressed = false
@@ -199,7 +201,9 @@ ModeInKey.prototype.drawGrid = function () {
 
 ModeInKey.prototype.padNote = function (x, y) {
   //FIXME
-  var deg = this.originDegree + x * this.deltaX + y * this.deltaY
+  var dx = state.getInKeyDeltaX()
+  var dy = state.getInKeyDeltaY()
+  var deg = this.originDegree + x * dx + y * dy
   var o = this.originOctave + Math.floor(deg / this.nbDegrees)
   deg = deg % this.nbDegrees
   var n = this.notePositions[deg] + 12 * o

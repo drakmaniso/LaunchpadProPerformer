@@ -16,7 +16,8 @@ menuLayoutChromatic.enter = function () {
 
 menuLayoutChromatic.onMidi = function (status, data1, data2) {
   var m = launchpad.screen().mode()
-  var dx = state.getChromaticHorizontal()
+  var dx = state.getChromaticDeltaX()
+  var dy = state.getChromaticDeltaY()
   if (status === 0x90 && data2 > 0) {
     var x = display.padX(data1)
     var y = display.padY(data1)
@@ -28,42 +29,43 @@ menuLayoutChromatic.onMidi = function (status, data1, data2) {
           dx = dx + 1
         }
       } else {
-        if (y < 2 && m.deltaY > 1) {
-          m.deltaY = m.deltaY - 1
-        } else if (y > 2 && m.deltaY < 8) {
-          m.deltaY = m.deltaY + 1
+        if (y < 2 && dy > 1) {
+          dy = dy - 1
+        } else if (y > 2 && dy < 8) {
+          dy = dy + 1
         }
       }
     } else if (y === 7) {
       switch (x) {
         case 0:
           dx = 1
-          m.deltaY = 5
+          dy = 5
           m.keyColors = keyColorSchemes[0]
           break
         case 1:
           dx = 1
-          m.deltaY = 7
+          dy = 7
           m.keyColors = keyColorSchemes[0]
           break
         case 2:
           dx = 2
-          m.deltaY = 5
+          dy = 5
           m.keyColors = keyColorSchemes[0]
           break
         case 4:
           dx = 4
-          m.deltaY = 3
+          dy = 3
           m.keyColors = keyColorSchemes[1]
           break
         case 5:
           dx = 4
-          m.deltaY = 7
+          dy = 7
           m.keyColors = keyColorSchemes[1]
           break
       }
     }
-    state.setChromaticHorizontal(dx)
+    state.setChromaticDeltaX(dx)
+    state.setChromaticDeltaY(dy)
     this.drawGrid()
   }
 
@@ -76,23 +78,24 @@ menuLayoutChromatic.drawGrid = function () {
   display.clearPads(0x0)
 
   var m = launchpad.screen().mode()
-  var dx = state.getChromaticHorizontal()
+  var dx = state.getChromaticDeltaX()
+  var dy = state.getChromaticDeltaY()
 
-  display.setPad(0, 7, dx === 1 && m.deltaY === 5 ? colorSelectedOption : this.color)
-  display.setPad(1, 7, dx === 1 && m.deltaY === 7 ? colorSelectedOption : this.color)
-  display.setPad(2, 7, dx === 2 && m.deltaY === 5 ? colorSelectedOption : this.color)
-  display.setPad(4, 7, dx === 4 && m.deltaY === 3 ? colorSelectedOption : this.color)
-  display.setPad(5, 7, dx === 4 && m.deltaY === 7 ? colorSelectedOption : this.color)
+  display.setPad(0, 7, dx === 1 && dy === 5 ? colorSelectedOption : this.color)
+  display.setPad(1, 7, dx === 1 && dy === 7 ? colorSelectedOption : this.color)
+  display.setPad(2, 7, dx === 2 && dy === 5 ? colorSelectedOption : this.color)
+  display.setPad(4, 7, dx === 4 && dy === 3 ? colorSelectedOption : this.color)
+  display.setPad(5, 7, dx === 4 && dy === 7 ? colorSelectedOption : this.color)
 
   if (dx >= 0) {
     display.drawBigNumber(0, 0, dx, this.color)
   } else {
     display.drawBigNumber(0, 0, -dx, 0x0b)
   }
-  if (m.deltaY >= 0) {
-    display.drawBigNumber(5, 0, m.deltaY, this.color)
+  if (dy >= 0) {
+    display.drawBigNumber(5, 0, dy, this.color)
   } else {
-    display.drawBigNumber(5, 0, -m.deltaY, 0x0b)
+    display.drawBigNumber(5, 0, -dy, 0x0b)
   }
 }
 
