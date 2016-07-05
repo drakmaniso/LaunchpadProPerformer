@@ -2,22 +2,36 @@
 
 var scales = [
   [
-    {name: 'Major', notes: "1_2_34_5_6_7"},
+    {name: 'Major', notes: "1_2_34_5_6_7" },
     {name: 'Minor', notes: "1_23_4_56_7_"},
+    null,
     {name: 'Harmonic Minor', notes: "1_23_4_56__7"},
+    null,
     {name: 'Melodic Minor', notes: "1_23_4_5_6_7"},
+    null,
     null,
     {name: 'Major Pentatonic', notes: "1_2_3__4_5__"},
     {name: 'Minor Pentatonic', notes: "1__2_3_4__5_"},
-    {name: 'Blues', notes: "1__2_345__6_"}
+    null,
+    {name: 'Blues', notes: "1__2_345__6_"},
+    null,
+    null,
+    null,
+    null
   ],
   [
     {name: 'Ionian Mode', notes: "1_2_34_5_6_7"},
+    null,
     {name: 'Dorian Mode', notes: "1_23_4_5_67_"},
+    null,
     {name: 'Phrygian Mode', notes: "12_3_4_56_7_"},
+    null,
     {name: 'Lydian Mode', notes: "1_2_3_45_6_7"},
+    null,
     {name: 'Mixolydian Mode', notes: "1_2_34_5_67_"},
+    null,
     {name: 'Aeolian Mode', notes: "1_23_4_56_7_"},
+    null,
     {name: 'Locrian Mode', notes: "12_3_45_6_7_"}
   ],
   [
@@ -36,10 +50,15 @@ var scales = [
     {name: 'Kumoi', notes: "1_23___4_5__"},
     null,
     null,
-    null,
+    null
+  ],
+  [
     {name: 'Symetric Diminished', notes: "1_23_45_67_8"},
     {name: 'Whole Tone', notes: "1_2_3_4_5_6_"}
-  ]
+  ],
+  [],
+  [],
+  []
 ]
 
 // -----------------------------------------------------------------------------

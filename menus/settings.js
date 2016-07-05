@@ -29,7 +29,6 @@ menuSettings.onMidi = function (status, data1, data2) {
     }
     display.clearPads(0x0)
     this.drawGrid()
-    println(byteToHexString(data1))
   } else {
     return this.submenu.onMidi(status, data1, data2)
   }
