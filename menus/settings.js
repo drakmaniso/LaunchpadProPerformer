@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 
 var menuSettings = {
-  color: 0x05,
+  color: menuMode.color,
   submenus: [menuMode, menuLayoutChromatic],
   submenu: menuMode
 }
