@@ -110,18 +110,18 @@ menuKey.drawGrid = function () {
 
   // Circle of Fifths
 
-  display.setPad(1, 7, 0x05)
-  display.setPad(2, 7, 0x05)
-  display.setPad(3, 7, 0x05)
-  display.setPad(4, 6, 0x05)
-  display.setPad(4, 5, 0x05)
-  display.setPad(4, 4, 0x05)
-  display.setPad(3, 3, 0x05)
-  display.setPad(2, 3, 0x06)
-  display.setPad(1, 3, 0x06)
-  display.setPad(0, 4, 0x06)
-  display.setPad(0, 5, 0x06)
-  display.setPad(0, 6, 0x06)
+  display.setPad(1, 7, 0x06) // F
+  display.setPad(2, 7, 0x06) // C
+  display.setPad(3, 7, 0x06) // G
+  display.setPad(4, 6, 0x06) // D
+  display.setPad(4, 5, 0x06) // A
+  display.setPad(4, 4, 0x06) // E
+  display.setPad(3, 3, 0x06) // B
+  display.setPad(2, 3, 0x06) // F# / Gb
+  display.setPad(1, 3, 0x06) // C# / Db
+  display.setPad(0, 4, 0x06) // G# / Ab
+  display.setPad(0, 5, 0x06) // D# / Eb
+  display.setPad(0, 6, 0x06) // A# / Bb
 
   // Current tonic
 
@@ -166,7 +166,7 @@ menuKey.drawGrid = function () {
 
   // Current Scale
 
-  display.setPad(0, 0, 0x3)
+  display.setPad(0, 0, 0x03)
   display.setPad(1, 0, state.scale[ 1] ? 0x01 : 0x08)
   display.setPad(2, 0, state.scale[ 2] ? 0x01 : 0x08)
   display.setPad(3, 0, state.scale[ 3] ? 0x01 : 0x08)
@@ -178,6 +178,7 @@ menuKey.drawGrid = function () {
   display.setPad(4, 1, state.scale[ 9] ? 0x01 : 0x08)
   display.setPad(0, 2, state.scale[10] ? 0x01 : 0x08)
   display.setPad(1, 2, state.scale[11] ? 0x01 : 0x08)
+  display.setPad(2, 2, 0x03)
 
   // Page of Scales
 
@@ -190,7 +191,7 @@ menuKey.drawGrid = function () {
             eq = false
           }
         }
-        display.setPad(6 + x, 7 - y, eq ? 0x01 : 0x07)
+        display.setPad(6 + x, 7 - y, eq ? 0x01 : 0x05)
       }
     }
   }
@@ -198,7 +199,7 @@ menuKey.drawGrid = function () {
   // Current Page
 
   for (var i = 0; i < 8; i++) {
-    display.setSceneButton(i, this.page === i ? 0x07 | 0x10 : 0x11)
+    display.setSceneButton(i, this.page === i ? 0x05 | 0x10 : 0x11)
   }
 
 }
