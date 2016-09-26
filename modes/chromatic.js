@@ -27,11 +27,11 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.upPressed = true
           if (launchpad.shifted) {
-            state.setChromaticOrigin (state.getChromaticOrigin() + 12)
+            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticDeltaY())
           } else if (this.downPressed) {
             state.setChromaticOrigin (48 + state.tonic)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() + state.getChromaticDeltaY())
+            state.setChromaticOrigin (state.getChromaticOrigin() + 12)
           }
         } else {
           this.upPressed = false
@@ -42,11 +42,11 @@ ModeChromatic.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.downPressed = true
           if (launchpad.shifted) {
-            state.setChromaticOrigin (state.getChromaticOrigin() - 12)
+            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticDeltaY())
           } else if (this.upPressed) {
             state.setChromaticOrigin (48 + state.tonic)
           } else {
-            state.setChromaticOrigin (state.getChromaticOrigin() - state.getChromaticDeltaY())
+            state.setChromaticOrigin (state.getChromaticOrigin() - 12)
           }
         } else {
           this.downPressed = false

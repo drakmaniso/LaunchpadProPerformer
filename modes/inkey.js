@@ -35,13 +35,13 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.upPressed = true
           if (launchpad.shifted) {
-            this.originOctave = this.originOctave + 1
+            this.originOctave += Math.floor((this.originDegree + dy) / this.nbDegrees)
+            this.originDegree = modulo(this.originDegree + dy, this.nbDegrees)
           } else if (this.downPressed) {
             this.originOctave = 3
             this.originDegree = 0
           } else {
-            this.originOctave += Math.floor((this.originDegree + dy) / this.nbDegrees)
-            this.originDegree = modulo(this.originDegree + dy, this.nbDegrees)
+            this.originOctave = this.originOctave + 1
           }
         } else {
           this.upPressed = false
@@ -52,13 +52,13 @@ ModeInKey.prototype.onMidi = function (status, data1, data2) {
         if (data2 > 0) {
           this.downPressed = true
           if (launchpad.shifted) {
-            this.originOctave = this.originOctave - 1
+            this.originOctave += Math.floor((this.originDegree - dy) / this.nbDegrees)
+            this.originDegree = modulo(this.originDegree - dy, this.nbDegrees)
           } else if (this.upPressed) {
             this.originOctave = 3
             this.originDegree = 0
           } else {
-            this.originOctave += Math.floor((this.originDegree - dy) / this.nbDegrees)
-            this.originDegree = modulo(this.originDegree - dy, this.nbDegrees)
+            this.originOctave = this.originOctave - 1
           }
         } else {
           this.downPressed = false
